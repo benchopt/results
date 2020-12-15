@@ -2,13 +2,15 @@
 <head>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
 <link href="static/main.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
 
 </head>
 <body>
 <a id="top"></a>
 <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
-<h1>BenchOpt benchmark result</h1>
+<a href="${benchmark}.html"><button class="btn"><i class="fa fa-arrow-left"></i> ${benchmark}</button></a>
+<h1>Result on ${benchmark} benchmark</h1>
 
 <p><a href="${result['fname']}">
 	<button class="btn"><i class="fa fa-download"></i> ${result["fname_short"]}</button>

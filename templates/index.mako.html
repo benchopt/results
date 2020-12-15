@@ -2,6 +2,8 @@
 <head>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
 <link href="static/main.css" rel="stylesheet" />
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
 <script type="text/javascript">
 ${table_formatter_js}
 </script>
@@ -17,29 +19,21 @@ ${table_formatter_css}
 </head>
 <body>
 <a id="top"></a>
-<h1>BenchOpt benchmark results</h1>
+<h1><a href="https://benchopt.github.io/">BenchOpt</a> benchmark results</h1>
 
 <p><em>Last updated: ${last_updated.isoformat(sep=' ', timespec='minutes') | h}</em></p>
-<h2>Summary</h2>
 <p>
-    <strong>${nb_total_benchs}</strong> benchmark results in total.
+    <strong>${nb_total_benchs}</strong> benchmarks in total.
 </p>
-<table class="summary display">
-<thead>
-  <tr>
-    <th>File</th>
-    <th>Page</th>
-  </tr>
-</thead>
-<tbody>
-% for result in results:
-  <tr>
-    <td class="fname"><a href="${result['fname']}">${result["fname_short"]}</a></td>
-    <td class="page"><a href="${result['page']}">${result["page"]}</a></td>
-  </tr>
+
+<h2>Available Benchmarks</h2>
+% for benchmark in benchmarks:
+  <div>
+    <a href="${benchmark}.html">
+      <button class="btn"><i class="fa fa-search"></i> ${benchmark}</button>
+    </a>
+  </div>
 %endfor
-</tbody>
-</table>
 
 <a class="backtotop" title="Back to top" href="#top">🔼</a>
 <script type="text/javascript">
