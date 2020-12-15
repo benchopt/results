@@ -20,6 +20,15 @@ jobs:
       run: |
         pip install -r requirements.txt
         pip install -U https://github.com/benchopt/benchOpt/archive/master.zip
-    - name: Plot and publish
+
+    - name: Render
       run: |
-        make publish
+        make render
+
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: rendered # The folder the action should deploy.
+        CLEAN: true # Automatically remove deleted files from the deploy branch
