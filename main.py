@@ -70,6 +70,7 @@ def get_results(fnames):
     OUTPUT_FIG_DIR.mkdir(exist_ok=True, parents=True)
 
     for fname in fnames:
+        print(f"Processing {fname}")
         fname_path = Path(fname)
         df = pd.read_csv(fname)
 
@@ -135,7 +136,6 @@ def render_all_results(results):
 
     htmls = []
     for result in results:
-        print(result)
         html = Template(
             filename=str(TEMPLATE_RESULT),
             input_encoding="utf-8").render(
@@ -146,11 +146,17 @@ def render_all_results(results):
     return htmls
 
 
+@click.command()
 @click.option('--pattern', '-k', 'patterns',
               metavar="<pattern>", multiple=True, type=str,
               help="Include results matching <pattern>.")
 def main(patterns=None):
-    fnames = sorted(glob.glob('outputs/*.csv'))
+    if patterns is None:
+        patterns = ['*']
+    fnames = []
+    for p in patterns:
+        fnames += glob.glob(f'outputs/{p}.csv')
+    fnames = sorted(set(fnames))
     results = get_results(fnames)
     rendered = render_index(results)
     copy_static()
