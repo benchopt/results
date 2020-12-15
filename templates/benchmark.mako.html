@@ -4,21 +4,56 @@
 <link href="static/main.css" rel="stylesheet" />
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+<script type="text/javascript">
+${table_formatter_js}
+</script>
+<style>
 
+/* pygment syntax highlighting for SQL queries */
+${code_formatter_css}
+
+/* datatables.net */
+${table_formatter_css}
+
+</style>
 </head>
 <body>
 <a id="top"></a>
 <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
-<a href="${benchmark}.html"><button class="btn"><i class="fa fa-arrow-left"></i> ${benchmark}</button></a>
-<h1>Result on ${benchmark} benchmark</h1>
+<h1>
+  BenchOpt benchmark results: ${benchmark}
+  <a href="https://github.com/benchopt/benchmark_${benchmark}">
+    <i class="fab fa-github-square"></i>
+  </a>
+</h1>
 
-<p><a href="${result['fname']}">
-	<button class="btn"><i class="fa fa-download"></i> ${result["fname_short"]}</button>
-</a></p>
-
-% for fig_fname in result['fig_fnames']:
-  <img src="${fig_fname}"><br/>
+<p><em>Last updated: ${last_updated.isoformat(sep=' ', timespec='minutes') | h}</em></p>
+<h2>Summary</h2>
+<p>
+    <strong>${nb_total_benchs}</strong> benchmark results in total.
+</p>
+<table class="summary display">
+<thead>
+  <tr>
+    <th>Results</th>
+  </tr>
+</thead>
+<tbody>
+% for result in results:
+  <tr>
+    <td class="fname">
+      <a href="${result['page']}">
+        ${result["fname_short"]}
+        <button class="btn"><i class="fas fa-chart-line"></i></button>
+      </a>
+      <a href="${result['fname']}">
+        <button class="btn"><i class="fa fa-download"></i></button>
+      </a>
+    </td>
+  </tr>
 %endfor
+</tbody>
+</table>
 
 <a class="backtotop" title="Back to top" href="#top"><i class="fas fa-level-up-alt"></i></a>
 <script type="text/javascript">
