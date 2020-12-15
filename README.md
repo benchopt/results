@@ -1,2 +1,2 @@
-# results
-BenchOpt benchmark results
+# BenchOpt benchmark results
+

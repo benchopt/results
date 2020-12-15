@@ -1,0 +1,19 @@
+,objective_name,data_name,scale,idx_rep,solver_name,stop_val,time,objective_value
+0,Lasso Regression[reg=0.05],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],1,3.627400000016934e-05,149813.17
+1,Lasso Regression[reg=0.05],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],2,0.00014763900000014374,1.0078485073078738e+18
+2,Lasso Regression[reg=0.05],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],3,0.00017041900000025478,1.574763091580253e+18
+3,Lasso Regression[reg=0.05],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],4,0.00020388499999990373,1.8368036005230938e+18
+4,Lasso Regression[reg=0.05],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],6,0.0005394480000000534,2.0568332944145108e+18
+5,Lasso Regression[reg=0.05],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],9,0.00047165400000004354,2.1679936819586644e+18
+6,Lasso Regression[reg=0.1],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],1,7.111900000023041e-05,149813.17
+7,Lasso Regression[reg=0.1],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],2,0.00016281799999973146,4.0313928035504947e+18
+8,Lasso Regression[reg=0.1],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],3,0.00021348000000021017,6.299050834219874e+18
+9,Lasso Regression[reg=0.1],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],4,0.00021816799999996306,7.347212747423185e+18
+10,Lasso Regression[reg=0.1],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],6,0.00027789200000016834,8.227331426685379e+18
+11,Lasso Regression[reg=0.1],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],9,0.0008659909999999549,8.671972930169402e+18
+12,Lasso Regression[reg=0.5],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],1,2.9425000000138368e-05,149813.17
+13,Lasso Regression[reg=0.5],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],2,0.00010596100000004327,1.0078479557514772e+20
+14,Lasso Regression[reg=0.5],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],3,0.00018269999999986908,1.574762402134794e+20
+15,Lasso Regression[reg=0.5],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],4,0.0002546990000000804,1.836802855922012e+20
+16,Lasso Regression[reg=0.5],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],6,0.00035787800000042225,2.0568325064768658e+20
+17,Lasso Regression[reg=0.5],Boston,13,0,Python-Frank-Wolfe[use_linesearch=False],9,0.0004262060000002066,2.1679928730093532e+20

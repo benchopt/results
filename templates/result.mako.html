@@ -1,0 +1,27 @@
+<html>
+<head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+<link href="static/main.css" rel="stylesheet" />
+
+</head>
+<body>
+<a id="top"></a>
+<h1>BenchOpt benchmark result</h1>
+
+<p><em>File: <a href="${result['fname']}">${result["fname_short"]}</a></em></p>
+
+% for fig_fname in result['fig_fnames']:
+  <img src="${fig_fname}"><br/>
+%endfor
+
+<a class="backtotop" title="Back to top" href="#top">🔼</a>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.summary').DataTable( {
+        "lengthMenu": [[25, 100, -1], [25, 100, "All"]],
+         "order": [[ 2, "asc" ], [0, "asc"], [3, "desc"], [1, "asc"]]
+    } );
+} );
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<html>
+<head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+<link href="static/main.css" rel="stylesheet" />
+<script type="text/javascript">
+${table_formatter_js}
+</script>
+<style>
+
+/* pygment syntax highlighting for SQL queries */
+${code_formatter_css}
+
+/* datatables.net */
+${table_formatter_css}
+
+</style>
+</head>
+<body>
+<a id="top"></a>
+<h1>BenchOpt benchmark results</h1>
+
+<p><em>Last updated: ${last_updated.isoformat(sep=' ', timespec='minutes') | h}</em></p>
+<h2>Summary</h2>
+<p>
+    <strong>${nb_total_benchs}</strong> benchmark results in total.
+</p>
+<table class="summary display">
+<thead>
+  <tr>
+    <th>File</th>
+    <th>Page</th>
+  </tr>
+</thead>
+<tbody>
+% for result in results:
+  <tr>
+    <td class="fname"><a href="${result['fname']}">${result["fname_short"]}</a></td>
+    <td class="page"><a href="${result['page']}">${result["page"]}</a></td>
+  </tr>
+%endfor
+</tbody>
+</table>
+
+<a class="backtotop" title="Back to top" href="#top">🔼</a>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.summary').DataTable( {
+        "lengthMenu": [[25, 100, -1], [25, 100, "All"]],
+         "order": [[ 2, "asc" ], [0, "asc"], [3, "desc"], [1, "asc"]]
+    } );
+} );
+</script>
+</body>
+</html>
