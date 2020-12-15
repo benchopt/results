@@ -69,7 +69,7 @@ def get_results(fnames):
     OUTPUT_BENCH_DIR.mkdir(exist_ok=True, parents=True)
     OUTPUT_FIG_DIR.mkdir(exist_ok=True, parents=True)
 
-    for fname in fnames[:1]:
+    for fname in fnames:
         fname_path = Path(fname)
         df = pd.read_csv(fname)
 
