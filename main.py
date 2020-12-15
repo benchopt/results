@@ -151,7 +151,7 @@ def render_all_results(results):
               metavar="<pattern>", multiple=True, type=str,
               help="Include results matching <pattern>.")
 def main(patterns=None):
-    if patterns is None:
+    if not patterns:
         patterns = ['*']
     fnames = []
     for p in patterns:
