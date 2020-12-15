@@ -19,6 +19,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip -r requirements.txt
+        pip install -U https://github.com/benchopt/benchOpt/archive/master.zip
     - name: Plot and publish
       run: |
         make publish
