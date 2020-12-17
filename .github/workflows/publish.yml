@@ -18,11 +18,16 @@ jobs:
 
     - name: Install dependencies
       env:
-        BENCHOPT_BRANCH: ENH_plotting_module
+        # Need to be of format repo:branch.
+        # BENCHOPT_BRANCH: benchopt:master
+        BENCHOPT_BRANCH: tommoral:ENH_plotting_module
       run: |
         pip install -r requirements.txt
-        pip install -U git+https://github.com/benchopt/benchOpt@$BENCHOPT_BRANCH
 
+        USER=${$BENCHOPT_BRANCH%:*}
+        BRANCH=${$BENCHOPT_BRANCH##*:}
+        echo "using branch $USER:$BRANCH"
+        pip install -U git+https://github.com/$USER/benchOpt@$BRANCH
     - name: Render
       run: |
         make render
