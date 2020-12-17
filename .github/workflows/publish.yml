@@ -21,7 +21,7 @@ jobs:
         BENCHOPT_BRANCH: ENH_plotting_module
       run: |
         pip install -r requirements.txt
-        pip install -U git+https://github.com/benchopt/benchOpt@BENCHOPT_BRANCH
+        pip install -U git+https://github.com/benchopt/benchOpt@$BENCHOPT_BRANCH
 
     - name: Render
       run: |
