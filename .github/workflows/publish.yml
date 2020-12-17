@@ -24,8 +24,8 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-        USER=${$BENCHOPT_BRANCH%:*}
-        BRANCH=${$BENCHOPT_BRANCH##*:}
+        USER=${BENCHOPT_BRANCH%:*}
+        BRANCH=${BENCHOPT_BRANCH##*:}
         echo "using branch $USER:$BRANCH"
         pip install -U git+https://github.com/$USER/benchOpt@$BRANCH
     - name: Render
