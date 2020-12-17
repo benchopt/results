@@ -10,7 +10,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 import pandas as pd
-from benchopt.viz import PLOT_KINDS
+from benchopt.plotting import PLOT_KINDS
 
 matplotlib.use('Agg')
 
@@ -30,16 +30,16 @@ JQUERY_DATATABLES_JS = ROOT / "resources" / "jquery.dataTables.min.js"
 JQUERY_DATATABLES_CSS = ROOT / "resources" / "jquery.dataTables.min.css"
 
 
-def plot_benchmark(df, kinds=PLOT_KINDS):
-    """Plot convergence curve and histogram for a given benchmark.
+def generate_plot_benchmark(fname, kinds=PLOT_KINDS):
+    """Generate all possible plots for a given benchmark.
 
     Parameters
     ----------
-    df : instance of pandas.DataFrame
+    fname : instance of pandas.DataFrame
         The benchmark results.
-    kinds : list of str or None
-        List of the plots that will be generated. If None are provided, use the
-        config file to choose or default to suboptimality_curve.
+    kinds : list of str
+        List of the kind of plots that will be generated. This needs to be a
+        sub-list of PLOT_KINDS.keys().
 
     Returns
     -------
@@ -47,12 +47,19 @@ def plot_benchmark(df, kinds=PLOT_KINDS):
         The matplotlib figures for convergence curve and histogram
         for each dataset.
     """
-    datasets = df['data_name'].unique()
-    figs = []
-    for data in datasets:
-        df_data = df[df['data_name'] == data]
-        objective_names = df['objective_name'].unique()
+
+    df = pd.read_csv(fname)
+    dataset_names = df['data_name'].unique()
+    objective_names = df['objective_name'].unique()
+    fname_short = fname.replace('outputs/', '').replace('/', '_')
+
+    figures = {}
+    n_figure = 0
+    for data_name in dataset_names:
+        figures[data_name] = {}
+        df_data = df[df['data_name'] == data_name]
         for objective_name in objective_names:
+            figures[data_name][objective_name] = {}
             df_obj = df_data[df_data['objective_name'] == objective_name]
 
             for k in kinds:
@@ -60,11 +67,31 @@ def plot_benchmark(df, kinds=PLOT_KINDS):
                     raise ValueError(
                         f"Requesting invalid plot '{k}'. Should be in:\n"
                         f"{PLOT_KINDS}")
-                plt.figure()
-                fig = PLOT_KINDS[k](df_obj)
-                figs.append(fig)
+                try:
+                    fig = PLOT_KINDS[k](df_obj, plotly=True)
+                except TypeError:
+                    fig = PLOT_KINDS[k](df_obj)
 
-    return figs
+                figures[data_name][objective_name][k] = export_figure(
+                    fig, f"{fname_short}_{n_figure}"
+                )
+                n_figure += 1
+
+    return dict(
+        figures=figures, dataset_names=dataset_names, fname_short=fname_short,
+        objective_names=objective_names, kinds=kinds.keys()
+    )
+
+
+def export_figure(fig, fig_name):
+    if hasattr(fig, 'to_html'):
+        return fig.to_html(include_plotlyjs=False)
+
+    fig_basename = f"{fig_name}.svg"
+    save_name = BUILD_DIR_FIGURES / fig_basename
+    fig.savefig(save_name)
+    plt.close(fig)
+    return f'figures/{fig_basename}'
 
 
 def get_results(fnames):
@@ -74,30 +101,17 @@ def get_results(fnames):
 
     for fname in fnames:
         print(f"Processing {fname}")
-        fname_path = Path(fname)
-        df = pd.read_csv(fname)
         fname_no_output = fname.replace('outputs/', '')
         fname_no_output_path = Path(fname_no_output)
 
         # Copy CSV
         shutil.copy(fname, BUILD_DIR_OUTPUTS / fname_no_output_path)
 
+        # Generate figures
         result = dict(
-            fname_short=fname.replace('outputs/', '').replace('/', '_'),
             fname=fname,
-            fig_fnames=[]
+            **generate_plot_benchmark(fname)
         )
-
-        # Produce figures
-        figs = plot_benchmark(df)
-
-        for k, fig in enumerate(figs):
-            fig_basename = f"{result['fname_short']}_{k}.svg"
-            save_name = BUILD_DIR_FIGURES / fig_basename
-            fig.savefig(save_name)
-            result['fig_fnames'].append(f'figures/{fig_basename}')
-            plt.close(fig)
-
         results.append(result)
 
     for result in results:
