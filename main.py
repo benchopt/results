@@ -5,7 +5,6 @@ import glob
 
 import click
 from mako.template import Template
-from pygments.formatters import HtmlFormatter
 import matplotlib
 import matplotlib.pyplot as plt
 
@@ -22,12 +21,6 @@ BUILD_DIR_FIGURES = BUILD_DIR / "figures"
 TEMPLATE_INDEX = ROOT / "templates" / "index.mako.html"
 TEMPLATE_BENCHMARK = ROOT / "templates" / "benchmark.mako.html"
 TEMPLATE_RESULT = ROOT / "templates" / "result.mako.html"
-
-JQUERY_JS = ROOT / "resources" / "jquery.js"
-JQUERY_DATATABLES_JS = ROOT / "resources" / "jquery.dataTables.min.js"
-JQUERY_DATATABLES_CSS = ROOT / "resources" / "jquery.dataTables.min.css"
-JQUERY_DATATABLES_JS = ROOT / "resources" / "jquery.dataTables.min.js"
-JQUERY_DATATABLES_CSS = ROOT / "resources" / "jquery.dataTables.min.css"
 
 
 def generate_plot_benchmark(fname, kinds=PLOT_KINDS):
@@ -122,22 +115,10 @@ def get_results(fnames):
 
 
 def render_benchmark(results, benchmark):
-    cssclass = "highlight"
-    formatter = HtmlFormatter(cssclass=cssclass)
-
-    table_formatter_css = JQUERY_DATATABLES_CSS.read_text("utf-8")
-    table_formatter_js = (
-        JQUERY_JS.read_text("utf-8")
-        + "\n"
-        + JQUERY_DATATABLES_JS.read_text("utf-8")
-    )
     return Template(filename=str(TEMPLATE_BENCHMARK),
                     input_encoding="utf-8").render(
         results=results,
         benchmark=benchmark,
-        code_formatter_css=formatter.get_style_defs(f'.{cssclass}'),
-        table_formatter_css=table_formatter_css,
-        table_formatter_js=table_formatter_js,
         max_rows=15,
         nb_total_benchs=len(results),
         last_updated=datetime.now(),
@@ -145,21 +126,9 @@ def render_benchmark(results, benchmark):
 
 
 def render_index(benchmarks):
-    cssclass = "highlight"
-    formatter = HtmlFormatter(cssclass=cssclass)
-
-    table_formatter_css = JQUERY_DATATABLES_CSS.read_text("utf-8")
-    table_formatter_js = (
-        JQUERY_JS.read_text("utf-8")
-        + "\n"
-        + JQUERY_DATATABLES_JS.read_text("utf-8")
-    )
     return Template(filename=str(TEMPLATE_INDEX),
                     input_encoding="utf-8").render(
         benchmarks=benchmarks,
-        code_formatter_css=formatter.get_style_defs(f'.{cssclass}'),
-        table_formatter_css=table_formatter_css,
-        table_formatter_js=table_formatter_js,
         nb_total_benchs=len(benchmarks),
         max_rows=15,
         last_updated=datetime.now(),
@@ -174,9 +143,6 @@ def copy_static():
 
 
 def render_all_results(results, benchmark):
-    cssclass = "highlight"
-    formatter = HtmlFormatter(cssclass=cssclass)
-
     htmls = []
     for result in results:
         html = Template(
@@ -184,7 +150,6 @@ def render_all_results(results, benchmark):
             input_encoding="utf-8").render(
             result=result,
             benchmark=benchmark,
-            code_formatter_css=formatter.get_style_defs(f'.{cssclass}'),
         )
         htmls.append(html)
     return htmls

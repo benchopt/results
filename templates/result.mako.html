@@ -60,14 +60,7 @@
 %endfor
 
 <a class="backtotop" title="Back to top" href="#top"><i class="fas fa-level-up-alt"></i></a>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('.summary').DataTable( {
-        "lengthMenu": [[25, 100, -1], [25, 100, "All"]],
-         "order": [[ 2, "asc" ], [0, "asc"], [3, "desc"], [1, "asc"]]
-    } );
-} );
-</script>
+
 <script type="text/javascript">
 	function showMe(e) {
 		for (var i = 0; i < e.options.length; i++) {
@@ -88,10 +81,6 @@ $(document).ready(function() {
   obj.onchange();
   var obj = document.getElementById('plot_kind');
   obj.onchange();
-
-
-
-
 </script>
 </body>
 </html>
