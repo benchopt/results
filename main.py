@@ -100,9 +100,13 @@ def get_results(fnames):
         # Copy CSV
         shutil.copy(fname, BUILD_DIR_OUTPUTS / fname_no_output_path)
 
+        df = pd.read_csv(fname)
+        datasets = list(df['data_name'].unique())
+
         # Generate figures
         result = dict(
             fname=fname,
+            datasets=datasets,
             **generate_plot_benchmark(fname)
         )
         results.append(result)

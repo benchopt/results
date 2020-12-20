@@ -34,6 +34,7 @@
 <thead>
   <tr>
     <th>Results</th>
+    <th>Datasets</th>
     <th></th>
   </tr>
 </thead>
@@ -44,6 +45,13 @@
       <a href="${result['page']}">
         ${result["fname_short"]}
       </a>
+    </td>
+    <td class="datasets">
+      % for dataset in result['datasets']:
+      <div class=dataset>
+        ${dataset}
+      </div>
+      %endfor
     </td>
     <td class="buttons">
       <a href="${result['page']}">
