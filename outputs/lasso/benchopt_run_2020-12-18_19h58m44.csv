@@ -1,0 +1,16 @@
+,objective_name,data_name,dimension,idx_rep,solver_name,stop_val,time,objective_value
+0,Lasso Regression[reg=0.05],finance,"(1668737,)",0,cd,1,0.6086613840016071,18056.451532261995
+1,Lasso Regression[reg=0.05],finance,"(1668737,)",0,Lightning,1,1.442325249001442,135743.42131610616
+2,Lasso Regression[reg=0.05],finance,"(1668737,)",0,Python-PGD[use_acceleration=False],1,3.13320672899863,41483.25507940697
+3,Lasso Regression[reg=0.05],finance,"(1668737,)",0,Python-PGD[use_acceleration=True],1,2.676918568002293,41483.25507940698
+4,Lasso Regression[reg=0.05],finance,"(1668737,)",0,sklearn,1,0.5488006609957665,18056.451532261966
+5,Lasso Regression[reg=0.1],finance,"(1668737,)",0,cd,1,0.7168598499993095,33074.04233857964
+6,Lasso Regression[reg=0.1],finance,"(1668737,)",0,Lightning,1,1.3743876540029305,141777.8680911106
+7,Lasso Regression[reg=0.1],finance,"(1668737,)",0,Python-PGD[use_acceleration=False],1,2.152740712001105,58333.08033013226
+8,Lasso Regression[reg=0.1],finance,"(1668737,)",0,Python-PGD[use_acceleration=True],1,3.947214650004753,58333.08033013226
+9,Lasso Regression[reg=0.1],finance,"(1668737,)",0,sklearn,1,0.6911961829973734,33074.04233857959
+10,Lasso Regression[reg=0.5],finance,"(1668737,)",0,cd,1,0.7272595960021135,86754.77539959173
+11,Lasso Regression[reg=0.5],finance,"(1668737,)",0,Lightning,1,1.3368127520006965,153765.10404069797
+12,Lasso Regression[reg=0.5],finance,"(1668737,)",0,Python-PGD[use_acceleration=False],1,3.556222370993055,99272.00708283036
+13,Lasso Regression[reg=0.5],finance,"(1668737,)",0,Python-PGD[use_acceleration=True],1,4.710993412001699,99272.00708283036
+14,Lasso Regression[reg=0.5],finance,"(1668737,)",0,sklearn,1,0.6129486099962378,86754.7753995917
