@@ -9,7 +9,13 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 import pandas as pd
-from benchopt.plotting import PLOT_KINDS
+
+from benchopt.constants import PLOT_KINDS
+from benchopt.plotting import plot_histogram  # noqa: F401
+from benchopt.plotting import plot_objective_curve  # noqa: F401
+from benchopt.plotting import plot_suboptimality_curve  # noqa: F401
+from benchopt.plotting import plot_relative_suboptimality_curve  # noqa: F401 E501
+
 
 matplotlib.use('Agg')
 
@@ -60,10 +66,11 @@ def generate_plot_benchmark(fname, kinds=PLOT_KINDS):
                     raise ValueError(
                         f"Requesting invalid plot '{k}'. Should be in:\n"
                         f"{PLOT_KINDS}")
+                plot_func = globals()[PLOT_KINDS[k]]
                 try:
-                    fig = PLOT_KINDS[k](df_obj, plotly=True)
+                    fig = plot_func(df_obj, plotly=True)
                 except TypeError:
-                    fig = PLOT_KINDS[k](df_obj)
+                    fig = plot_func(df_obj)
 
                 figures[data_name][objective_name][k] = export_figure(
                     fig, f"{fname_short}_{n_figure}"
