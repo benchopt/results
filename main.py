@@ -69,6 +69,21 @@ def generate_plot_benchmark(fname, kinds=PLOT_KINDS):
                 plot_func = globals()[PLOT_KINDS[k]]
                 try:
                     fig = plot_func(df_obj, plotly=True)
+                    if plot_func != "plot_histogram":
+                        if len(df_obj["solver_name"].unique()) < 10:
+                            fact_ = 10
+                        else:
+                            fact_ = 100
+                        height = 1000 + fact_ * len(objective_names)
+                        fig.update_layout(legend={"xanchor": "center",
+                                                  "yanchor": "top",
+                                                  "y": -.2,
+                                                  "x": .5
+                                                  },
+                                          autosize=False,
+                                          width=1000,
+                                          height=height
+                                          )
                 except TypeError:
                     fig = plot_func(df_obj)
 
@@ -76,7 +91,6 @@ def generate_plot_benchmark(fname, kinds=PLOT_KINDS):
                     fig, f"{fname_short}_{n_figure}"
                 )
                 n_figure += 1
-
     return dict(
         figures=figures, dataset_names=dataset_names, fname_short=fname_short,
         objective_names=objective_names, kinds=kinds.keys()
