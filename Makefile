@@ -13,7 +13,7 @@ clean:
 	rm -rf build
 
 render:
-	${PYTHON} main.py
+	benchopt generate-results --root benchmarks --no-display
 
 publish:
 	touch $(OUTPUTDIR)/.nojekyll
