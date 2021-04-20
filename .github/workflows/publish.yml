@@ -19,7 +19,7 @@ jobs:
     - name: Install dependencies
       env:
         # Need to be of format repo:branch.
-        BENCHOPT_BRANCH: bmalezieux:master
+        BENCHOPT_BRANCH: benchopt:master
       run: |
         pip install -r requirements.txt
 
