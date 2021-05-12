@@ -1,6 +1,7 @@
 <html>
 <head>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+<link href="static/hover_index.css" rel="stylesheet" />
 <link href="static/main.css" rel="stylesheet" />
 
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
@@ -16,25 +17,64 @@
 </head>
 
 <body>
+
+
+
+<div class="sidenav" id="sidenav" style="padding:0px; width:0px;">
+  <label for=selectcpu style="font-size: 120%; padding: 8px; color: white;">
+     cpu
+  </label>
+  <select class="myselect" id=selectcpu onchange="change(['cpu', 'ram (GB)', 'cuda'])">
+    <option value=""> Any </option>
+    
+    
+    
+  </select>
+  <label for=selectram(GB) style="font-size: 120%; padding: 8px; color: white;">
+     ram (GB)
+  </label>
+  <select class="myselect" id=selectram(GB) onchange="change(['cpu', 'ram (GB)', 'cuda'])">
+    <option value=""> Any </option>
+    
+    
+    
+  </select>
+  <label for=selectcuda style="font-size: 120%; padding: 8px; color: white;">
+     cuda
+  </label>
+  <select class="myselect" id=selectcuda onchange="change(['cpu', 'ram (GB)', 'cuda'])">
+    <option value=""> Any </option>
+    
+    
+    
+  </select>
+
+  <span id="closewithin" style="font-size:30px;cursor:pointer;text-align:center;color:white;" onclick="closeSideNav()">
+    <i class="fa fa-times-circle"></i> Close
+  </span>
+</div>
+
+<div class="main" id="main">
 <a id="top"></a>
-<a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
 <h1>
-  BenchOpt benchmark results: benchmark_lasso
+  <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
+  BenchOpt results: lasso
   <a href="https://github.com/benchopt/benchmark_lasso">
     <i class="fab fa-github-square"></i>
   </a>
 </h1>
 
-<p><em>Last updated: 2021-04-22 13:44</em></p>
-<h2>Summary</h2>
-<p>
-    <strong>3</strong> benchmark results in total.
+<p><em>Last updated: 2021-05-12 14:39</em>
+  with <strong>3</strong> benchmark results in total. <br>
 </p>
-<table class="summary display">
-<thead>
+
+
+<table class="summary display" id="summary">
+<thead style="background-color: dodgerblue; color: white;">
   <tr>
     <th>Results</th>
     <th>Datasets</th>
+    <th>System info</th>
     <th></th>
   </tr>
 </thead>
@@ -42,13 +82,23 @@
   <tr>
     <td class="fname">
       <a href="benchmark_lasso_benchmark_lasso_benchopt_run_2020-12-16_10h55m50.html">
-        benchmark_lasso_benchopt_run_2020-12-16_10h55m50.csv
+        
+        lasso 2020-12-16_10h55m50
       </a>
     </td>
     <td class="datasets">
+
       <div class=dataset>
+        
         Boston
       </div>
+
+    </td>
+    
+    <td class="sysinfo">
+      <ul style="list-style-type: none; margin-top: 0;">
+
+
     </td>
     <td class="buttons">
       <a href="benchmark_lasso_benchmark_lasso_benchopt_run_2020-12-16_10h55m50.html">
@@ -62,22 +112,39 @@
   <tr>
     <td class="fname">
       <a href="benchmark_lasso_benchmark_lasso_benchopt_run_2020-12-16_14h59m11.html">
-        benchmark_lasso_benchopt_run_2020-12-16_14h59m11.csv
+        
+        lasso 2020-12-16_14h59m11
       </a>
     </td>
     <td class="datasets">
+
       <div class=dataset>
-        Simulated[n_samples=100,n_features=5000,rho=0]
+        
+        Simulated
+          </br> <span style="font-size: 80%;padding-left:15px;padding-bottom:15px;">n_samples=100,n_features=5000,rho=0 </span>
       </div>
       <div class=dataset>
-        Simulated[n_samples=100,n_features=5000,rho=0.6]
+        
+        Simulated
+          </br> <span style="font-size: 80%;padding-left:15px;padding-bottom:15px;">n_samples=100,n_features=5000,rho=0.6 </span>
       </div>
       <div class=dataset>
-        Simulated[n_samples=100,n_features=10000,rho=0]
+        
+        Simulated
+          </br> <span style="font-size: 80%;padding-left:15px;padding-bottom:15px;">n_samples=100,n_features=10000,rho=0 </span>
       </div>
       <div class=dataset>
-        Simulated[n_samples=100,n_features=10000,rho=0.6]
+        
+        Simulated
+          </br> <span style="font-size: 80%;padding-left:15px;padding-bottom:15px;">n_samples=100,n_features=10000,rho=0.6 </span>
       </div>
+
+    </td>
+    
+    <td class="sysinfo">
+      <ul style="list-style-type: none; margin-top: 0;">
+
+
     </td>
     <td class="buttons">
       <a href="benchmark_lasso_benchmark_lasso_benchopt_run_2020-12-16_14h59m11.html">
@@ -91,28 +158,47 @@
   <tr>
     <td class="fname">
       <a href="benchmark_lasso_benchmark_lasso_benchopt_run_2020-12-20_21h50m17.html">
-        benchmark_lasso_benchopt_run_2020-12-20_21h50m17.csv
+        
+        lasso 2020-12-20_21h50m17
       </a>
     </td>
     <td class="datasets">
+
       <div class=dataset>
+        
         Boston
       </div>
       <div class=dataset>
-        finance
+        
+        Finance
       </div>
       <div class=dataset>
-        Simulated[n_samples=100,n_features=5000,rho=0]
+        
+        Simulated
+          </br> <span style="font-size: 80%;padding-left:15px;padding-bottom:15px;">n_samples=100,n_features=5000,rho=0 </span>
       </div>
       <div class=dataset>
-        Simulated[n_samples=100,n_features=5000,rho=0.6]
+        
+        Simulated
+          </br> <span style="font-size: 80%;padding-left:15px;padding-bottom:15px;">n_samples=100,n_features=5000,rho=0.6 </span>
       </div>
       <div class=dataset>
-        Simulated[n_samples=100,n_features=10000,rho=0]
+        
+        Simulated
+          </br> <span style="font-size: 80%;padding-left:15px;padding-bottom:15px;">n_samples=100,n_features=10000,rho=0 </span>
       </div>
       <div class=dataset>
-        Simulated[n_samples=100,n_features=10000,rho=0.6]
+        
+        Simulated
+          </br> <span style="font-size: 80%;padding-left:15px;padding-bottom:15px;">n_samples=100,n_features=10000,rho=0.6 </span>
       </div>
+
+    </td>
+    
+    <td class="sysinfo">
+      <ul style="list-style-type: none; margin-top: 0;">
+
+
     </td>
     <td class="buttons">
       <a href="benchmark_lasso_benchmark_lasso_benchopt_run_2020-12-20_21h50m17.html">
@@ -132,6 +218,81 @@
 $(document).ready(function() {
     $('.summary').DataTable();
 } );
+
+$('table').each(function(a, tbl) {
+        var currentTableRows = $(tbl).find('tbody tr').length;
+        $(tbl).find('th').each(function(i) {
+            var remove = 0;
+            var currentTable = $(this).parents('table');
+            var tds = currentTable.find('tr td:nth-child(' + (i + 1) + ')');
+            tds.each(function(j) { if ($(this)[0].innerText.length == 0) remove++; });
+            if (remove == currentTableRows) {
+                $(this).hide();
+                tds.hide();
+            }
+        });
+    });
+
+function change(ll_item){
+  var td, i, fil;
+  var filter = new Array;
+  for (item = 0; item < ll_item.length; item++){
+    filter.push(document.getElementById("select"+ll_item[item].replace(/\s/g, "")).value.toUpperCase());
+  }
+  var table = document.getElementById("summary");
+  var tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    tr[i].style.display = "";
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td){
+     for (fil = 0; fil < filter.length; fil++){
+       if (td.innerHTML.toUpperCase().indexOf(filter[fil]) > -1 && tr[i].style.display !== "none") {
+         tr[i].style.display = "";
+       }
+       else {
+         tr[i].style.display = "none";
+       }
+     }
+    }
+  }
+}
+
+function displaymore(id, loop_index) {
+  var x = document.getElementById("subinfo"+loop_index);
+  $(id).find('svg').toggleClass('fa-plus-circle fa-minus-circle');
+  if (x.style.display === 'none') {
+    x.style.display = "block";
+  }
+  else {
+    x.style.display = "none";
+  }
+}
+
+var openbtn = document.getElementById("open");
+var closebtn = document.getElementById("close");
+var closewithin = document.getElementById("closewithin");
+openbtn.style.display = 'none';
+
+function openSideNav() {
+    navbar = document.getElementById("sidenav")
+    navbar.style.width = "200px";
+    navbar.style.padding = "30px";
+    document.getElementById("main").style.marginLeft = "50px";
+	  openbtn.style.display = 'none';
+    closebtn.style.display = '';
+}
+
+openSideNav()
+
+function closeSideNav() {
+    navbar = document.getElementById("sidenav")
+    navbar.style.width = "0";
+    navbar.style.padding = "0";
+    document.getElementById("main").style.marginLeft = "0";
+	  openbtn.style.display = '';
+    closebtn.style.display = 'none';
+}
 </script>
+</div>
 </body>
 </html>
