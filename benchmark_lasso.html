@@ -51,8 +51,8 @@
   </select>
 </div>
 
-<div class="main" id="main">
-<a id="top"></a>
+<div class="main" id="main" style="margin-left: 0;">
+  <a id="top"></a>
 <h1>
   <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
   BenchOpt results: lasso
@@ -61,7 +61,7 @@
   </a>
 </h1>
 
-<p><em>Last updated: 2021-05-13 20:30</em>
+<p><em>Last updated: 2021-05-14 20:31</em>
   with <strong>3</strong> benchmark results in total. <br>
 </p>
 
@@ -304,7 +304,7 @@ function closeSideNav() {
     navbar.style.opacity = "0";
     navbar.style.height = "0";
     if ($(window).width() > 900) {
-      main.style.marginLeft = "150px";
+      main.style.marginLeft = "0px";
     }
     openbtn.style.display = '';
     closebtn.style.display = 'none';
