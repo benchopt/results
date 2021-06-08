@@ -30,12 +30,8 @@
     <select class="myselect" id=selectcpu onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
       
-      
         
           <option value="<b>cpu</b>: 16"> 16 </option>
-      
-        
-          <option value="<b>cpu</b>: 48"> 48 </option>
     </select>
     <label for=selectram(GB) style="padding: 8px; color: white;">
        ram (GB)
@@ -43,20 +39,14 @@
     <select class="myselect" id=selectram(GB) onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
       
-      
         
           <option value="<b>ram (GB)</b>: 32"> 32 </option>
-      
-        
-          <option value="<b>ram (GB)</b>: 755"> 755 </option>
     </select>
     <label for=selectcuda style="padding: 8px; color: white;">
        cuda
     </label>
     <select class="myselect" id=selectcuda onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
-      
-      
       
     </select>
   </div>
@@ -66,14 +56,14 @@
   <a id="top"></a>
 <h1>
   <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
-  BenchOpt results: logreg l2
-  <a href="https://github.com/benchopt/benchmark_logreg_l2">
+  BenchOpt results: huber l2
+  <a href="https://github.com/benchopt/benchmark_huber_l2">
     <i class="fab fa-github-square"></i>
   </a>
 </h1>
 
 <p><em>Last updated: 2021-06-08 15:01</em>
-  with <strong>3</strong> benchmark results in total. <br>
+  with <strong>1</strong> benchmark results in total. <br>
 </p>
 
 <span id="close" style="font-size:30px;cursor:pointer" onclick="closeSideNav()">&#9776; Filter Informations</span>
@@ -91,9 +81,9 @@
 <tbody>
   <tr>
     <td class="fname">
-      <a href="benchmark_logreg_l2_benchmark_logreg_l2_benchopt_run_2020-12-16_18h57m34.html">
+      <a href="benchmark_huber_l2_benchmark_huber_l2_benchopt_run_2021-06-08_16h48m40.html">
         
-        logreg_l2 2020-12-16_18h57m34
+        huber_l2 2021-06-08_16h48m40
       </a>
     </td>
     <td class="datasets">
@@ -101,39 +91,22 @@
       <div class=dataset>
         
           Simulated
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=200,n_features=500 </span> </li>
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=100,n_features=5000,rho=0 </span> </li>
         
       </div>
-    </ul>
-
-    </td>
-    
-    <td class="sysinfo">
-      <ul style="list-style-type: none; margin-top: 0;">
-
-
-    </td>
-    <td class="buttons">
-      <a href="benchmark_logreg_l2_benchmark_logreg_l2_benchopt_run_2020-12-16_18h57m34.html">
-        <button class="btn"><i class="fas fa-chart-line"></i></button>
-      </a>
-      <a href="outputs/benchmark_logreg_l2_benchopt_run_2020-12-16_18h57m34.csv">
-        <button class="btn"><i class="fa fa-download"></i></button>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td class="fname">
-      <a href="benchmark_logreg_l2_benchmark_logreg_l2_benchopt_run_2021-03-06_13h48m00.html">
-        
-        logreg_l2 2021-03-06_13h48m00
-      </a>
-    </td>
-    <td class="datasets">
-    <ul style="list-style-type: none; margin-top: 0;">
       <div class=dataset>
         
-          Rcv1
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=100,n_features=5000,rho=0.6 </span> </li>
+        
+      </div>
+      <div class=dataset>
+        
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=100,n_features=10000,rho=0 </span> </li>
+        
+      </div>
+      <div class=dataset>
+        
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=100,n_features=10000,rho=0.6 </span> </li>
         
       </div>
     </ul>
@@ -144,7 +117,7 @@
       <ul style="list-style-type: none; margin-top: 0;">
           <li>
             <b>cpu</b>: 16
-              <button onclick="displaymore(this,1)" id=btn_subinfo1 class="button buttoncent" style="float:right;">
+              <button onclick="displaymore(this,0)" id=btn_subinfo0 class="button buttoncent" style="float:right;">
                 <i class='fas fa-plus-circle'></i>
               </button>
               
@@ -154,7 +127,7 @@
           </li>
 
         <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo1 style="display:none;">
+        <div id=subinfo0 style="display:none;">
               <li>
                 <b>platform</b>: Darwin19.0.0-x86_64
               </li>
@@ -166,78 +139,10 @@
 
     </td>
     <td class="buttons">
-      <a href="benchmark_logreg_l2_benchmark_logreg_l2_benchopt_run_2021-03-06_13h48m00.html">
+      <a href="benchmark_huber_l2_benchmark_huber_l2_benchopt_run_2021-06-08_16h48m40.html">
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
-      <a href="outputs/benchmark_logreg_l2_benchopt_run_2021-03-06_13h48m00.csv">
-        <button class="btn"><i class="fa fa-download"></i></button>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td class="fname">
-      <a href="benchmark_logreg_l2_benchmark_logreg_l2_benchopt_run_2021-03-18_02h11m46.html">
-        
-        logreg_l2 2021-03-18_02h11m46
-      </a>
-    </td>
-    <td class="datasets">
-    <ul style="list-style-type: none; margin-top: 0;">
-      <div class=dataset>
-        
-          Covtype_binary
-        
-      </div>
-      <div class=dataset>
-        
-          Madelon
-        
-      </div>
-      <div class=dataset>
-        
-          Simulated
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=200,n_features=500 </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=1000,n_features=10 </span> </li>
-        
-      </div>
-    </ul>
-
-    </td>
-    
-    <td class="sysinfo">
-      <ul style="list-style-type: none; margin-top: 0;">
-          <li>
-            <b>cpu</b>: 48
-              <button onclick="displaymore(this,2)" id=btn_subinfo2 class="button buttoncent" style="float:right;">
-                <i class='fas fa-plus-circle'></i>
-              </button>
-              
-          </li>
-          <li>
-            <b>ram (GB)</b>: 755
-          </li>
-
-        <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo2 style="display:none;">
-              <li>
-                <b>platform</b>: Linux4.15.0-112-generic-x86_64
-              </li>
-              <li>
-                <b>processor</b>: Intel(R) Xeon(R) Gold 6126 CPU @ 2.60GHz
-              </li>
-        </div>
-      </ul>
-
-    </td>
-    <td class="buttons">
-      <a href="benchmark_logreg_l2_benchmark_logreg_l2_benchopt_run_2021-03-18_02h11m46.html">
-        <button class="btn"><i class="fas fa-chart-line"></i></button>
-      </a>
-      <a href="outputs/benchmark_logreg_l2_benchopt_run_2021-03-18_02h11m46.csv">
+      <a href="outputs/benchmark_huber_l2_benchopt_run_2021-06-08_16h48m40.csv">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>
