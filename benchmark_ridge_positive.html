@@ -32,9 +32,6 @@
       <option value=""> Any </option>
       
         
-          <option value="<b>cpu</b>: 16"> 16 </option>
-      
-        
           <option value="<b>cpu</b>: 72"> 72 </option>
     </select>
     <label for=selectram(GB) style="padding: 8px; color: white;">
@@ -42,9 +39,6 @@
     </label>
     <select class="myselect" id=selectram(GB) onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
-      
-        
-          <option value="<b>ram (GB)</b>: 32"> 32 </option>
       
         
           <option value="<b>ram (GB)</b>: 376"> 376 </option>
@@ -55,7 +49,6 @@
     <select class="myselect" id=selectcuda onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
       
-      
     </select>
   </div>
 </div>
@@ -64,14 +57,14 @@
   <a id="top"></a>
 <h1>
   <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
-  BenchOpt results: quantile regression
-  <a href="https://github.com/benchopt/benchmark_quantile_regression">
+  BenchOpt results: ridge positive
+  <a href="https://github.com/benchopt/benchmark_ridge_positive">
     <i class="fab fa-github-square"></i>
   </a>
 </h1>
 
-<p><em>Last updated: 2021-09-10 16:25</em>
-  with <strong>2</strong> benchmark results in total. <br>
+<p><em>Last updated: 2021-09-10 16:24</em>
+  with <strong>1</strong> benchmark results in total. <br>
 </p>
 
 <span id="close" style="font-size:30px;cursor:pointer" onclick="closeSideNav()">&#9776; Filter Informations</span>
@@ -89,80 +82,23 @@
 <tbody>
   <tr>
     <td class="fname">
-      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2021-04-01_13h28m43.html">
+      <a href="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.html">
         
-        quantile_regression 2021-04-01_13h28m43
+        ridge_positive 2021-09-10_18h23m09
       </a>
     </td>
     <td class="datasets">
     <ul style="list-style-type: none; margin-top: 0;">
       <div class=dataset>
         
-          Simulated
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=100,n_features=50 </span> </li>
+          Boston
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">standardized=True </span> </li>
         
       </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=1000,n_features=200 </span> </li>
-        
-      </div>
-    </ul>
-
-    </td>
-    
-    <td class="sysinfo">
-      <ul style="list-style-type: none; margin-top: 0;">
-          <li>
-            <b>cpu</b>: 16
-              <button onclick="displaymore(this,0)" id=btn_subinfo0 class="button buttoncent" style="float:right;">
-                <i class='fas fa-plus-circle'></i>
-              </button>
-              
-          </li>
-          <li>
-            <b>ram (GB)</b>: 32
-          </li>
-
-        <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo0 style="display:none;">
-              <li>
-                <b>platform</b>: Darwin19.0.0-x86_64
-              </li>
-              <li>
-                <b>processor</b>: Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz
-              </li>
-        </div>
-      </ul>
-
-    </td>
-    <td class="buttons">
-      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2021-04-01_13h28m43.html">
-        <button class="btn"><i class="fas fa-chart-line"></i></button>
-      </a>
-      <a href="outputs/benchmark_quantile_regression_benchopt_run_2021-04-01_13h28m43.csv">
-        <button class="btn"><i class="fa fa-download"></i></button>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td class="fname">
-      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.html">
-        
-        quantile_regression 2021-09-10_18h22m45
-      </a>
-    </td>
-    <td class="datasets">
-    <ul style="list-style-type: none; margin-top: 0;">
       <div class=dataset>
         
           Simulated
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=100,n_features=50 </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=1000,n_features=200 </span> </li>
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=1000,n_features=50,use_sparse=False </span> </li>
         
       </div>
     </ul>
@@ -173,7 +109,7 @@
       <ul style="list-style-type: none; margin-top: 0;">
           <li>
             <b>cpu</b>: 72
-              <button onclick="displaymore(this,1)" id=btn_subinfo1 class="button buttoncent" style="float:right;">
+              <button onclick="displaymore(this,0)" id=btn_subinfo0 class="button buttoncent" style="float:right;">
                 <i class='fas fa-plus-circle'></i>
               </button>
               
@@ -183,7 +119,7 @@
           </li>
 
         <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo1 style="display:none;">
+        <div id=subinfo0 style="display:none;">
               <li>
                 <b>platform</b>: Linux4.15.0-139-generic-x86_64
               </li>
@@ -198,10 +134,10 @@
 
     </td>
     <td class="buttons">
-      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.html">
+      <a href="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.html">
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
-      <a href="outputs/benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.csv">
+      <a href="outputs/benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.csv">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>
