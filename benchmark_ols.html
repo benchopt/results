@@ -1,5 +1,6 @@
 <html>
 <head>
+<meta charset="utf-8"/>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
 <link href="static/hover_index.css" rel="stylesheet" />
 <link href="static/main.css" rel="stylesheet" />
@@ -30,6 +31,9 @@
     <select class="myselect" id=selectcpu onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
       
+      
+        
+          <option value="<b>cpu</b>: 72"> 72 </option>
     </select>
     <label for=selectram(GB) style="padding: 8px; color: white;">
        ram (GB)
@@ -37,6 +41,9 @@
     <select class="myselect" id=selectram(GB) onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
       
+      
+        
+          <option value="<b>ram (GB)</b>: 376"> 376 </option>
     </select>
     <label for=selectcuda style="padding: 8px; color: white;">
        cuda
@@ -44,11 +51,12 @@
     <select class="myselect" id=selectcuda onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
       
+      
     </select>
   </div>
 </div>
 
-<div class="main" id="main" style="margin-left: 0;">
+<div class="main" id="main">
   <a id="top"></a>
 <h1>
   <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
@@ -58,10 +66,12 @@
   </a>
 </h1>
 
-<p><em>Last updated: 2021-07-07 12:34</em>
-  with <strong>1</strong> benchmark results in total. <br>
+<p><em>Last updated: 2021-09-10 16:21</em>
+  with <strong>2</strong> benchmark results in total. <br>
 </p>
 
+<span id="close" style="font-size:30px;cursor:pointer" onclick="closeSideNav()">&#9776; Filter Informations</span>
+<span id="open" style="font-size:30px;cursor:pointer" onclick="openSideNav()">&#9776; Filter Informations</span>
 
 <table class="summary display" id="summary">
 <thead style="background-color: dodgerblue; color: white;">
@@ -112,6 +122,72 @@
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
       <a href="outputs/benchmark_ols_benchopt_run_2020-12-16_10h43m05.csv">
+        <button class="btn"><i class="fa fa-download"></i></button>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td class="fname">
+      <a href="benchmark_ols_benchmark_ols_benchopt_run_2021-09-10_18h17m28.html">
+        
+        ols 2021-09-10_18h17m28
+      </a>
+    </td>
+    <td class="datasets">
+    <ul style="list-style-type: none; margin-top: 0;">
+      <div class=dataset>
+        
+          Boston
+        
+      </div>
+      <div class=dataset>
+        
+          Simulated
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=1000,n_features=500 </span> </li>
+        
+      </div>
+      <div class=dataset>
+        
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=5000,n_features=200 </span> </li>
+        
+      </div>
+    </ul>
+
+    </td>
+    
+    <td class="sysinfo">
+      <ul style="list-style-type: none; margin-top: 0;">
+          <li>
+            <b>cpu</b>: 72
+              <button onclick="displaymore(this,1)" id=btn_subinfo1 class="button buttoncent" style="float:right;">
+                <i class='fas fa-plus-circle'></i>
+              </button>
+              
+          </li>
+          <li>
+            <b>ram (GB)</b>: 376
+          </li>
+
+        <!--Case where sub infos are available but somehow main infos are not-->
+        <div id=subinfo1 style="display:none;">
+              <li>
+                <b>platform</b>: Linux4.15.0-139-generic-x86_64
+              </li>
+              <li>
+                <b>processor</b>: Intel(R) Xeon(R) Gold 6140 CPU @ 2.30GHz
+              </li>
+              <li>
+                <b>nb threads</b>: 1
+              </li>
+        </div>
+      </ul>
+
+    </td>
+    <td class="buttons">
+      <a href="benchmark_ols_benchmark_ols_benchopt_run_2021-09-10_18h17m28.html">
+        <button class="btn"><i class="fas fa-chart-line"></i></button>
+      </a>
+      <a href="outputs/benchmark_ols_benchopt_run_2021-09-10_18h17m28.csv">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>
@@ -176,44 +252,46 @@ function displaymore(id, loop_index) {
 }
 
 var openbtn = document.getElementById("open");
-var closebtn = document.getElementById("close");
-openbtn.style.display = 'none';
+if (openbtn){
+  var closebtn = document.getElementById("close");
+  openbtn.style.display = 'none';
 
-function openSideNav() {
-    navbar = document.getElementById("sidenav")
-    navbar.style.visibility = "visible";
-    main = document.getElementById("main")
-    if ($(window).width() < 900) {
-      navbar.style.height = "100%";
-      main.style.marginLeft = "0";
-    }
-    else {
-      navbar.style.height = "1000px";
-      main.style.marginLeft = "200px";
-    }
-    navbar.style.opacity = "1";
-	  openbtn.style.display = 'none';
-    closebtn.style.display = '';
-}
+  function openSideNav() {
+      navbar = document.getElementById("sidenav")
+      navbar.style.visibility = "visible";
+      main = document.getElementById("main")
+      if ($(window).width() < 900) {
+        navbar.style.height = "100%";
+        main.style.marginLeft = "0";
+      }
+      else {
+        navbar.style.height = "1000px";
+        main.style.marginLeft = "200px";
+      }
+      navbar.style.opacity = "1";
+  	  openbtn.style.display = 'none';
+      closebtn.style.display = '';
+  }
 
-if ($(window).width() > 900){
-  openSideNav()
-}
-else {
-  closeSideNav()
-}
+  if ($(window).width() > 900){
+    openSideNav()
+  }
+  else {
+    closeSideNav()
+  }
 
-function closeSideNav() {
-    navbar = document.getElementById("sidenav")
-    main = document.getElementById("main")
-    navbar.style.visibility = "hidden";
-    navbar.style.opacity = "0";
-    navbar.style.height = "0";
-    if ($(window).width() > 900) {
-      main.style.marginLeft = "0px";
+  function closeSideNav() {
+      navbar = document.getElementById("sidenav")
+      main = document.getElementById("main")
+      navbar.style.visibility = "hidden";
+      navbar.style.opacity = "0";
+      navbar.style.height = "0";
+      if ($(window).width() > 900) {
+        main.style.marginLeft = "0px";
+      }
+      openbtn.style.display = '';
+      closebtn.style.display = 'none';
     }
-    openbtn.style.display = '';
-    closebtn.style.display = 'none';
 }
 </script>
 </div>
