@@ -34,6 +34,9 @@
       
         
           <option value="<b>cpu</b>: 72"> 72 </option>
+      
+        
+          <option value="<b>cpu</b>: 72"> 72 </option>
     </select>
     <label for=selectram(GB) style="padding: 8px; color: white;">
        ram (GB)
@@ -44,12 +47,16 @@
       
         
           <option value="<b>ram (GB)</b>: 376"> 376 </option>
+      
+        
+          <option value="<b>ram (GB)</b>: 376"> 376 </option>
     </select>
     <label for=selectcuda style="padding: 8px; color: white;">
        cuda
     </label>
     <select class="myselect" id=selectcuda onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
+      
       
       
     </select>
@@ -66,8 +73,8 @@
   </a>
 </h1>
 
-<p><em>Last updated: 2021-09-12 23:36</em>
-  with <strong>2</strong> benchmark results in total. <br>
+<p><em>Last updated: 2021-09-12 23:41</em>
+  with <strong>3</strong> benchmark results in total. <br>
 </p>
 
 <span id="close" style="font-size:30px;cursor:pointer" onclick="closeSideNav()">&#9776; Filter Informations</span>
@@ -188,6 +195,72 @@
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
       <a href="outputs/benchmark_ols_benchopt_run_2021-09-10_18h17m28.csv">
+        <button class="btn"><i class="fa fa-download"></i></button>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td class="fname">
+      <a href="benchmark_ols_benchmark_ols_benchopt_run_2021-09-13_01h39m56.html">
+        
+        ols 2021-09-13_01h39m56
+      </a>
+    </td>
+    <td class="datasets">
+    <ul style="list-style-type: none; margin-top: 0;">
+      <div class=dataset>
+        
+          Boston
+        
+      </div>
+      <div class=dataset>
+        
+          Simulated
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=1000,n_features=500 </span> </li>
+        
+      </div>
+      <div class=dataset>
+        
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=5000,n_features=200 </span> </li>
+        
+      </div>
+    </ul>
+
+    </td>
+    
+    <td class="sysinfo">
+      <ul style="list-style-type: none; margin-top: 0;">
+          <li>
+            <b>cpu</b>: 72
+              <button onclick="displaymore(this,2)" id=btn_subinfo2 class="button buttoncent" style="float:right;">
+                <i class='fas fa-plus-circle'></i>
+              </button>
+              
+          </li>
+          <li>
+            <b>ram (GB)</b>: 376
+          </li>
+
+        <!--Case where sub infos are available but somehow main infos are not-->
+        <div id=subinfo2 style="display:none;">
+              <li>
+                <b>platform</b>: Linux4.15.0-139-generic-x86_64
+              </li>
+              <li>
+                <b>processor</b>: Intel(R) Xeon(R) Gold 6140 CPU @ 2.30GHz
+              </li>
+              <li>
+                <b>nb threads</b>: 1
+              </li>
+        </div>
+      </ul>
+
+    </td>
+    <td class="buttons">
+      <a href="benchmark_ols_benchmark_ols_benchopt_run_2021-09-13_01h39m56.html">
+        <button class="btn"><i class="fas fa-chart-line"></i></button>
+      </a>
+      <a href="outputs/benchmark_ols_benchopt_run_2021-09-13_01h39m56.csv">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>
