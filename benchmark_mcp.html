@@ -60,7 +60,7 @@
   </a>
 </h1>
 
-<p><em>Last updated: 2021-09-14 17:32</em>
+<p><em>Last updated: 2021-09-16 19:50</em>
   with <strong>3</strong> benchmark results in total. <br>
 </p>
 
@@ -244,8 +244,11 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('.summary').DataTable();
-} );
+    $('.summary').dataTable( {
+        "order": [[ 0, "desc" ]]
+      }
+    )
+});
 
 $('table').each(function(a, tbl) {
         var currentTableRows = $(tbl).find('tbody tr').length;
