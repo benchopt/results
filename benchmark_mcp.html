@@ -24,35 +24,7 @@
 
 
 
-<div class="sidenav" id="sidenav" style="visibility: hidden; height:0; opacity: 0; transition: visibility 0s, opacity 0.5s linear; z-index: 100;">
-  <a href="javascript:void(0)" class="closebtn">&times;</a>
-  <div class="menu">
-    <label for=selectcpu style="padding: 8px; color: white;">
-       cpu
-    </label>
-    <select class="myselect" id=selectcpu onchange="change(['cpu', 'ram (GB)', 'cuda'])">
-      <option value=""> Any </option>
-        
-          <option value="<b>cpu</b>: 72"> 72 </option>
-    </select>
-    <label for=selectram(GB) style="padding: 8px; color: white;">
-       ram (GB)
-    </label>
-    <select class="myselect" id=selectram(GB) onchange="change(['cpu', 'ram (GB)', 'cuda'])">
-      <option value=""> Any </option>
-        
-          <option value="<b>ram (GB)</b>: 376"> 376 </option>
-    </select>
-    <label for=selectcuda style="padding: 8px; color: white;">
-       cuda
-    </label>
-    <select class="myselect" id=selectcuda onchange="change(['cpu', 'ram (GB)', 'cuda'])">
-      <option value=""> Any </option>
-    </select>
-  </div>
-</div>
-
-<div class="main" id="main">
+<div class="main" id="main" style="margin-left: 0;">
   <a id="top"></a>
 <h1>
   <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
@@ -62,12 +34,34 @@
   </a>
 </h1>
 
-<p><em>Last updated: 2022-03-26 14:56</em>
+<p><em>Last updated: 2022-04-29 14:47</em>
   with <strong>3</strong> benchmark results in total. <br>
 </p>
 
-<span id="close" style="font-size:30px;cursor:pointer">&#9776; Filter Informations</span>
-<span id="open" style="font-size:30px;cursor:pointer">&#9776; Filter Informations</span>
+<div class="menu" style="padding-left: 0px;">
+    <label for=select_cpu style="padding-left: 20px; color: #333">
+       CPU
+    </label>
+    <select id=select_cpu onchange="change(['cpu', 'ram (GB)', 'cuda'])">
+      <option value=""> Any </option>
+        
+          <option value="<b>cpu</b>: 72"> 72 </option>
+    </select>
+    <label for=select_ram(GB) style="padding-left: 20px; color: #333">
+       RAM (GB)
+    </label>
+    <select id=select_ram(GB) onchange="change(['cpu', 'ram (GB)', 'cuda'])">
+      <option value=""> Any </option>
+        
+          <option value="<b>ram (GB)</b>: 376"> 376 </option>
+    </select>
+    <label for=select_cuda style="padding-left: 20px; color: #333">
+       CUDA
+    </label>
+    <select id=select_cuda onchange="change(['cpu', 'ram (GB)', 'cuda'])">
+      <option value=""> Any </option>
+    </select>
+  </div>
 
 <table class="summary display" id="summary">
 <thead style="background-color: dodgerblue; color: white;">
@@ -146,14 +140,14 @@
     <td class="sysinfo">
       <ul style="list-style-type: none; margin-top: 0;">
           <li>
-            <b>cpu</b>: 72
+            <b>CPU</b>: 72
               <button data-idx=1 id=btn_subinfo1 class="button buttoncent" style="float:right;">
                 <i class='fas fa-plus-circle'></i>
               </button>
               
           </li>
           <li>
-            <b>ram (GB)</b>: 376
+            <b>RAM (GB)</b>: 376
           </li>
 
         <!--Case where sub infos are available but somehow main infos are not-->
@@ -208,14 +202,14 @@
     <td class="sysinfo">
       <ul style="list-style-type: none; margin-top: 0;">
           <li>
-            <b>cpu</b>: 72
+            <b>CPU</b>: 72
               <button data-idx=2 id=btn_subinfo2 class="button buttoncent" style="float:right;">
                 <i class='fas fa-plus-circle'></i>
               </button>
               
           </li>
           <li>
-            <b>ram (GB)</b>: 376
+            <b>RAM (GB)</b>: 376
           </li>
 
         <!--Case where sub infos are available but somehow main infos are not-->
