@@ -28,8 +28,8 @@
   <a id="top"></a>
 <h1>
   <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
-  Benchopt results: ridge
-  <a href="https://github.com/benchopt/benchmark_ridge">
+  Benchopt results: jointdiag
+  <a href="https://github.com/benchopt/benchmark_jointdiag">
     <i class="fab fa-github-square"></i>
   </a>
 </h1>
@@ -45,7 +45,7 @@
     <select id=select_cpu onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
         
-          <option value="<b>cpu</b>: 80"> 80 </option>
+          <option value="<b>cpu</b>: 16"> 16 </option>
     </select>
     <label for=select_ram(GB) style="padding-left: 20px; color: #333">
        RAM (GB)
@@ -53,7 +53,7 @@
     <select id=select_ram(GB) onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
         
-          <option value="<b>ram (GB)</b>: 188"> 188 </option>
+          <option value="<b>ram (GB)</b>: 32"> 32 </option>
     </select>
     <label for=select_cuda style="padding-left: 20px; color: #333">
        CUDA
@@ -75,49 +75,18 @@
 <tbody>
   <tr>
     <td class="fname">
-      <a href="benchmark_ridge_benchmark_ridge_benchopt_run_preprint22.html">
+      <a href="benchmark_jointdiag_benchmark_jointdiag_benchopt_run_2022-07-04_22h02m39.html">
         
-        ridge runpreprint22
+        jointdiag 2022-07-0422h02m39
       </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_ridge_benchopt_run_preprint22.csv" data-html="benchmark_ridge_benchmark_ridge_benchopt_run_preprint22.html" style="display:none;">
+      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_jointdiag_benchopt_run_2022-07-04_22h02m39.parquet" data-html="benchmark_jointdiag_benchmark_jointdiag_benchopt_run_2022-07-04_22h02m39.html" style="display:none;">
     </td>
     <td class="datasets">
     <ul style="list-style-type: none; margin-top: 0;">
       <div class=dataset>
         
-          Libsvm
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=bodyfat </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=leukemia </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=gisette </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
           Simulated
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=5000,n_samples=100,rho=0 </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=5000,n_samples=100,rho=0.6 </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=1000,n_samples=500,rho=0 </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=1000,n_samples=500,rho=0.6 </span> </li>
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=5,n_matrices=100 </span> </li>
         
       </div>
     </ul>
@@ -127,33 +96,33 @@
     <td class="sysinfo">
       <ul style="list-style-type: none; margin-top: 0;">
           <li>
-            <b>CPU</b>: 80
+            <b>CPU</b>: 16
               <button data-idx=0 id=btn_subinfo0 class="button buttoncent" style="float:right;">
                 <i class='fas fa-plus-circle'></i>
               </button>
               
           </li>
           <li>
-            <b>RAM (GB)</b>: 188
+            <b>RAM (GB)</b>: 32
           </li>
 
         <!--Case where sub infos are available but somehow main infos are not-->
         <div id=subinfo0 style="display:none;">
               <li>
-                <b>platform</b>: Linux4.18.0-305.40.2.el8_4.x86_64-x86_64
+                <b>platform</b>: Darwin21.3.0-x86_64
               </li>
               <li>
-                <b>processor</b>: Intel(R) Xeon(R) Gold 6248 CPU @ 2.50GHz
+                <b>processor</b>: Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz
               </li>
         </div>
       </ul>
 
     </td>
     <td class="buttons" style='text-align: center'>
-      <a href="benchmark_ridge_benchmark_ridge_benchopt_run_preprint22.html">
+      <a href="benchmark_jointdiag_benchmark_jointdiag_benchopt_run_2022-07-04_22h02m39.html">
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
-      <a href="outputs/benchmark_ridge_benchopt_run_preprint22.csv">
+      <a href="outputs/benchmark_jointdiag_benchopt_run_2022-07-04_22h02m39.parquet">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>
