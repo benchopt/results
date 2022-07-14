@@ -5,330 +5,1360 @@
         <meta charset="utf-8" />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./static/utilities.css">
+        <link rel="stylesheet" href="./static/hover_index.css">
 
         <title>Result on linear svm binary classif no intercept benchmark</title>
 
         <style>
             /*
-   Comprehensive Base Stylesheet - https://fvsch.com/base-stylesheet/
-   Makes browser default styles more consistent, creating a canvas that you
-   should modify for your project. Fully commented. Last update: 2011-10-02.
+! tailwindcss v3.1.2 | MIT License | https://tailwindcss.com
 */
 
-/* CONTAINERS */
+/*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  /* 1 */
+  border-width: 0;
+  /* 2 */
+  border-style: solid;
+  /* 2 */
+  border-color: #e5e7eb;
+  /* 2 */
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+*/
+
+html {
+  line-height: 1.5;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  -moz-tab-size: 4;
+  /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4;
+  /* 3 */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* 4 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
 body {
-  margin: auto;
-  max-width: 70em;
-  padding: 1.5em 3% 8em; /* Browsers have default 8px margins _or_ padding! */
-  font-size: 100%; /* See: http://www.informationarchitects.jp/en/100e2r/ */
-  line-height: 1.5; /* Default value, `normal`, depends on the font */
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji; /* ripoff from github */
-}
-/* HTML5 blocks - needed in older browsers */
-article, aside, figcaption, figure, footer, header, nav, section {
-  display: block;
+  margin: 0;
+  /* 1 */
+  line-height: inherit;
+  /* 2 */
 }
 
-/* PARAGRAPHS */
-h1, h2, h3, h4 {
-  line-height: 1.25; /* Bigger text is often nicer with smaller line height */
-  font-weight: bold; /* Browser default. Use `normal` for less bulky titles */
-}
-h1 {
-    margin: 0.5em 0 .5em; /* Titles should be close to the text they describe */
-    font-size: 2em;
-}
-h2 {
-    margin: 2em 0 .5em; /* Titles should be close to the text they describe */
-    font-size: 1.5em;}
-h3 {
-    margin: 3em 0 .5em; /* Titles should be close to the text they describe */
-    font-size: 1.2em;}
-h4 {
-    margin: 1.5em 0 .5em; /* Titles should be close to the text they describe */
-    font-size: 1em;
-}
-ul, ol {
-  margin: 1em 0; /* Default for all browsers except IE */
-  padding-left: 40px; /* IE has a 40px margin-left instead */
-}
-p {
-  margin: 1em 0;
-}
-blockquote {
-  margin: 1em 40px; /* Same for all browsers - Customize or remove */
-}
-figure {
-  margin: 1em 0; /* Default in HTML5 spec: `1em 40px` */
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0;
+  /* 1 */
+  color: inherit;
+  /* 2 */
+  border-top-width: 1px;
+  /* 3 */
 }
 
-/* LINKS */
-/* Default browser styles (from Firefox, similar in most browsers) */
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
 a {
-  text-decoration: none;
-}
-a:link,
-a:visited {
-    color: DodgerBlue;
-}
-a:active {
-    color: #EE0000;
-}
-/* Add your own styles for hover _and_ focus styles */
-a:hover, a:focus {
-  text-decoration: none;
-}
-/* Remove dotted outline clicked links - Keeps outline on focus */
-a:active, a:hover {
-  outline: none;
-}
-/* No border around images in links */
-a img {
-  border: none;
+  color: inherit;
+  text-decoration: inherit;
 }
 
-/* MISC TEXT-LEVEL ELEMENTS */
-/* Make quotations and references more visible */
-q, cite {
-  font-style: italic;
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
 }
-/* Remove automatic quotation marks for inline quotations
-   (`q {quotes:none}` not implemented in WebKit) */
-q:before, q:after {
-  content: "";
+
+/*
+1. Use the user's configured `mono` font family by default.
+2. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
 }
-/* Stopping superscript and subscript from adding to the line's leading */
-sup, sub {
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
   line-height: 0;
+  position: relative;
+  vertical-align: baseline;
 }
 
-/* FORMS */
-fieldset {
-  margin: 0; /* Common default is `0 2px` */
-  padding: 0; /* Common default (roughly): `.35em .625em .75em` */
-  border: none;
-}
-input, button, select {
-  vertical-align: middle; /* Helps keep form elements roughly aligned */
+sub {
+  bottom: -0.25em;
 }
 
-select {
-  border: 1px solid #aaa;
-  border-radius: 3px;
-  padding: 5px;
-  background-color: transparent;
-  padding: 4px;
-  color: #333;
+sup {
+  top: -0.5em;
 }
 
-/* TABLES */
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
 table {
-  border-collapse: collapse; /* Merges cell borders together */
-  /* Browser default: border-collapse: separate; border-spacing: 2px; */
-}
-td, th {
-  padding: 1px; /* Same as browser default - set to "0" to remove padding */
-  vertical-align: top; /* Default is "middle" */
-  text-align: left; /* Default for TH elements is "center" */
-}
-td:first-child, th:first-child {
-  empty-cells: hide; /* Hide empty cells when they're the first in the row */
-}
-
-/* Custom stuff on top of the base style sheet */
-.status {
-    font-weight: bold;
-    font-family: monospace;
-    color: white;
-    padding: .25em .4em;
-    border-radius: .2em;
-}
-.success {
-    background-color: forestgreen;
-}
-.failure {
-    background-color: orangered;
-}
-.error {
-    background-color: firebrick;
-}
-
-.summary a {
-    font-weight: 500;
-}
-
-.highlight {
-    margin: 0;
-}
-
-.highlight pre {
-    padding: 1em;
-    border: 1px solid #eee;
-    background-color: #f5f5f5;
-    margin-bottom: 0.1em;
-    overflow-x: auto;
-}
-
-.source {
-    margin: 0.3em 0 2em;
-    font-size: 90%;
-}
-
-.source a:visited,
-.source a:link {
-    color: #666;
-    text-decoration: underline;
-}
-.source a:hover, a:focus {
-    color: #666;
-    text-decoration: underline;
-}
-
-/* Pandas dataframe css */
-/* Taken from: https://github.com/spatialaudio/nbsphinx/blob/fb3ba670fc1ba5f54d4c487573dbc1b4ecf7e9ff/src/nbsphinx.py#L587-L619 */
-
-table.dataframe {
-  border: none !important;
+  text-indent: 0;
+  /* 1 */
+  border-color: inherit;
+  /* 2 */
   border-collapse: collapse;
-  border-spacing: 0;
-  border-color: transparent;
-  color: black;
-  font-size: .9em;
-  table-layout: fixed;
-  border-radius:6px;
-}
-table.datatable {
-  border-radius:6px;
-}
-table.dataframe thead {
-  border-bottom: 1px solid black;
-  vertical-align: bottom;
-}
-table.dataframe tr,
-table.dataframe th,
-table.dataframe td {
-  text-align: left;
-  vertical-align: middle;
-  padding: 0.5em 0.5em;
-  line-height: normal;
-  white-space: normal;
-  max-width: none;
-  border: none;
-}
-table.dataframe th {
-  font-weight: bold;
-}
-table.dataframe tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-table.datatable.display tbody tr:hover {
-  background-color: #ddd !important;
-}
-a.anchor:visited,
-a.anchor:link {
-    padding-left: .2em;
-    color: #999;
-}
-div.dataTables_filter, div.dataTables_length {
-  padding: 20px;
+  /* 3 */
 }
 
-.backtotop {
-    text-decoration: none;
-    display: flex;
-    position: fixed;
-    font-size: 50px;
-    right: 40px;
-    bottom: 40px;
-    align-items: center;
-    justify-content: center;
-    order: 2;
-    margin-left: auto;
-    z-index: 999;
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  font-weight: inherit;
+  /* 1 */
+  line-height: inherit;
+  /* 1 */
+  color: inherit;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+  padding: 0;
+  /* 3 */
 }
 
-.priority1 {
-    color: purple;
-}
-.priority2 {
-    color: firebrick;
-}
-.priority3 {
-    color: chocolate;
-}
-td.number {
-  text-align: right;
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
 }
 
-/* Style buttons */
-.btn {
-  background-color: DodgerBlue; /* Blue background */
-  border: none; /* Remove borders */
-  color: white; /* White text */
-  padding: 12px 16px; /* Some padding */
-  font-size: 16px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
-  min-height: 46px;
-  /**
-   * Vertically align the icon and the text
-   * inside the button
-   */
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+  /* 1 */
+  background-color: transparent;
+  /* 2 */
+  background-image: none;
+  /* 2 */
 }
 
-/* Darker background on mouse-over */
-.btn:hover {
-  background-color: RoyalBlue;
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
 }
 
-/* The main part of the page should adapt to the presence of the sidebar */
-.main {
-  margin-left: 200px; /* same as sidebar width to avoid overlaps */
-  padding: 1px 16px;
-  height: 1000px;
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
 }
 
-.btn svg {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: white;
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
 }
 
-/* Select all elements after any other element in a .btn */
-.btn > * + * {
-  margin-left: 0.5rem;
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
 }
 
-.space-r-4 > * {
-  margin-right: 1rem;
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */
 }
 
-#btn_subinfo:hover {
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1;
+  /* 1 */
+  color: #9ca3af;
+  /* 2 */
+}
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  opacity: 1;
+  /* 1 */
+  color: #9ca3af;
+  /* 2 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1;
+  /* 1 */
+  color: #9ca3af;
+  /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role="button"] {
   cursor: pointer;
 }
 
-#btn_subinfo svg {
-  width: 1rem;
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  /* 1 */
+  vertical-align: middle;
+  /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+*, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+::-webkit-backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.inset-0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.flex {
+  display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.table {
+  display: table;
+}
+
+.grid {
+  display: grid;
+}
+
+.hidden {
+  display: none;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
+.h-10 {
+  height: 2.5rem;
+}
+
+.h-8 {
+  height: 2rem;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
+.h-5 {
+  height: 1.25rem;
+}
+
+.h-4 {
   height: 1rem;
 }
 
-#plot_legend {
-  display: flex;
-  flex-direction: row;
+.h-12 {
+  height: 3rem;
+}
+
+.min-h-full {
+  min-height: 100%;
+}
+
+.w-96 {
+  width: 24rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.w-5 {
+  width: 1.25rem;
+}
+
+.w-4 {
+  width: 1rem;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.min-w-0 {
+  min-width: 0px;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
   flex-wrap: wrap;
-  padding: 10px;
 }
 
-#legend_title {
-  font-size: 1.2rem;
-  font-weight: bold;
+.items-end {
+  align-items: flex-end;
 }
 
-#legend_help {
-  font-size: 0.75rem;
-  color: #475569;
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
+.space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.border-gray-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.border-gray-800 {
+  --tw-border-opacity: 1;
+  border-color: rgb(31 41 55 / var(--tw-border-opacity));
+}
+
+.border-transparent {
+  border-color: transparent;
+}
+
+.bg-gray-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.bg-gray-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+}
+
+.bg-blue-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+
+.bg-slate-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+}
+
+.bg-blue-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+}
+
+.bg-gray-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.bg-opacity-75 {
+  --tw-bg-opacity: 0.75;
+}
+
+.p-1 {
+  padding: 0.25rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.pt-2 {
+  padding-top: 0.5rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
+}
+
+.pb-0 {
+  padding-bottom: 0;
+}
+
+.pb-1 {
+  padding-bottom: 0.25rem;
+}
+
+.pb-3 {
+  padding-bottom: 0.75rem;
+}
+
+.pt-5 {
+  padding-top: 1.25rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.leading-7 {
+  line-height: 1.75rem;
+}
+
+.leading-6 {
+  line-height: 1.5rem;
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-gray-100 {
+  --tw-text-opacity: 1;
+  color: rgb(243 244 246 / var(--tw-text-opacity));
+}
+
+.text-gray-900 {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+
+.text-gray-700 {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-xl {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.hover\:bg-blue-800:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 64 175 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-blue-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.focus\:border-blue-500:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(59 130 246 / var(--tw-border-opacity));
+}
+
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus\:ring-2:focus {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-inset:focus {
+  --tw-ring-inset: inset;
+}
+
+.focus\:ring-blue-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity));
+}
+
+.focus\:ring-white:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity));
+}
+
+.focus\:ring-gray-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(107 114 128 / var(--tw-ring-opacity));
+}
+
+.focus\:ring-offset-2:focus {
+  --tw-ring-offset-width: 2px;
+}
+
+@media (min-width: 640px) {
+  .sm\:my-8 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .sm\:mx-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .sm\:mt-0 {
+    margin-top: 0px;
+  }
+
+  .sm\:ml-3 {
+    margin-left: 0.75rem;
+  }
+
+  .sm\:ml-4 {
+    margin-left: 1rem;
+  }
+
+  .sm\:block {
+    display: block;
+  }
+
+  .sm\:flex {
+    display: flex;
+  }
+
+  .sm\:hidden {
+    display: none;
+  }
+
+  .sm\:h-10 {
+    height: 2.5rem;
+  }
+
+  .sm\:w-full {
+    width: 100%;
+  }
+
+  .sm\:w-10 {
+    width: 2.5rem;
+  }
+
+  .sm\:w-auto {
+    width: auto;
+  }
+
+  .sm\:max-w-lg {
+    max-width: 32rem;
+  }
+
+  .sm\:flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  .sm\:items-start {
+    align-items: flex-start;
+  }
+
+  .sm\:items-center {
+    align-items: center;
+  }
+
+  .sm\:items-stretch {
+    align-items: stretch;
+  }
+
+  .sm\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .sm\:space-x-6 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+    margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
+  .sm\:truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sm\:p-0 {
+    padding: 0px;
+  }
+
+  .sm\:p-6 {
+    padding: 1.5rem;
+  }
+
+  .sm\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .sm\:pb-4 {
+    padding-bottom: 1rem;
+  }
+
+  .sm\:text-left {
+    text-align: left;
+  }
+
+  .sm\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .sm\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .sm\:mr-6 {
+    margin-right: 1.5rem; /* 24px */
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:inline {
+    display: inline;
+  }
+
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:hidden {
+    display: none;
+  }
+
+  .md\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .md\:text-left {
+    text-align: left;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:inline-block {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:mt-0 {
+    margin-top: 0px;
+  }
+
+  .lg\:ml-4 {
+    margin-left: 1rem;
+  }
+
+  .lg\:flex {
+    display: flex;
+  }
+
+  .lg\:items-center {
+    align-items: center;
+  }
+
+  .lg\:justify-between {
+    justify-content: space-between;
+  }
+
+  .lg\:inline {
+    display: inline;
+  }
+
+  .lg\:hidden {
+    display: none;
+  }
+
+  .lg\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .lg\:text-left {
+    text-align: left;
+  }
+
+  .lg\:block {
+    display:block;
+  }
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.px-10 {
+  padding-left: 2.5rem; /* 40px */
+  padding-right: 2.5rem; /* 40px */
+}
+
+.py-10 {
+  padding-top: 2.5rem; /* 40px */
+  padding-bottom: 2.5rem; /* 40px */
+}
+
+.mb-4 {
+  margin-bottom: 1rem; /* 16px */
+}
+
+.mt-4 {
+  margin-top: 1rem; /* 16px */
+}
+
+.mr-6 {
+  margin-right: 1.5rem; /* 24px */
+}
+
+.mr-4 {
+  margin-right: 1rem; /* 24px */
+}
+
+.rounded {
+  border-radius: 0.25rem; /* 4px */
 }
 
 
@@ -560,6 +1590,8 @@ input:focus+.slider {
 }
 
 input:checked+.slider:before {
+  -webkit-transform: translateX(var(--slider-on));
+  -ms-transform: translateX(var(--slider-on));
   transform: translateX(var(--slider-on));
 }
 
@@ -571,114 +1603,425 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
+/*----------------------------------------*/
+/***** Brand text animated *****/
+/*----------------------------------------*/
+
+
+.ml11 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.1em;
+  padding-right: 0.05em;
+  padding-bottom: 0.15em;
+}
+
+.ml11 .line {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background-color: #fff;
+  transform-origin: 0 50%;
+}
+
+.ml11 .line1 { 
+  top: 0; 
+  left: 0;
+}
+
+.ml11 .letter {
+  display: inline-block;
+  line-height: 1em;
+  font-family: 'Kanit', sans-serif;
+}
+
+/*----------------------------------------*/
+/***** Plot *****/
+/*----------------------------------------*/
+
+@media (min-width: 768px) {
+  #unique_plot {
+    flex: 1 1 0%;
+  }
+}
+
+@media (max-width: 767px) {
+  #unique_plot {
+    flex: initial;
+    flex-shrink: 0;
+  }
+}
+
+.js-plotly-plot .plotly .modebar {
+  transform: translateX(-30px);
+}
+
+/*----------------------------------------*/
+/***** Custom legend *****/
+/*----------------------------------------*/
+
+#plot_legend {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#legend_title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+#legend_help {
+  font-size: 0.75rem;
+  color: #475569;
+}
+
+.space-r-2 > * {
+  margin-right: 0.5rem;
+}
+
         </style>
     </head>
     <body>
-        <a id="top"></a>
-        <a href="index.html">
-            <button class="btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 576 512">
-    <path d="M511.8 287.6L512.5 447.7C512.5 450.5 512.3 453.1 512 455.8V472C512 494.1 494.1 512 472 512H456C454.9 512 453.8 511.1 452.7 511.9C451.3 511.1 449.9 512 448.5 512H392C369.9 512 352 494.1 352 472V384C352 366.3 337.7 352 320 352H256C238.3 352 224 366.3 224 384V472C224 494.1 206.1 512 184 512H128.1C126.6 512 125.1 511.9 123.6 511.8C122.4 511.9 121.2 512 120 512H104C81.91 512 64 494.1 64 472V360C64 359.1 64.03 358.1 64.09 357.2V287.6H32.05C14.02 287.6 0 273.5 0 255.5C0 246.5 3.004 238.5 10.01 231.5L266.4 8.016C273.4 1.002 281.4 0 288.4 0C295.4 0 303.4 2.004 309.5 7.014L416 100.7V64C416 46.33 430.3 32 448 32H480C497.7 32 512 46.33 512 64V185L564.8 231.5C572.8 238.5 576.9 246.5 575.8 255.5C575.8 273.5 560.8 287.6 543.8 287.6L511.8 287.6z"/>
-</svg>
-
-            </button>
-        </a>
-        <a href="benchmark_linear_svm_binary_classif_no_intercept.html">
-            <button class="btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 448 512"><path d="M447.1 256C447.1 273.7 433.7 288 416 288H109.3l105.4 105.4c12.5 12.5 12.5 32.75 0 45.25C208.4 444.9 200.2 448 192 448s-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L109.3 224H416C433.7 224 447.1 238.3 447.1 256z"/></svg>
-
-                <span>
-                    linear svm binary classif no intercept
-                </span>
-            </button>
-        </a>
-        <a href="outputs/benchmark_linear_svm_binary_classif_no_intercept_benchopt_run_2021-09-14_19h14m42.csv">
-            <button class="btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 512 512"><path d="M480 352h-133.5l-45.25 45.25C289.2 409.3 273.1 416 256 416s-33.16-6.656-45.25-18.75L165.5 352H32c-17.67 0-32 14.33-32 32v96c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32v-96C512 366.3 497.7 352 480 352zM432 456c-13.2 0-24-10.8-24-24c0-13.2 10.8-24 24-24s24 10.8 24 24C456 445.2 445.2 456 432 456zM233.4 374.6C239.6 380.9 247.8 384 256 384s16.38-3.125 22.62-9.375l128-128c12.49-12.5 12.49-32.75 0-45.25c-12.5-12.5-32.76-12.5-45.25 0L288 274.8V32c0-17.67-14.33-32-32-32C238.3 0 224 14.33 224 32v242.8L150.6 201.4c-12.49-12.5-32.75-12.5-45.25 0c-12.49 12.5-12.49 32.75 0 45.25L233.4 374.6z"/></svg>
-
-                <span>
-                    benchmark_linear_svm_binary_classif_no_intercept_benchopt_run_2021-09-14_19h14m42.csv
-                </span>
-            </button>
-        </a>
-        <h1 style:>Result on linear svm binary classif no intercept benchmark</h1>
-        <summary></summary>
-
-        <!--Display all system informations if you want to-->
-        <p>System informations:
-            <b>CPU</b>: 40
-            <b>RAM (GB)</b>: 252
-            <b>CUDA</b>: Cuda compilation tools, release 9.0, V9.0.176
-            <button id="btn_subinfo" class="button buttonleft toggle">
-                <svg id="btn_plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z"/></svg>
-                <svg id="btn_minus" style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM168 232C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H168z"/></svg>
-            </button>
-            <div id="subinfo" style="display:none;transition: 0.5s;">
-                <ul>
-                    <li> <b>platform</b>: Linux4.15.0-112-generic-x86_64 </li>
-                    <li> <b>processor</b>: Intel(R) Xeon(R) CPU E5-2698 v4 @ 2.20GHz </li>
-                    <li> <b>nb threads</b>: 1 </li>
-                    
-                    <li> <b>numpy</b>: 1.21.2 blas=NO_ATLAS_INFO lapack=lapack </li>
-                    
-                    <li> <b>scipy</b>: 1.7.1 </li>
-                </ul>
+        <!-- Two main columns container -->
+        <div class="flex">
+            <!-- Left column on big screen (plot selectors) -->
+            <div class="hidden lg:flex flex-col w-96 bg-gray-700">
+                <div class="h-screen">
+                    <div class="px-8 h-16 flex items-center bg-gray-800">
+                        <h1 class="ml11">
+                            <span class="text-wrapper">
+                                <span class="line line1"></span>
+                                <span id="brand" class="hidden letters text-2xl text-white">Benchopt</span>
+                            </span>
+                        </h1>
+                    </div>
+                    <div class="flex-1 flex flex-col">
+                        <div class="mt-10 px-8">
+                            <label for="dataset_selector" class="block text-sm font-medium text-white">Dataset:</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <select id="dataset_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({dataset: this.value})">
+                                    <option value="news20">news20</option>
+                                    <option value="Simulated[n_samples=100,n_features=5000]">Simulated[n_samples=100,n_features=5000]</option>
+                                    <option value="Simulated[n_samples=100,n_features=10000]">Simulated[n_samples=100,n_features=10000]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-8 px-8">
+                            <label for="objective_selector" class="block text-sm font-medium text-white">Objective:</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <select id="objective_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective: this.value})">
+                                    <option value="SVM Binary Classification (no intercept)[C=1.0]">SVM Binary Classification (no intercept)[C=1.0]</option>
+                                    <option value="SVM Binary Classification (no intercept)[C=0.1]">SVM Binary Classification (no intercept)[C=0.1]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-8 px-8">
+                            <label for="objective_column" class="block text-sm font-medium text-white">Objective column</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <select id="objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_column: this.value})">
+                                    <option value="objective_value">objective_value</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-8 px-8">
+                            <label for="plot_kind" class="block text-sm font-medium text-white">Chart type</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value})">
+                                    <option value="objective_curve">objective_curve</option>
+                                    <option value="suboptimality_curve">suboptimality_curve</option>
+                                    <option value="relative_suboptimality_curve">relative_suboptimality_curve</option>
+                                    <option value="bar_chart">bar_chart</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="scale-form-group" class="mt-8 px-8">
+                            <label for="change_scaling" class="block text-sm font-medium text-white">Scale</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <select id="change_scaling" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
+                                    <option value="semilog-y">semilog-y</option>
+                                    <option value="semilog-x">semilog-x</option>
+                                    <option value="loglog">loglog</option>
+                                    <option value="linear">linear</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-8 px-8">
+                            <div class="block text-sm font-medium text-white">Quantiles</div>
+                            <label class="block switch">
+                                <input id="change_shades" type="checkbox" checked onchange="setState({with_quantiles: this.checked})">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </p>
+            <!-- Right column on big screen and main column on mobile -->
+            <div class="w-full flex flex-col overflow-scroll">
+                <!-- Main menu -->
+                <nav class="bg-blue-600">
+                    <div class="px-4">
+                        <div class="relative flex items-center justify-between h-16">
+                            <!-- mobile navbar -->
+                            <div class="absolute inset-0 flex items-center justify-between lg:hidden">
+                                <!-- Mobile menu brand text -->
+                                <span class="text-white text-xl">
+                                    Benchopt
+                                </span>
+                                <!-- Mobile menu button-->
+                                <button type="button" id="btn-main-menu" class="inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                                    <span class="sr-only">Open main menu</span>
+                                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                    <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- big screen navbar-->
+                            <div class="flex-1 flex items-center justify-center lg:items-stretch lg:justify-start">
+                                <div class="hidden lg:block">
+                                    <div class="flex space-x-4">
+                                        <a href="index.html" class="text-gray-100 hover:bg-blue-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</a>
+                                        <a href="https://benchopt.github.io" class="text-gray-100 hover:bg-blue-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium" target="_blank">Website</a>
+                                        <a href="https://github.com/benchopt/benchopt" class="text-gray-100 hover:bg-blue-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium" target="_blank">Github</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile menu, show/hide based on menu state. -->
+                    <div class="hidden" id="mobile-menu">
+                        <div class="px-2 pt-2 pb-3 space-y-1">
+                            <a href="index.html" class="text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Home</a>
+                            <a href="https://benchopt.github.io" class="text-white block px-3 py-2 rounded-md text-base font-medium">Website</a>
+                            <a href="https://github.com/benchopt/benchopt" class="text-white block px-3 py-2 rounded-md text-base font-medium">Github</a>
+                            <a href="outputs/benchmark_linear_svm_binary_classif_no_intercept_benchopt_run_2021-09-14_19h14m42.csv" class="text-white block px-3 py-2 rounded-md text-base font-medium">Download data</a>
+                        </div>
+                    </div>
+                </nav>
 
+                <!-- Plot menu for mobiles -->
+                <nav class="lg:hidden bg-gray-700">
+                    <div class="px-4" id="btn-plot-config">
+                        <div class="relative flex items-center justify-between h-10">
+                            <div class="absolute inset-0 flex items-center justify-between lg:hidden">
+                                <!-- Mobile menu button-->
+                                <span class="flex items-center space-x-2 text-white">
+                                    <span>Change plot</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                                    </svg>
+                                </span>
+                                <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                                    <span class="sr-only">Open main menu</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile menu, show/hide based on menu state. -->
+                    <div class="hidden" id="mobile-plot-form">
+                        <div class="px-2 pt-2 pb-3 space-y-4">
+                            <div class="px-8">
+                                <label for="dataset_selector" class="block text-sm font-medium text-white">Dataset:</label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select id="dataset_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({dataset: this.value})">
+                                        <option value="news20">news20</option>
+                                        <option value="Simulated[n_samples=100,n_features=5000]">Simulated[n_samples=100,n_features=5000]</option>
+                                        <option value="Simulated[n_samples=100,n_features=10000]">Simulated[n_samples=100,n_features=10000]</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="px-8">
+                                <label for="objective_selector" class="block text-sm font-medium text-white">Objective:</label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select id="objective_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective: this.value})">
+                                        <option value="SVM Binary Classification (no intercept)[C=1.0]">SVM Binary Classification (no intercept)[C=1.0]</option>
+                                        <option value="SVM Binary Classification (no intercept)[C=0.1]">SVM Binary Classification (no intercept)[C=0.1]</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="px-8">
+                                <label for="objective_column" class="block text-sm font-medium text-white">Objective column</label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select id="objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_column: this.value})">
+                                        <option value="objective_value">objective_value</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="px-8">
+                                <label for="plot_kind" class="block text-sm font-medium text-white">Chart type</label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value})">
+                                        <option value="objective_curve">objective_curve</option>
+                                        <option value="suboptimality_curve">suboptimality_curve</option>
+                                        <option value="relative_suboptimality_curve">relative_suboptimality_curve</option>
+                                        <option value="bar_chart">bar_chart</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="scale-form-group" class="px-8">
+                                <label for="change_scaling" class="block text-sm font-medium text-white">Scale</label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select id="change_scaling" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
+                                        <option value="semilog-y">semilog-y</option>
+                                        <option value="semilog-x">semilog-x</option>
+                                        <option value="loglog">loglog</option>
+                                        <option value="linear">linear</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mt-8 px-8">
+                                <div class="block text-sm font-medium text-white">Quantiles</div>
+                                <label class="block switch">
+                                    <input id="change_shades" type="checkbox" checked onchange="setState({with_quantiles: this.checked})">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+    
+                <!-- Page heading -->
+                <div class="px-4 pt-4 pb-1 md:py-4 lg:flex lg:items-center lg:justify-between">
+                    <div class="flex-1 min-w-0">
+                        <h2 class="w-full text-center lg:text-left text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Result on linear svm binary classif no intercept benchmark</h2>
+                        <div class="mt-1 flex flex-wrap justify-center lg:justify-start sm:mt-0">
+                            <div class="mt-2 sm:mr-6 hidden md:flex items-center text-sm text-gray-500">
+                                <span class="font-bold"></span>CPU : 40
+                            </div>
+                            <div class="mt-2 sm:mr-6 hidden md:flex items-center text-sm text-gray-500">
+                                <span class="font-bold"></span>RAM (GB) : 252
+                            </div>
+                            <div class="mt-2 sm:mr-6 hidden md:flex items-center text-sm text-gray-500">
+                                <span class="font-bold"></span>CUDA : Cuda compilation tools, release 9.0, V9.0.176
+                            </div>
+                            <div class="mt-2">
+                                <button class="inline-flex items-center px-2 py-1 space-x-2 border border-gray-500 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" onclick="document.getElementById('system-modal').style.display = 'block'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="hidden md:inline-block text-sm">Show more</span>
+                                    <span class="md:hidden text-sm">Show system information</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden lg:flex mt-5 lg:mt-0 lg:ml-4">
+                        <span>
+                            <a href="outputs/benchmark_linear_svm_binary_classif_no_intercept_benchopt_run_2021-09-14_19h14m42.csv" class="inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                <span class="hidden lg:inline">Download data</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+    
+                <!-- Plot -->
+                <div id="unique_plot"></div>
+                <div id="legend_container" class="py-10 bg-slate-200">
+                    <div id="legend_title" class="px-10 mb-4">
+                        Solvers <span id="legend_help">(Click on a solver to hide it or double click to hide all the others)</span>
+                    </div>
+                    <div id="plot_legend" class="px-10 space-r-2"></div>
+                </div>
+            </div>
+        </div>
 
-        <!-- Add selector to display only one plot -->
-        <div>
-            <label for='dataset_selector'>Dataset:</label>
-            <select id='dataset_selector' onchange="setState({dataset: this.value});">
-                <option value="news20">news20</option>
-                <option value="Simulated[n_samples=100,n_features=5000]">Simulated[n_samples=100,n_features=5000]</option>
-                <option value="Simulated[n_samples=100,n_features=10000]">Simulated[n_samples=100,n_features=10000]</option>
-            </select>
+        <!-- System information modal -->
+        <div id="system-modal" class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+            <div class="fixed z-10 inset-0 overflow-y-auto">
+                <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+                    <div class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">System information</h3>
+                                    <div class="mt-2">
+                                        <ul class="text-sm text-gray-500">
+                                            <li> <b>CPU</b>: 40 </li>
+                                            <li> <b>RAM (GB)</b>: 252 </li>
+                                            <li> <b>CUDA</b>: Cuda compilation tools, release 9.0, V9.0.176 </li>
+                                            <li> <b>platform</b>: Linux4.15.0-112-generic-x86_64 </li>
+                                            <li> <b>processor</b>: Intel(R) Xeon(R) CPU E5-2698 v4 @ 2.20GHz </li>
+                                            <li> <b>nb threads</b>: 1 </li>
+                                            
+                                            <li> <b>numpy</b>: 1.21.2 blas=NO_ATLAS_INFO lapack=lapack </li>
+                                            
+                                            <li> <b>scipy</b>: 1.7.1 </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="document.getElementById('system-modal').style.display = 'none'">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for='objective_selector'>Objective:</label>
-            <select id='objective_selector' onchange="setState({objective: this.value});">
-                <option value="SVM Binary Classification (no intercept)[C=1.0]">SVM Binary Classification (no intercept)[C=1.0]</option>
-                <option value="SVM Binary Classification (no intercept)[C=0.1]">SVM Binary Classification (no intercept)[C=0.1]</option>
-            </select>
-            <select id='objective_column' onchange="setState({objective_column: this.value});">
-                <option value="objective_value">value</option>
-            </select>
-        </div>
-        <div>
-            <label for='plot_kind'>Chart type:</label>
-            <select id='plot_kind' onchange="setState({plot_kind: this.value});">
-                <option value="objective_curve">objective curve</option>
-                <option value="suboptimality_curve">suboptimality curve</option>
-                <option value="relative_suboptimality_curve">relative suboptimality curve</option>
-                <option value="bar_chart">bar chart</option>
-            </select>
-            <select id="change_scaling" onchange="setState({scale: this.value});">
-                <option value="semilog-y">semilog-y</option>
-                <option value="semilog-x">semilog-x</option>
-                <option value="loglog">loglog</option>
-                <option value="linear">linear</option>
-            </select>
-        </div>
-        <div style="display: flex; align-items: center;">
-            <p style="margin: 0; margin-right: 4px">Quantiles: </p>
-            <label for='change_shades' class="switch">
-                <input id="change_shades" type="checkbox" checked onchange="setState({with_quantiles: this.checked})">
-                <span class="slider round"></span>
-            </label>
-        </div>
-
-        <div id="unique_plot"></div>
-
-        <div id="legend_title">
-            Solvers <span id="legend_help">(Click on a solver to hide it or double click to hide all the others)</span>
-        </div>
-        <div id="plot_legend" class="space-r-4"></div>
 
         <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+        <!-- Used for the brand animation -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+        <!-- Define the brand animation -->
         <script>
-            window.data = {"news20": {"SVM Binary Classification (no intercept)[C=1.0]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.441767806187272, 0.4919702056795358, 0.5180622190237045, 0.5856980178505182, 0.6076234299689531, 0.7049736473709345, 0.8252343963831663, 1.0048814080655577, 1.25356250628829, 1.6223642490804195, 2.2938619907945395, 3.1526411920785904, 4.580873027443886, 6.683341091498733], "y": [19996.0, 25397.28335521788, 23487.302819610453, 22184.402200828677, 21085.92774941787, 18849.43277167424, 16151.618054525954, 13365.331768964314, 9651.664699953037, 6558.611666929712, 5462.047570847958, 7248.084265882959, 7496.582129129973, 4441.204974379012], "q1": [0.42091588899493215, 0.48289791569113727, 0.5089561384171247, 0.5550594139844179, 0.5965125773102045, 0.6796985745429993, 0.8020983740687371, 0.9816991738975047, 1.2353127602487803, 1.605984526127577, 2.21130310036242, 3.134204224124551, 4.519637083634734, 6.471591408923269], "q9": [0.45100249387323854, 0.5355648465454579, 0.540225874260068, 0.5930526945739985, 0.6166116639971733, 0.7120742481201887, 0.837216229736805, 1.016058300435543, 1.2889517776668071, 1.6491768710315227, 2.3417502347379924, 3.2209508176892996, 4.675341168045998, 6.821513329818845]}, "bar": {"y": 10.542413465678692, "times": NaN, "text": "Did not converge"}, "color": "rgba(219.0, 219.0, 141.0, 1.0)", "marker": 38}, "L-BFGS-B": {"scatter": {"x": [0.8175038062036037, 0.8485596906393766, 1.1856948640197515, 1.4096174873411655, 1.74432179518044, 2.5306035354733467, 3.8831492830067873, 6.209711842238903, 10.449550142511724], "y": [10178.10694519508, 10178.10694519508, 20562.898789217503, 18399.865366079805, 6139.531863784296, 4643.951500709745, 4130.326406081927, 3257.905359200929, 2634.430116193936], "q1": [0.7922013700008392, 0.79883605055511, 1.1648638043552637, 1.3850617680698631, 1.7348561763763428, 2.517097955569625, 3.861526416987181, 6.139953203871846, 10.392491717636585], "q9": [0.8282583259046078, 0.8639634598046542, 1.2075996469706296, 1.416224031895399, 1.7593876723200084, 2.5879165045917034, 3.9834938772022723, 6.225839158147574, 10.523102184385062]}, "bar": {"y": 10.542413465678692, "times": NaN, "text": "Did not converge"}, "color": "rgba(23.0, 190.0, 207.0, 1.0)", "marker": 39}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.3330606874078512, 0.3717240747064352, 0.4151284918189049, 0.4589506611227989, 0.5225622281432152, 0.553916797041893, 0.6381281316280365, 0.7041888646781445, 0.8157756570726633, 0.9186315424740314, 1.1187691576778889, 1.3930587247014046, 1.870775816962123, 2.4733294155448675, 3.3972497452050447, 4.778794229030609], "y": [19996.0, 3497.0146224814907, 3101.128490770145, 2729.3499637353066, 2658.7395587232045, 2596.012376148797, 2572.766695460668, 2566.320377319152, 2563.9148989083883, 2563.160825224469, 2562.739740749749, 2562.621337885822, 2562.57177761547, 2562.5517007393064, 2562.546898543786, 2562.544115187718], "q1": [0.31906778998672963, 0.36203235834836955, 0.4098350942134857, 0.44183926433324816, 0.4803500987589359, 0.5375384747982025, 0.6148629315197468, 0.6714703671634197, 0.7951711889356374, 0.9041437625885009, 1.1147811677306891, 1.3854978635907174, 1.7544738974422216, 2.3625875566154715, 3.2038933765143156, 4.609869224950671], "q9": [0.3516792744398117, 0.39066237360239026, 0.4375523038208485, 0.4728344891220331, 0.5428341150283813, 0.5606013163924217, 0.649404538050294, 0.7139890495687723, 0.8385291367769241, 0.9408734738826751, 1.1653343446552753, 1.4094059567898511, 1.8834822215139866, 2.4949226908385755, 3.5001706589013337, 4.906598582863808]}, "bar": {"y": 10.542413465678692, "times": NaN, "text": "Did not converge"}, "color": "rgba(158.0, 218.0, 229.0, 1.0)", "marker": 40}}, "transformers": {"c_star": 2562.543454977787, "max_f_0": 25397.28335521788}}}, "SVM Binary Classification (no intercept)[C=0.1]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.4533401895314455, 0.4974383246153593, 0.5141460429877043, 0.5743698254227638, 0.5965513251721859, 0.6837536282837391, 0.8208292871713638, 1.0027989726513624, 1.249867044389248, 1.5918375197798014, 2.1546212639659643, 3.043079778552056, 4.287249241024256, 6.265819048509002], "y": [1999.6, 2386.886613962662, 2186.776195041403, 1974.5341528548252, 1751.722074898118, 1418.4184890172685, 1187.929318859884, 1060.6703279173264, 1149.428406292223, 944.3469957152744, 938.7677729471932, 940.3208131401508, 927.7650832090168, 913.3297603863408], "q1": [0.43904719352722166, 0.48971664309501645, 0.4998934864997864, 0.5476907670497895, 0.5819462940096856, 0.6768170889467001, 0.77883515432477, 0.9630626779049635, 1.2364518407732248, 1.5499218463897704, 2.1517794128507375, 3.029763698205352, 4.260917416214943, 6.130850857123733], "q9": [0.47233574762940406, 0.5016108173877001, 0.5329478900879622, 0.6026067636907101, 0.6107217483222485, 0.7139320008456707, 0.8447003040462733, 1.0129456009715796, 1.2887336280196906, 1.607509831339121, 2.18687156252563, 3.1040895104408266, 4.376568264514208, 6.384015456959605]}, "bar": {"y": 10.421925755217671, "times": NaN, "text": "Did not converge"}, "color": "rgba(219.0, 219.0, 141.0, 1.0)", "marker": 38}, "L-BFGS-B": {"scatter": {"x": [0.7996651344001293, 0.8428426031023264, 1.188375145196915, 1.3686761315912008, 1.7398812007158997, 2.5230879429727797, 3.865650024265051, 6.144168950617313, 10.320749873295426], "y": [1304.882449621105, 1304.882449621105, 2396.5745668445084, 2185.191360346448, 1253.6336195127597, 968.5779675765044, 903.8446128621016, 903.0943064365158, 902.647143642196], "q1": [0.7736979100853205, 0.8030208628624678, 1.1622399572283029, 1.3646257352083921, 1.732748068869114, 2.5017849884927275, 3.849726852029562, 6.102610290795565, 10.29637178890407], "q9": [0.8206531386822462, 0.8586426232010126, 1.203599314019084, 1.4079879377037288, 1.794032848626375, 2.589672969654203, 3.916429475322366, 6.182424876466394, 10.40042704679072]}, "bar": {"y": 10.421925755217671, "times": NaN, "text": "Did not converge"}, "color": "rgba(23.0, 190.0, 207.0, 1.0)", "marker": 39}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.3478614874184131, 0.3893429804593324, 0.4335999805480242, 0.4642744231969118, 0.4943604003638029, 0.5360415130853653, 0.5429706051945686, 0.5582101680338383, 0.5804213378578424, 0.5882373806089163, 0.6355023328214884, 0.6876977402716875, 0.7909571509808302, 0.921103786677122, 1.051919536665082, 1.2195636555552485, 1.455027704127133], "y": [1999.6, 970.3660291041664, 911.4600987121448, 904.319154934342, 903.2329979762992, 902.6173394215554, 902.5676946102304, 902.5612026969908, 902.5600961243448, 902.5599935841396, 902.5599247973344, 902.559742711404, 902.5599419501904, 902.5597303401844, 902.5597303399588, 902.5597303399596, 902.5597303399588], "q1": [0.32952345684170725, 0.37788255549967287, 0.40450156219303607, 0.46233699582517146, 0.48827423043549056, 0.527852613851428, 0.527864221483469, 0.5392359439283609, 0.572245953977108, 0.5711987443268299, 0.6224484361708165, 0.6798831675201654, 0.779333370923996, 0.8770047418773175, 0.9608124002814292, 1.20057775080204, 1.4314538830891252], "q9": [0.34865443110466005, 0.3992843676358461, 0.44298552908003325, 0.4747020360082388, 0.4968952391296625, 0.5418932352215051, 0.5502578869462014, 0.564493253082037, 0.5822205573320389, 0.6103962134569884, 0.6580102004110813, 0.7172235779464244, 0.801591394841671, 0.9390361446887255, 1.0656540252268314, 1.2312179222702981, 1.4786015251651405]}, "bar": {"y": 0.921103786677122, "times": [0.9036736711859704, 0.9247854072600604, 0.9485366363078356, 0.8592254556715488, 0.921103786677122], "text": ""}, "color": "rgba(158.0, 218.0, 229.0, 1.0)", "marker": 40}}, "transformers": {"c_star": 902.5597303398565, "max_f_0": 2386.886613962662}}}}, "Simulated[n_samples=100,n_features=5000]": {"SVM Binary Classification (no intercept)[C=1.0]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.0061372257769107, 0.0078738238662481, 0.0097649600356817, 0.0102118626236915, 0.0107699427753686, 0.0125732626765966, 0.0150998085737228, 0.0175433829426765, 0.0215169209986925, 0.0238833576440811, 0.0299043767154216, 0.0380013715475797, 0.0501003824174404, 0.069482572376728, 0.0978249050676822, 0.1406638640910387, 0.2016454432159662], "y": [100.0, 5.617553256808828, 0.441420742286111, 0.0502912254237901, 0.013314037638729, 0.0105530216961285, 0.0105427238454983, 0.010542719705769, 0.0105427197056688, 0.0105427197056678, 0.0105427197056667, 0.0105427197056664, 0.0105427197056659, 0.0105427197056654, 0.0105427197056659, 0.0105427197056651, 0.0105427197056665], "q1": [0.0044260252267121596, 0.0053580857813358, 0.00574660971760744, 0.00956818200647828, 0.01022036150097844, 0.0105988167226314, 0.01215471699833866, 0.01677243821322912, 0.01968893446028228, 0.02233938053250308, 0.0279395759105682, 0.03715498931705944, 0.04956342279911038, 0.06924660280346867, 0.09694550447165962, 0.13787027150392533, 0.1963211059570312], "q9": [0.00752844661474226, 0.00939349904656404, 0.01055658981204026, 0.01175191849470136, 0.01178537793457504, 0.01411406360566614, 0.01573092453181738, 0.01866047568619248, 0.02182793542742724, 0.02795413359999654, 0.03232881017029282, 0.03910421952605244, 0.05131274163722986, 0.07486166171729561, 0.10113449022173876, 0.14984604269266125, 0.20719431415200232]}, "bar": {"y": 0.0150998085737228, "times": [0.0155282523483037, 0.0150998085737228, 0.0158660393208265, 0.0104848854243755, 0.0146594643592834], "text": ""}, "color": "rgba(219.0, 219.0, 141.0, 1.0)", "marker": 38}, "L-BFGS-B": {"scatter": {"x": [0.0089709218591451, 0.0090783927589654, 0.0099652484059333, 0.0115491300821304, 0.0126780308783054, 0.0147713162004947, 0.0348249822854995, 0.0338543988764286, 0.0359032656997442, 0.0343547090888023, 0.0361923836171627, 0.0337413419038057, 0.0350629817694425, 0.0350677315145731, 0.0341214053332805, 0.0359220281243324, 0.0360480323433876], "y": [6.247817535303946, 6.247817535303946, 0.941713407198444, 0.161691923977568, 0.0142982861665385, 0.010544747654479, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309], "q1": [0.00847671516239638, 0.00887586250901218, 0.008884642645716619, 0.0101958263665437, 0.01053443811833852, 0.01429418027400964, 0.03376956842839714, 0.03304043672978876, 0.03474671877920622, 0.03041565567255018, 0.03440969027578826, 0.031624960154294904, 0.03429843299090856, 0.03407511785626406, 0.03295897021889678, 0.0348213009536266, 0.03415286131203174], "q9": [0.009351236373186059, 0.00960378535091874, 0.01018729917705052, 0.011736924573779041, 0.01311443932354444, 0.015468230471014921, 0.0358393225818872, 0.035006116703152616, 0.03869901373982426, 0.03596887551248066, 0.03868377394974226, 0.03614271283149712, 0.03568668514490126, 0.03615468628704546, 0.03654355928301808, 0.03634183779358858, 0.03666941411793226]}, "bar": {"y": 0.0348249822854995, "times": [0.0333583932369947, 0.0343863312155008, 0.0348249822854995, 0.0361504424363374, 0.0353726428002119], "text": ""}, "color": "rgba(23.0, 190.0, 207.0, 1.0)", "marker": 39}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.0115313213318586, 0.0134597718715667, 0.0145937632769346, 0.0161147527396678, 0.0179740116000175, 0.0201944839209318, 0.0240576341748237, 0.0301884692162275, 0.0342428833246231, 0.0418855939060449, 0.0508771259337663, 0.0651661157608032, 0.0884826518595218, 0.1201618257910013], "y": [100.0, 5.488936632585754, 0.8276221358026615, 0.0991477654190883, 0.0247842878797273, 0.010845439707357, 0.010543611381433, 0.0105427203612794, 0.01054271972485, 0.0105427197246611, 0.010542719722038, 0.0105427197240972, 0.0105427197252589, 0.0105427197240855], "q1": [0.009927674382924979, 0.0124640099704265, 0.01288874894380562, 0.01346332728862756, 0.01413595080375666, 0.019017538800835558, 0.022044448554515803, 0.02981798574328418, 0.03099125586450094, 0.0402396101504564, 0.0496315989643335, 0.0648763414472341, 0.08740196153521532, 0.11932867951691147], "q9": [0.01234099492430682, 0.0138757579028606, 0.01502672210335726, 0.01821993179619306, 0.01815501675009726, 0.02090235948562616, 0.024605224281549442, 0.03077413029968734, 0.04467945843935006, 0.042339408770203535, 0.051909591257572114, 0.06926739141345022, 0.08878221437335011, 0.1203365389257669]}, "bar": {"y": 0.0301884692162275, "times": [0.0301961433142423, 0.0301884692162275, 0.0311594549566507, 0.0299486964941024, 0.0297308452427387], "text": ""}, "color": "rgba(158.0, 218.0, 229.0, 1.0)", "marker": 40}}, "transformers": {"c_star": 0.0105427196056651, "max_f_0": 6.247817535303946}}}, "SVM Binary Classification (no intercept)[C=0.1]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.0058817509561777, 0.0069434065371751, 0.0084441360086202, 0.0106891598552465, 0.0106197800487279, 0.0122096799314022, 0.014529226347804, 0.016291843727231, 0.0197248328477144, 0.0233756471425294, 0.0290130916982889, 0.038294343277812, 0.0497775990515947, 0.0672500133514404, 0.0947669371962547, 0.1354357507079839], "y": [10.0, 0.5706531944381464, 0.053601877452589, 0.0145149017428216, 0.0108197918625967, 0.0105437500279664, 0.0105427201198558, 0.0105427197056662, 0.0105427197056562, 0.0105427197056561, 0.010542719705656, 0.0105427197056559, 0.0105427197056559, 0.0105427197056558, 0.0105427197056559, 0.0105427197056558], "q1": [0.00408828258514396, 0.00677199140191076, 0.00780836008489128, 0.00935133881866928, 0.01012861058115958, 0.01202144660055636, 0.012908063828945139, 0.014547567442059501, 0.019297410547733297, 0.02239897586405274, 0.02741952575743192, 0.0373557891696691, 0.0486860238015651, 0.06625166833400721, 0.08852994143962857, 0.13479154296219345], "q9": [0.00636033713817592, 0.00882375724613664, 0.00975168794393534, 0.01098241657018656, 0.01169358529150482, 0.01322700940072528, 0.014886942505836439, 0.01791612692177288, 0.02048100419342516, 0.02397165596485134, 0.03057157583534712, 0.03878905475139616, 0.050727637112140594, 0.068675522506237, 0.0961563896387815, 0.13728386983275412]}, "bar": {"y": 0.014529226347804, "times": [0.0150683522224426, 0.014529226347804, 0.0141729712486267, 0.0146148279309272, 0.0120647922158241], "text": ""}, "color": "rgba(219.0, 219.0, 141.0, 1.0)", "marker": 38}, "L-BFGS-B": {"scatter": {"x": [0.0076464861631393, 0.007281556725502, 0.0077644977718591, 0.0099687799811363, 0.0121390558779239, 0.0137374885380268, 0.0218748077750206, 0.0205538924783468, 0.021378269419074, 0.0220621395856142, 0.021832937374711, 0.0217567719519138, 0.0219223834574222, 0.0225079394876956, 0.0225080177187919, 0.0220759529620409], "y": [0.634041763603878, 0.634041763603878, 0.1036595721471305, 0.025657241093259, 0.0109182793259511, 0.0105429224987074, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078], "q1": [0.00653030090034004, 0.006882847100496261, 0.00735629722476, 0.00933349728584284, 0.010692766681313439, 0.01152236461639398, 0.02171000652015208, 0.0199858766049146, 0.02103085666894908, 0.02105259932577606, 0.02056442834436888, 0.021091568842530217, 0.02144914157688614, 0.022083318978548, 0.020746138319373043, 0.0200636580586433], "q9": [0.00813236832618712, 0.0082382928580045, 0.00874032452702518, 0.0103474218398332, 0.01270134039223192, 0.01459376476705068, 0.02226091139018528, 0.02270491570234294, 0.0229443624615669, 0.02277903556823728, 0.022698188573122002, 0.0222806420177221, 0.02278707735240454, 0.02288346290588376, 0.0238301884382963, 0.02400611340999596]}, "bar": {"y": 0.0137374885380268, "times": [0.0149549972265958, 0.0119874496012926, 0.0137374885380268, 0.014051916077733, 0.0112123079597949], "text": ""}, "color": "rgba(23.0, 190.0, 207.0, 1.0)", "marker": 39}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.0120526067912578, 0.0138843152672052, 0.0144858602434396, 0.0160203445702791, 0.017596261575818, 0.0210192147642374, 0.024495679885149, 0.0289617795497179, 0.0350458100438118, 0.0409867875277996, 0.0507415793836116, 0.0650886613875627], "y": [10.0, 0.5705154707905303, 0.0925355878311583, 0.0193529130615431, 0.0121042248166743, 0.0105719544048664, 0.0105428170512861, 0.0105427197608557, 0.0105427197075275, 0.0105427197076324, 0.0105427197073226, 0.0105427197073461], "q1": [0.01149022914469238, 0.0135954190045595, 0.01222228668630118, 0.015309166163206059, 0.01710100024938578, 0.020029404759407, 0.02319278903305526, 0.02811985500156872, 0.0331185288727283, 0.03783274553716178, 0.049448123946785875, 0.0636800408363342], "q9": [0.01278852671384808, 0.01567816995084282, 0.014615811035037, 0.01701245121657842, 0.01840787641704074, 0.02352848351001732, 0.0280366364866495, 0.029436374083161302, 0.038639314845204324, 0.04193927198648446, 0.05106541067361828, 0.06627398058772081]}, "bar": {"y": 0.024495679885149, "times": [0.0250366125255823, 0.024495679885149, 0.0239468831568956, 0.0300366524606943, 0.0226900596171617], "text": ""}, "color": "rgba(158.0, 218.0, 229.0, 1.0)", "marker": 40}}, "transformers": {"c_star": 0.0105427196056558, "max_f_0": 0.634041763603878}}}}, "Simulated[n_samples=100,n_features=10000]": {"SVM Binary Classification (no intercept)[C=1.0]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.0066377967596054, 0.0099115185439586, 0.0121030397713184, 0.01312698982656, 0.015151796862483, 0.0184759385883808, 0.0222695413976907, 0.0281605925410985, 0.0328312404453754, 0.0379569958895444, 0.0431919861584901, 0.0568050350993871, 0.0728974919766187, 0.1001447532325983, 0.1391342747956514, 0.1937962789088487], "y": [100.0, 2.68903995945588, 0.1605820162370797, 0.0108642162602571, 0.0052302637382067, 0.0050237339396456, 0.0050233092613336, 0.0050233092259873, 0.0050233092259866, 0.0050233092259877, 0.0050233092259879, 0.0050233092259887, 0.0050233092259883, 0.0050233092259893, 0.0050233092259883, 0.0050233092259868], "q1": [0.00613829866051668, 0.0085596051067113, 0.0117337577044963, 0.01257676482200622, 0.01500421166419978, 0.01740690506994722, 0.01972850114107128, 0.02490586452186104, 0.02839135192334644, 0.03591332994401452, 0.04005976431071752, 0.05326855890452856, 0.06088196784257888, 0.08772905506193632, 0.13087145872414108, 0.18068619258701799], "q9": [0.00789709910750382, 0.01064196377992622, 0.01248887293040748, 0.013810262084007199, 0.01588955596089358, 0.018756911158561658, 0.023714624717831558, 0.02946303375065318, 0.0335452672094106, 0.03886562138795844, 0.04541664794087406, 0.05731715410947794, 0.07475253157317634, 0.10456211268901824, 0.13976735845208166, 0.20078210607171054]}, "bar": {"y": 0.0184759385883808, "times": [0.0184759385883808, 0.0189280919730663, 0.0178725197911262, 0.0185001399368047, 0.0170964952558279], "text": ""}, "color": "rgba(219.0, 219.0, 141.0, 1.0)", "marker": 38}, "L-BFGS-B": {"scatter": {"x": [0.0098191611468791, 0.0111687593162059, 0.0135353375226259, 0.0147615410387516, 0.0164923090487718, 0.0525952223688364, 0.0514700040221214, 0.0503731481730937, 0.0497862622141838, 0.0515768993645906, 0.0500254910439252, 0.0495576579123735, 0.0505954194813966, 0.0509116537868976, 0.0514551736414432, 0.0519236475229263], "y": [3.8193167679022695, 3.8193167679022695, 0.3292479978900495, 0.0346262490008226, 0.0053672431611835, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649], "q1": [0.008427372202277121, 0.01003734096884722, 0.012994068488478599, 0.013176193460822081, 0.01638204157352442, 0.04944162257015698, 0.04949848055839534, 0.0502629593014717, 0.04868969991803168, 0.0504485942423343, 0.04928895384073252, 0.04886616915464398, 0.04969906285405156, 0.05003226920962326, 0.049684519320726366, 0.04896985404193396], "q9": [0.01207149289548394, 0.0118662521243095, 0.01420437358319754, 0.01536489501595496, 0.0172743115574121, 0.05309629365801808, 0.05509326122701168, 0.053375701233744584, 0.0519199784845113, 0.051945082843303604, 0.05154523141682144, 0.05342392213642592, 0.05213432461023328, 0.05149300284683698, 0.05232682339847086, 0.05326992087066172]}, "bar": {"y": 0.0525952223688364, "times": [0.0509050749242305, 0.0525952223688364, 0.053133487701416, 0.0484659876674413, 0.0530405025929212], "text": ""}, "color": "rgba(23.0, 190.0, 207.0, 1.0)", "marker": 39}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.0178440641611814, 0.0207264050841331, 0.0223128907382488, 0.0268613584339618, 0.0297214016318321, 0.0349819343537092, 0.0432355385273695, 0.0524898972362279, 0.0602235421538353, 0.0732634831219911, 0.0940344743430614, 0.1194580374285578, 0.16328757908195252, 0.21426494978368277, 0.2969746440649032], "y": [100.0, 2.556546198899512, 0.3014704556973118, 0.0247247200732914, 0.006996684005141, 0.0050381256992896, 0.0050233209600435, 0.005023309239021, 0.0050233092403834, 0.0050233092409034, 0.0050233092391482, 0.0050233092378005, 0.005023309243222951, 0.0050233092409115, 0.0050233092434673], "q1": [0.015178996324539121, 0.01914911828935142, 0.02129157595336432, 0.02518059350550168, 0.02617144882678982, 0.0336274046450853, 0.04017397090792656, 0.050419714674353557, 0.05387104265391826, 0.07140002846717834, 0.09066015146672723, 0.1183131476864218, 0.1620280681177973, 0.21403652839362616, 0.2969746440649032], "q9": [0.02060955874621866, 0.02225039228796956, 0.02416632175445554, 0.0277361564338207, 0.03027626983821384, 0.0353476826101541, 0.043383676558732896, 0.05297022052109234, 0.06051250062882898, 0.0747347671538591, 0.09750511571764939, 0.1206029271706938, 0.1645470900461077, 0.21449337117373934, 0.2969746440649032]}, "bar": {"y": 0.0432355385273695, "times": [0.0385190024971962, 0.0426564235240221, 0.0434519760310649, 0.0432812273502349, 0.0432355385273695], "text": ""}, "color": "rgba(158.0, 218.0, 229.0, 1.0)", "marker": 40}}, "transformers": {"c_star": 0.005023309125986601, "max_f_0": 3.8193167679022695}}}, "SVM Binary Classification (no intercept)[C=0.1]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.0107308998703956, 0.012189807370305, 0.0149491634219884, 0.0166178289800882, 0.0171545203775167, 0.020641541108489, 0.0247548557817935, 0.0313107892870903, 0.0347627382725477, 0.0394317992031574, 0.048072574660182, 0.0595947280526161, 0.0778425671160221, 0.1033657919615507, 0.1447497084736824, 0.2025455795228481], "y": [10.0, 0.2733857718054311, 0.0205771382958165, 0.0056077747947607, 0.0050440328662679, 0.0050233517304569, 0.0050233092295128, 0.0050233092259776, 0.0050233092259775, 0.0050233092259776, 0.0050233092259776, 0.0050233092259777, 0.0050233092259777, 0.0050233092259778, 0.0050233092259777, 0.0050233092259775], "q1": [0.007889724895358021, 0.01107958219945424, 0.01443399488925928, 0.01483542695641514, 0.0163670629262924, 0.01953979544341556, 0.02314754053950302, 0.029961737617850242, 0.031144180148839858, 0.03492789231240744, 0.04582521617412562, 0.05769181437790386, 0.07187460511922834, 0.09527071677148337, 0.14182767122983925, 0.19856853410601616], "q9": [0.011498674377799, 0.01321510933339592, 0.015457053855061461, 0.017432676255702943, 0.01763654127717012, 0.021027478203177442, 0.02512573599815362, 0.03155232220888136, 0.03489472977817054, 0.04076445586979386, 0.04821792580187316, 0.06088673956692216, 0.08501281328499313, 0.10475296154618258, 0.1483577717095613, 0.2085374545305967]}, "bar": {"y": 0.020641541108489, "times": [0.0201412606984376, 0.0191388186067342, 0.0210097599774599, 0.0210392903536558, 0.020641541108489], "text": ""}, "color": "rgba(219.0, 219.0, 141.0, 1.0)", "marker": 38}, "L-BFGS-B": {"scatter": {"x": [0.0118776280432939, 0.0128362532705068, 0.0132356099784374, 0.0133255776017904, 0.0162692498415708, 0.0338107720017433, 0.0699922628700733, 0.0675370339304208, 0.0714636836200952, 0.0665082298219204, 0.0695456806570291, 0.0681853778660297, 0.0709979496896267, 0.0682950951159, 0.0689714252948761, 0.0674871671944856], "y": [0.3864141794154838, 0.3864141794154838, 0.0374446834958457, 0.0079835873773923, 0.0050577028017023, 0.0050233572673741, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684], "q1": [0.01147073507308956, 0.0111460015177726, 0.01257720403373238, 0.01292233280837532, 0.01572314612567418, 0.032137767225503856, 0.06710709668695924, 0.06689412519335741, 0.07031923122704024, 0.06554027199745172, 0.06862324625253674, 0.06677854657173152, 0.06808976493775841, 0.06641153618693346, 0.06680354475975032, 0.06449347063899034], "q9": [0.013268188014626479, 0.013732827082276279, 0.013866439834237061, 0.01407460384070864, 0.01687857247889038, 0.03456927314400666, 0.07121324986219402, 0.069800828769803, 0.08275420702993865, 0.06895488202571869, 0.0715854603797197, 0.07100043781101698, 0.07517206929624075, 0.07036739364266395, 0.07026418596506112, 0.0702300906181335]}, "bar": {"y": 0.0338107720017433, "times": [0.0338107720017433, 0.0347774550318717, 0.0342570003122091, 0.0317308045923709, 0.0327482111752033], "text": ""}, "color": "rgba(23.0, 190.0, 207.0, 1.0)", "marker": 39}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.0187130719423294, 0.0195364505052566, 0.0236107353121042, 0.0255169756710529, 0.0301526058465242, 0.0352920480072498, 0.0431311596184968, 0.0509257931262254, 0.0610567834228277, 0.0732789132744073, 0.0918623991310596, 0.1226396169513464, 0.1517184246331453, 0.2297019995748996], "y": [10.0, 0.3063735163952057, 0.0343463599055041, 0.0070025035767162, 0.0052692454387997, 0.0050252630761477, 0.0050233107116104, 0.0050233092273957, 0.0050233092274825, 0.0050233092273579, 0.0050233092273603, 0.0050233092272853, 0.0050233092268535, 0.0050233092273749], "q1": [0.01624468602240084, 0.01811148002743718, 0.021343806385993917, 0.02218563444912426, 0.02804637067019934, 0.0331864736974239, 0.0407272666692733, 0.04843675196170802, 0.05975546501576898, 0.07293572984635822, 0.09087676182389258, 0.1226396169513464, 0.1517184246331453, 0.2297019995748996], "q9": [0.01902712509036062, 0.02140222229063502, 0.02490109913051122, 0.0268457494676113, 0.0307617392390966, 0.038896837458014435, 0.04339247569441792, 0.052437671273946704, 0.06137328557670112, 0.07595571838319295, 0.0931362345814704, 0.1226396169513464, 0.1517184246331453, 0.2297019995748996]}, "bar": {"y": 0.0431311596184968, "times": [0.0394290201365947, 0.0431511607021093, 0.0426746364682912, 0.043553352355957, 0.0431311596184968], "text": ""}, "color": "rgba(158.0, 218.0, 229.0, 1.0)", "marker": 40}}, "transformers": {"c_star": 0.0050233091259775, "max_f_0": 0.3864141794154838}}}}};
+            var textWrapper = document.querySelector('.ml11 .letters');
+            textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>");
+
+            window.addEventListener('load', () => {
+                document.getElementById('brand').style.display = 'inline';
+
+                anime.timeline({loop: false})
+                    .add({
+                        targets: '.ml11 .line',
+                        scaleY: [0,1],
+                        opacity: [0.5,1],
+                        easing: "easeOutExpo",
+                        duration: 700
+                    })
+                    .add({
+                        targets: '.ml11 .line',
+                        translateX: [0, document.querySelector('.ml11 .letters').getBoundingClientRect().width + 10],
+                        easing: "easeOutExpo",
+                        duration: 700,
+                        delay: 100
+                    }).add({
+                        targets: '.ml11 .letter',
+                        opacity: [0,1],
+                        easing: "easeOutExpo",
+                        duration: 600,
+                        offset: '-=775',
+                        delay: (el, i) => 34 * (i+1)
+                    }).add({
+                        targets: '.ml11 .line',
+                        scaleY: [1,0],
+                        opacity: [1,0.5],
+                        easing: "easeOutExpo",
+                        duration: 700,
+                        translateX: [document.querySelector('.ml11 .letters').getBoundingClientRect().width + 10, document.querySelector('.ml11 .letters').getBoundingClientRect().width + 10],
+                    });
+            });
+        </script>
+        <!-- Manage plot -->
+        <script>
+            window.data = {"news20": {"SVM Binary Classification (no intercept)[C=1.0]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.441767806187272, 0.4919702056795358, 0.5180622190237045, 0.5856980178505182, 0.6076234299689531, 0.7049736473709345, 0.8252343963831663, 1.0048814080655577, 1.25356250628829, 1.6223642490804195, 2.2938619907945395, 3.1526411920785904, 4.580873027443886, 6.683341091498733], "y": [19996.0, 25397.28335521788, 23487.302819610453, 22184.402200828677, 21085.92774941787, 18849.43277167424, 16151.618054525954, 13365.331768964314, 9651.664699953037, 6558.611666929712, 5462.047570847958, 7248.084265882959, 7496.582129129973, 4441.204974379012], "q1": [0.42091588899493215, 0.48289791569113727, 0.5089561384171247, 0.5550594139844179, 0.5965125773102045, 0.6796985745429993, 0.8020983740687371, 0.9816991738975047, 1.2353127602487803, 1.605984526127577, 2.21130310036242, 3.134204224124551, 4.519637083634734, 6.471591408923269], "q9": [0.45100249387323854, 0.5355648465454579, 0.540225874260068, 0.5930526945739985, 0.6166116639971733, 0.7120742481201887, 0.837216229736805, 1.016058300435543, 1.2889517776668071, 1.6491768710315227, 2.3417502347379924, 3.2209508176892996, 4.675341168045998, 6.821513329818845]}, "bar": {"y": 10.542413465678692, "times": NaN, "text": "Did not converge"}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 18}, "L-BFGS-B": {"scatter": {"x": [0.8175038062036037, 0.8485596906393766, 1.1856948640197515, 1.4096174873411655, 1.74432179518044, 2.5306035354733467, 3.8831492830067873, 6.209711842238903, 10.449550142511724], "y": [10178.10694519508, 10178.10694519508, 20562.898789217503, 18399.865366079805, 6139.531863784296, 4643.951500709745, 4130.326406081927, 3257.905359200929, 2634.430116193936], "q1": [0.7922013700008392, 0.79883605055511, 1.1648638043552637, 1.3850617680698631, 1.7348561763763428, 2.517097955569625, 3.861526416987181, 6.139953203871846, 10.392491717636585], "q9": [0.8282583259046078, 0.8639634598046542, 1.2075996469706296, 1.416224031895399, 1.7593876723200084, 2.5879165045917034, 3.9834938772022723, 6.225839158147574, 10.523102184385062]}, "bar": {"y": 10.542413465678692, "times": NaN, "text": "Did not converge"}, "color": "rgba(174.0, 199.0, 232.0, 1.0)", "marker": 19}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.3330606874078512, 0.3717240747064352, 0.4151284918189049, 0.4589506611227989, 0.5225622281432152, 0.553916797041893, 0.6381281316280365, 0.7041888646781445, 0.8157756570726633, 0.9186315424740314, 1.1187691576778889, 1.3930587247014046, 1.870775816962123, 2.4733294155448675, 3.3972497452050447, 4.778794229030609], "y": [19996.0, 3497.0146224814907, 3101.128490770145, 2729.3499637353066, 2658.7395587232045, 2596.012376148797, 2572.766695460668, 2566.320377319152, 2563.9148989083883, 2563.160825224469, 2562.739740749749, 2562.621337885822, 2562.57177761547, 2562.5517007393064, 2562.546898543786, 2562.544115187718], "q1": [0.31906778998672963, 0.36203235834836955, 0.4098350942134857, 0.44183926433324816, 0.4803500987589359, 0.5375384747982025, 0.6148629315197468, 0.6714703671634197, 0.7951711889356374, 0.9041437625885009, 1.1147811677306891, 1.3854978635907174, 1.7544738974422216, 2.3625875566154715, 3.2038933765143156, 4.609869224950671], "q9": [0.3516792744398117, 0.39066237360239026, 0.4375523038208485, 0.4728344891220331, 0.5428341150283813, 0.5606013163924217, 0.649404538050294, 0.7139890495687723, 0.8385291367769241, 0.9408734738826751, 1.1653343446552753, 1.4094059567898511, 1.8834822215139866, 2.4949226908385755, 3.5001706589013337, 4.906598582863808]}, "bar": {"y": 10.542413465678692, "times": NaN, "text": "Did not converge"}, "color": "rgba(255.0, 127.0, 14.0, 1.0)", "marker": 20}}, "transformers": {"c_star": 2562.543454977787, "max_f_0": 25397.28335521788}}}, "SVM Binary Classification (no intercept)[C=0.1]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.4533401895314455, 0.4974383246153593, 0.5141460429877043, 0.5743698254227638, 0.5965513251721859, 0.6837536282837391, 0.8208292871713638, 1.0027989726513624, 1.249867044389248, 1.5918375197798014, 2.1546212639659643, 3.043079778552056, 4.287249241024256, 6.265819048509002], "y": [1999.6, 2386.886613962662, 2186.776195041403, 1974.5341528548252, 1751.722074898118, 1418.4184890172685, 1187.929318859884, 1060.6703279173264, 1149.428406292223, 944.3469957152744, 938.7677729471932, 940.3208131401508, 927.7650832090168, 913.3297603863408], "q1": [0.43904719352722166, 0.48971664309501645, 0.4998934864997864, 0.5476907670497895, 0.5819462940096856, 0.6768170889467001, 0.77883515432477, 0.9630626779049635, 1.2364518407732248, 1.5499218463897704, 2.1517794128507375, 3.029763698205352, 4.260917416214943, 6.130850857123733], "q9": [0.47233574762940406, 0.5016108173877001, 0.5329478900879622, 0.6026067636907101, 0.6107217483222485, 0.7139320008456707, 0.8447003040462733, 1.0129456009715796, 1.2887336280196906, 1.607509831339121, 2.18687156252563, 3.1040895104408266, 4.376568264514208, 6.384015456959605]}, "bar": {"y": 10.421925755217671, "times": NaN, "text": "Did not converge"}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 18}, "L-BFGS-B": {"scatter": {"x": [0.7996651344001293, 0.8428426031023264, 1.188375145196915, 1.3686761315912008, 1.7398812007158997, 2.5230879429727797, 3.865650024265051, 6.144168950617313, 10.320749873295426], "y": [1304.882449621105, 1304.882449621105, 2396.5745668445084, 2185.191360346448, 1253.6336195127597, 968.5779675765044, 903.8446128621016, 903.0943064365158, 902.647143642196], "q1": [0.7736979100853205, 0.8030208628624678, 1.1622399572283029, 1.3646257352083921, 1.732748068869114, 2.5017849884927275, 3.849726852029562, 6.102610290795565, 10.29637178890407], "q9": [0.8206531386822462, 0.8586426232010126, 1.203599314019084, 1.4079879377037288, 1.794032848626375, 2.589672969654203, 3.916429475322366, 6.182424876466394, 10.40042704679072]}, "bar": {"y": 10.421925755217671, "times": NaN, "text": "Did not converge"}, "color": "rgba(174.0, 199.0, 232.0, 1.0)", "marker": 19}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.3478614874184131, 0.3893429804593324, 0.4335999805480242, 0.4642744231969118, 0.4943604003638029, 0.5360415130853653, 0.5429706051945686, 0.5582101680338383, 0.5804213378578424, 0.5882373806089163, 0.6355023328214884, 0.6876977402716875, 0.7909571509808302, 0.921103786677122, 1.051919536665082, 1.2195636555552485, 1.455027704127133], "y": [1999.6, 970.3660291041664, 911.4600987121448, 904.319154934342, 903.2329979762992, 902.6173394215554, 902.5676946102304, 902.5612026969908, 902.5600961243448, 902.5599935841396, 902.5599247973344, 902.559742711404, 902.5599419501904, 902.5597303401844, 902.5597303399588, 902.5597303399596, 902.5597303399588], "q1": [0.32952345684170725, 0.37788255549967287, 0.40450156219303607, 0.46233699582517146, 0.48827423043549056, 0.527852613851428, 0.527864221483469, 0.5392359439283609, 0.572245953977108, 0.5711987443268299, 0.6224484361708165, 0.6798831675201654, 0.779333370923996, 0.8770047418773175, 0.9608124002814292, 1.20057775080204, 1.4314538830891252], "q9": [0.34865443110466005, 0.3992843676358461, 0.44298552908003325, 0.4747020360082388, 0.4968952391296625, 0.5418932352215051, 0.5502578869462014, 0.564493253082037, 0.5822205573320389, 0.6103962134569884, 0.6580102004110813, 0.7172235779464244, 0.801591394841671, 0.9390361446887255, 1.0656540252268314, 1.2312179222702981, 1.4786015251651405]}, "bar": {"y": 0.921103786677122, "times": [0.9036736711859704, 0.9247854072600604, 0.9485366363078356, 0.8592254556715488, 0.921103786677122], "text": ""}, "color": "rgba(255.0, 127.0, 14.0, 1.0)", "marker": 20}}, "transformers": {"c_star": 902.5597303398565, "max_f_0": 2386.886613962662}}}}, "Simulated[n_samples=100,n_features=5000]": {"SVM Binary Classification (no intercept)[C=1.0]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.0061372257769107, 0.0078738238662481, 0.0097649600356817, 0.0102118626236915, 0.0107699427753686, 0.0125732626765966, 0.0150998085737228, 0.0175433829426765, 0.0215169209986925, 0.0238833576440811, 0.0299043767154216, 0.0380013715475797, 0.0501003824174404, 0.069482572376728, 0.0978249050676822, 0.1406638640910387, 0.2016454432159662], "y": [100.0, 5.617553256808828, 0.441420742286111, 0.0502912254237901, 0.013314037638729, 0.0105530216961285, 0.0105427238454983, 0.010542719705769, 0.0105427197056688, 0.0105427197056678, 0.0105427197056667, 0.0105427197056664, 0.0105427197056659, 0.0105427197056654, 0.0105427197056659, 0.0105427197056651, 0.0105427197056665], "q1": [0.0044260252267121596, 0.0053580857813358, 0.00574660971760744, 0.00956818200647828, 0.01022036150097844, 0.0105988167226314, 0.01215471699833866, 0.01677243821322912, 0.01968893446028228, 0.02233938053250308, 0.0279395759105682, 0.03715498931705944, 0.04956342279911038, 0.06924660280346867, 0.09694550447165962, 0.13787027150392533, 0.1963211059570312], "q9": [0.00752844661474226, 0.00939349904656404, 0.01055658981204026, 0.01175191849470136, 0.01178537793457504, 0.01411406360566614, 0.01573092453181738, 0.01866047568619248, 0.02182793542742724, 0.02795413359999654, 0.03232881017029282, 0.03910421952605244, 0.05131274163722986, 0.07486166171729561, 0.10113449022173876, 0.14984604269266125, 0.20719431415200232]}, "bar": {"y": 0.0150998085737228, "times": [0.0155282523483037, 0.0150998085737228, 0.0158660393208265, 0.0104848854243755, 0.0146594643592834], "text": ""}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 18}, "L-BFGS-B": {"scatter": {"x": [0.0089709218591451, 0.0090783927589654, 0.0099652484059333, 0.0115491300821304, 0.0126780308783054, 0.0147713162004947, 0.0348249822854995, 0.0338543988764286, 0.0359032656997442, 0.0343547090888023, 0.0361923836171627, 0.0337413419038057, 0.0350629817694425, 0.0350677315145731, 0.0341214053332805, 0.0359220281243324, 0.0360480323433876], "y": [6.247817535303946, 6.247817535303946, 0.941713407198444, 0.161691923977568, 0.0142982861665385, 0.010544747654479, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309, 0.0105427341885309], "q1": [0.00847671516239638, 0.00887586250901218, 0.008884642645716619, 0.0101958263665437, 0.01053443811833852, 0.01429418027400964, 0.03376956842839714, 0.03304043672978876, 0.03474671877920622, 0.03041565567255018, 0.03440969027578826, 0.031624960154294904, 0.03429843299090856, 0.03407511785626406, 0.03295897021889678, 0.0348213009536266, 0.03415286131203174], "q9": [0.009351236373186059, 0.00960378535091874, 0.01018729917705052, 0.011736924573779041, 0.01311443932354444, 0.015468230471014921, 0.0358393225818872, 0.035006116703152616, 0.03869901373982426, 0.03596887551248066, 0.03868377394974226, 0.03614271283149712, 0.03568668514490126, 0.03615468628704546, 0.03654355928301808, 0.03634183779358858, 0.03666941411793226]}, "bar": {"y": 0.0348249822854995, "times": [0.0333583932369947, 0.0343863312155008, 0.0348249822854995, 0.0361504424363374, 0.0353726428002119], "text": ""}, "color": "rgba(174.0, 199.0, 232.0, 1.0)", "marker": 19}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.0115313213318586, 0.0134597718715667, 0.0145937632769346, 0.0161147527396678, 0.0179740116000175, 0.0201944839209318, 0.0240576341748237, 0.0301884692162275, 0.0342428833246231, 0.0418855939060449, 0.0508771259337663, 0.0651661157608032, 0.0884826518595218, 0.1201618257910013], "y": [100.0, 5.488936632585754, 0.8276221358026615, 0.0991477654190883, 0.0247842878797273, 0.010845439707357, 0.010543611381433, 0.0105427203612794, 0.01054271972485, 0.0105427197246611, 0.010542719722038, 0.0105427197240972, 0.0105427197252589, 0.0105427197240855], "q1": [0.009927674382924979, 0.0124640099704265, 0.01288874894380562, 0.01346332728862756, 0.01413595080375666, 0.019017538800835558, 0.022044448554515803, 0.02981798574328418, 0.03099125586450094, 0.0402396101504564, 0.0496315989643335, 0.0648763414472341, 0.08740196153521532, 0.11932867951691147], "q9": [0.01234099492430682, 0.0138757579028606, 0.01502672210335726, 0.01821993179619306, 0.01815501675009726, 0.02090235948562616, 0.024605224281549442, 0.03077413029968734, 0.04467945843935006, 0.042339408770203535, 0.051909591257572114, 0.06926739141345022, 0.08878221437335011, 0.1203365389257669]}, "bar": {"y": 0.0301884692162275, "times": [0.0301961433142423, 0.0301884692162275, 0.0311594549566507, 0.0299486964941024, 0.0297308452427387], "text": ""}, "color": "rgba(255.0, 127.0, 14.0, 1.0)", "marker": 20}}, "transformers": {"c_star": 0.0105427196056651, "max_f_0": 6.247817535303946}}}, "SVM Binary Classification (no intercept)[C=0.1]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.0058817509561777, 0.0069434065371751, 0.0084441360086202, 0.0106891598552465, 0.0106197800487279, 0.0122096799314022, 0.014529226347804, 0.016291843727231, 0.0197248328477144, 0.0233756471425294, 0.0290130916982889, 0.038294343277812, 0.0497775990515947, 0.0672500133514404, 0.0947669371962547, 0.1354357507079839], "y": [10.0, 0.5706531944381464, 0.053601877452589, 0.0145149017428216, 0.0108197918625967, 0.0105437500279664, 0.0105427201198558, 0.0105427197056662, 0.0105427197056562, 0.0105427197056561, 0.010542719705656, 0.0105427197056559, 0.0105427197056559, 0.0105427197056558, 0.0105427197056559, 0.0105427197056558], "q1": [0.00408828258514396, 0.00677199140191076, 0.00780836008489128, 0.00935133881866928, 0.01012861058115958, 0.01202144660055636, 0.012908063828945139, 0.014547567442059501, 0.019297410547733297, 0.02239897586405274, 0.02741952575743192, 0.0373557891696691, 0.0486860238015651, 0.06625166833400721, 0.08852994143962857, 0.13479154296219345], "q9": [0.00636033713817592, 0.00882375724613664, 0.00975168794393534, 0.01098241657018656, 0.01169358529150482, 0.01322700940072528, 0.014886942505836439, 0.01791612692177288, 0.02048100419342516, 0.02397165596485134, 0.03057157583534712, 0.03878905475139616, 0.050727637112140594, 0.068675522506237, 0.0961563896387815, 0.13728386983275412]}, "bar": {"y": 0.014529226347804, "times": [0.0150683522224426, 0.014529226347804, 0.0141729712486267, 0.0146148279309272, 0.0120647922158241], "text": ""}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 18}, "L-BFGS-B": {"scatter": {"x": [0.0076464861631393, 0.007281556725502, 0.0077644977718591, 0.0099687799811363, 0.0121390558779239, 0.0137374885380268, 0.0218748077750206, 0.0205538924783468, 0.021378269419074, 0.0220621395856142, 0.021832937374711, 0.0217567719519138, 0.0219223834574222, 0.0225079394876956, 0.0225080177187919, 0.0220759529620409], "y": [0.634041763603878, 0.634041763603878, 0.1036595721471305, 0.025657241093259, 0.0109182793259511, 0.0105429224987074, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078, 0.0105427211539078], "q1": [0.00653030090034004, 0.006882847100496261, 0.00735629722476, 0.00933349728584284, 0.010692766681313439, 0.01152236461639398, 0.02171000652015208, 0.0199858766049146, 0.02103085666894908, 0.02105259932577606, 0.02056442834436888, 0.021091568842530217, 0.02144914157688614, 0.022083318978548, 0.020746138319373043, 0.0200636580586433], "q9": [0.00813236832618712, 0.0082382928580045, 0.00874032452702518, 0.0103474218398332, 0.01270134039223192, 0.01459376476705068, 0.02226091139018528, 0.02270491570234294, 0.0229443624615669, 0.02277903556823728, 0.022698188573122002, 0.0222806420177221, 0.02278707735240454, 0.02288346290588376, 0.0238301884382963, 0.02400611340999596]}, "bar": {"y": 0.0137374885380268, "times": [0.0149549972265958, 0.0119874496012926, 0.0137374885380268, 0.014051916077733, 0.0112123079597949], "text": ""}, "color": "rgba(174.0, 199.0, 232.0, 1.0)", "marker": 19}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.0120526067912578, 0.0138843152672052, 0.0144858602434396, 0.0160203445702791, 0.017596261575818, 0.0210192147642374, 0.024495679885149, 0.0289617795497179, 0.0350458100438118, 0.0409867875277996, 0.0507415793836116, 0.0650886613875627], "y": [10.0, 0.5705154707905303, 0.0925355878311583, 0.0193529130615431, 0.0121042248166743, 0.0105719544048664, 0.0105428170512861, 0.0105427197608557, 0.0105427197075275, 0.0105427197076324, 0.0105427197073226, 0.0105427197073461], "q1": [0.01149022914469238, 0.0135954190045595, 0.01222228668630118, 0.015309166163206059, 0.01710100024938578, 0.020029404759407, 0.02319278903305526, 0.02811985500156872, 0.0331185288727283, 0.03783274553716178, 0.049448123946785875, 0.0636800408363342], "q9": [0.01278852671384808, 0.01567816995084282, 0.014615811035037, 0.01701245121657842, 0.01840787641704074, 0.02352848351001732, 0.0280366364866495, 0.029436374083161302, 0.038639314845204324, 0.04193927198648446, 0.05106541067361828, 0.06627398058772081]}, "bar": {"y": 0.024495679885149, "times": [0.0250366125255823, 0.024495679885149, 0.0239468831568956, 0.0300366524606943, 0.0226900596171617], "text": ""}, "color": "rgba(255.0, 127.0, 14.0, 1.0)", "marker": 20}}, "transformers": {"c_star": 0.0105427196056558, "max_f_0": 0.634041763603878}}}}, "Simulated[n_samples=100,n_features=10000]": {"SVM Binary Classification (no intercept)[C=1.0]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.0066377967596054, 0.0099115185439586, 0.0121030397713184, 0.01312698982656, 0.015151796862483, 0.0184759385883808, 0.0222695413976907, 0.0281605925410985, 0.0328312404453754, 0.0379569958895444, 0.0431919861584901, 0.0568050350993871, 0.0728974919766187, 0.1001447532325983, 0.1391342747956514, 0.1937962789088487], "y": [100.0, 2.68903995945588, 0.1605820162370797, 0.0108642162602571, 0.0052302637382067, 0.0050237339396456, 0.0050233092613336, 0.0050233092259873, 0.0050233092259866, 0.0050233092259877, 0.0050233092259879, 0.0050233092259887, 0.0050233092259883, 0.0050233092259893, 0.0050233092259883, 0.0050233092259868], "q1": [0.00613829866051668, 0.0085596051067113, 0.0117337577044963, 0.01257676482200622, 0.01500421166419978, 0.01740690506994722, 0.01972850114107128, 0.02490586452186104, 0.02839135192334644, 0.03591332994401452, 0.04005976431071752, 0.05326855890452856, 0.06088196784257888, 0.08772905506193632, 0.13087145872414108, 0.18068619258701799], "q9": [0.00789709910750382, 0.01064196377992622, 0.01248887293040748, 0.013810262084007199, 0.01588955596089358, 0.018756911158561658, 0.023714624717831558, 0.02946303375065318, 0.0335452672094106, 0.03886562138795844, 0.04541664794087406, 0.05731715410947794, 0.07475253157317634, 0.10456211268901824, 0.13976735845208166, 0.20078210607171054]}, "bar": {"y": 0.0184759385883808, "times": [0.0184759385883808, 0.0189280919730663, 0.0178725197911262, 0.0185001399368047, 0.0170964952558279], "text": ""}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 18}, "L-BFGS-B": {"scatter": {"x": [0.0098191611468791, 0.0111687593162059, 0.0135353375226259, 0.0147615410387516, 0.0164923090487718, 0.0525952223688364, 0.0514700040221214, 0.0503731481730937, 0.0497862622141838, 0.0515768993645906, 0.0500254910439252, 0.0495576579123735, 0.0505954194813966, 0.0509116537868976, 0.0514551736414432, 0.0519236475229263], "y": [3.8193167679022695, 3.8193167679022695, 0.3292479978900495, 0.0346262490008226, 0.0053672431611835, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649, 0.0050237905360649], "q1": [0.008427372202277121, 0.01003734096884722, 0.012994068488478599, 0.013176193460822081, 0.01638204157352442, 0.04944162257015698, 0.04949848055839534, 0.0502629593014717, 0.04868969991803168, 0.0504485942423343, 0.04928895384073252, 0.04886616915464398, 0.04969906285405156, 0.05003226920962326, 0.049684519320726366, 0.04896985404193396], "q9": [0.01207149289548394, 0.0118662521243095, 0.01420437358319754, 0.01536489501595496, 0.0172743115574121, 0.05309629365801808, 0.05509326122701168, 0.053375701233744584, 0.0519199784845113, 0.051945082843303604, 0.05154523141682144, 0.05342392213642592, 0.05213432461023328, 0.05149300284683698, 0.05232682339847086, 0.05326992087066172]}, "bar": {"y": 0.0525952223688364, "times": [0.0509050749242305, 0.0525952223688364, 0.053133487701416, 0.0484659876674413, 0.0530405025929212], "text": ""}, "color": "rgba(174.0, 199.0, 232.0, 1.0)", "marker": 19}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.0178440641611814, 0.0207264050841331, 0.0223128907382488, 0.0268613584339618, 0.0297214016318321, 0.0349819343537092, 0.0432355385273695, 0.0524898972362279, 0.0602235421538353, 0.0732634831219911, 0.0940344743430614, 0.1194580374285578, 0.16328757908195252, 0.21426494978368277, 0.2969746440649032], "y": [100.0, 2.556546198899512, 0.3014704556973118, 0.0247247200732914, 0.006996684005141, 0.0050381256992896, 0.0050233209600435, 0.005023309239021, 0.0050233092403834, 0.0050233092409034, 0.0050233092391482, 0.0050233092378005, 0.005023309243222951, 0.0050233092409115, 0.0050233092434673], "q1": [0.015178996324539121, 0.01914911828935142, 0.02129157595336432, 0.02518059350550168, 0.02617144882678982, 0.0336274046450853, 0.04017397090792656, 0.050419714674353557, 0.05387104265391826, 0.07140002846717834, 0.09066015146672723, 0.1183131476864218, 0.1620280681177973, 0.21403652839362616, 0.2969746440649032], "q9": [0.02060955874621866, 0.02225039228796956, 0.02416632175445554, 0.0277361564338207, 0.03027626983821384, 0.0353476826101541, 0.043383676558732896, 0.05297022052109234, 0.06051250062882898, 0.0747347671538591, 0.09750511571764939, 0.1206029271706938, 0.1645470900461077, 0.21449337117373934, 0.2969746440649032]}, "bar": {"y": 0.0432355385273695, "times": [0.0385190024971962, 0.0426564235240221, 0.0434519760310649, 0.0432812273502349, 0.0432355385273695], "text": ""}, "color": "rgba(255.0, 127.0, 14.0, 1.0)", "marker": 20}}, "transformers": {"c_star": 0.005023309125986601, "max_f_0": 3.8193167679022695}}}, "SVM Binary Classification (no intercept)[C=0.1]": {"objective_value": {"solvers": {"CD": {"scatter": {"x": [0.0107308998703956, 0.012189807370305, 0.0149491634219884, 0.0166178289800882, 0.0171545203775167, 0.020641541108489, 0.0247548557817935, 0.0313107892870903, 0.0347627382725477, 0.0394317992031574, 0.048072574660182, 0.0595947280526161, 0.0778425671160221, 0.1033657919615507, 0.1447497084736824, 0.2025455795228481], "y": [10.0, 0.2733857718054311, 0.0205771382958165, 0.0056077747947607, 0.0050440328662679, 0.0050233517304569, 0.0050233092295128, 0.0050233092259776, 0.0050233092259775, 0.0050233092259776, 0.0050233092259776, 0.0050233092259777, 0.0050233092259777, 0.0050233092259778, 0.0050233092259777, 0.0050233092259775], "q1": [0.007889724895358021, 0.01107958219945424, 0.01443399488925928, 0.01483542695641514, 0.0163670629262924, 0.01953979544341556, 0.02314754053950302, 0.029961737617850242, 0.031144180148839858, 0.03492789231240744, 0.04582521617412562, 0.05769181437790386, 0.07187460511922834, 0.09527071677148337, 0.14182767122983925, 0.19856853410601616], "q9": [0.011498674377799, 0.01321510933339592, 0.015457053855061461, 0.017432676255702943, 0.01763654127717012, 0.021027478203177442, 0.02512573599815362, 0.03155232220888136, 0.03489472977817054, 0.04076445586979386, 0.04821792580187316, 0.06088673956692216, 0.08501281328499313, 0.10475296154618258, 0.1483577717095613, 0.2085374545305967]}, "bar": {"y": 0.020641541108489, "times": [0.0201412606984376, 0.0191388186067342, 0.0210097599774599, 0.0210392903536558, 0.020641541108489], "text": ""}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 18}, "L-BFGS-B": {"scatter": {"x": [0.0118776280432939, 0.0128362532705068, 0.0132356099784374, 0.0133255776017904, 0.0162692498415708, 0.0338107720017433, 0.0699922628700733, 0.0675370339304208, 0.0714636836200952, 0.0665082298219204, 0.0695456806570291, 0.0681853778660297, 0.0709979496896267, 0.0682950951159, 0.0689714252948761, 0.0674871671944856], "y": [0.3864141794154838, 0.3864141794154838, 0.0374446834958457, 0.0079835873773923, 0.0050577028017023, 0.0050233572673741, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684, 0.0050233572673684], "q1": [0.01147073507308956, 0.0111460015177726, 0.01257720403373238, 0.01292233280837532, 0.01572314612567418, 0.032137767225503856, 0.06710709668695924, 0.06689412519335741, 0.07031923122704024, 0.06554027199745172, 0.06862324625253674, 0.06677854657173152, 0.06808976493775841, 0.06641153618693346, 0.06680354475975032, 0.06449347063899034], "q9": [0.013268188014626479, 0.013732827082276279, 0.013866439834237061, 0.01407460384070864, 0.01687857247889038, 0.03456927314400666, 0.07121324986219402, 0.069800828769803, 0.08275420702993865, 0.06895488202571869, 0.0715854603797197, 0.07100043781101698, 0.07517206929624075, 0.07036739364266395, 0.07026418596506112, 0.0702300906181335]}, "bar": {"y": 0.0338107720017433, "times": [0.0338107720017433, 0.0347774550318717, 0.0342570003122091, 0.0317308045923709, 0.0327482111752033], "text": ""}, "color": "rgba(174.0, 199.0, 232.0, 1.0)", "marker": 19}, "sklearn[solver=liblinear]": {"scatter": {"x": [0.0187130719423294, 0.0195364505052566, 0.0236107353121042, 0.0255169756710529, 0.0301526058465242, 0.0352920480072498, 0.0431311596184968, 0.0509257931262254, 0.0610567834228277, 0.0732789132744073, 0.0918623991310596, 0.1226396169513464, 0.1517184246331453, 0.2297019995748996], "y": [10.0, 0.3063735163952057, 0.0343463599055041, 0.0070025035767162, 0.0052692454387997, 0.0050252630761477, 0.0050233107116104, 0.0050233092273957, 0.0050233092274825, 0.0050233092273579, 0.0050233092273603, 0.0050233092272853, 0.0050233092268535, 0.0050233092273749], "q1": [0.01624468602240084, 0.01811148002743718, 0.021343806385993917, 0.02218563444912426, 0.02804637067019934, 0.0331864736974239, 0.0407272666692733, 0.04843675196170802, 0.05975546501576898, 0.07293572984635822, 0.09087676182389258, 0.1226396169513464, 0.1517184246331453, 0.2297019995748996], "q9": [0.01902712509036062, 0.02140222229063502, 0.02490109913051122, 0.0268457494676113, 0.0307617392390966, 0.038896837458014435, 0.04339247569441792, 0.052437671273946704, 0.06137328557670112, 0.07595571838319295, 0.0931362345814704, 0.1226396169513464, 0.1517184246331453, 0.2297019995748996]}, "bar": {"y": 0.0431311596184968, "times": [0.0394290201365947, 0.0431511607021093, 0.0426746364682912, 0.043553352355957, 0.0431311596184968], "text": ""}, "color": "rgba(255.0, 127.0, 14.0, 1.0)", "marker": 20}}, "transformers": {"c_star": 0.0050233091259775, "max_f_0": 0.3864141794154838}}}}};
 
             window.addEventListener("load", () => {
                 // Initialize plot state
@@ -1584,7 +2927,9 @@ const isBarChart = () => state().plot_kind === 'bar_chart';
 
 const isVisible = solver => !state().hidden_solvers.includes(solver);
 
-const isSolverAvailable = solver => data(solver).scatter.y.filter(value => !isNaN(value)).length > 0
+const isSolverAvailable = solver => data(solver).scatter.y.filter(value => !isNaN(value)).length > 0;
+
+const isSmallScreen = () => window.screen.availHeight < 900;
 
 /**
  * Check for each solver
@@ -1607,11 +2952,11 @@ const isAvailable = () => {
 const displayScatterElements = shouldBeVisible => {
   if (shouldBeVisible) {
     document.getElementById('change_scaling').style.display = 'inline-block';
-    document.getElementById('legend_title').style.display = 'block';
+    document.getElementById('legend_container').style.display = 'block';
     document.getElementById('plot_legend').style.display = 'flex';
   } else {
     document.getElementById('change_scaling').style.display = 'none';
-    document.getElementById('legend_title').style.display = 'none';
+    document.getElementById('legend_container').style.display = 'none';
     document.getElementById('plot_legend').style.display = 'none';
   }
 };
@@ -1658,9 +3003,11 @@ const getScale = () => {
 
 const getScatterChartLayout = () => {
   const layout = {
-    width: 900,
+    autosize: !isSmallScreen(),
+    modebar: {
+      orientation: 'v',
+    },
     height: 700,
-    autosize: false,
     showlegend: false,
     legend: {
       title: {
@@ -1687,9 +3034,15 @@ const getScatterChartLayout = () => {
       gridcolor: '#ffffff',
       zeroline : false,
     },
-    title: `${state().objective}\nData: ${state().dataset}`,
+    title: `${state().objective}<br />Data: ${state().dataset}`,
     plot_bgcolor: '#e5ecf6',
   };
+
+  if (isSmallScreen()) {
+    layout.width = 900;
+    layout.height = window.screen.availHeight - 200;
+    layout.dragmode = false;
+  }
 
   if (!isAvailable()) {
     layout.annotations = [{
@@ -1710,10 +3063,12 @@ const getScatterChartLayout = () => {
 };
 
 const getBarChartLayout = () => {
+
   const layout = {
-    width: 900,
-    height: 700,
-    autosize: false,
+    autosize: !isSmallScreen(),
+    modebar: {
+      orientation: 'v',
+    },
     yaxis: {
       type: 'log',
       title: 'Time [sec]',
@@ -1725,9 +3080,15 @@ const getBarChartLayout = () => {
       ticktext: getSolvers(),
     },
     showlegend: false,
-    title: `${state().objective}\nData: ${state().dataset}`,
+    title: `${state().objective}<br />Data: ${state().dataset}`,
     plot_bgcolor: '#e5ecf6',
   };
+
+  if (isSmallScreen()) {
+    layout.width = 900;
+    layout.height = window.screen.availHeight - 200;
+    layout.dragmode = false;
+  }
 
   if (!isAvailable()) {
     layout.annotations = [{
@@ -1860,6 +3221,7 @@ const createLegendItem = (solver, color, symbolNumber) => {
   item.style.alignItems = 'center';
   item.style.position = 'relative';
   item.style.cursor = 'pointer';
+  item.className = 'bg-white py-1 px-4 shadow-sm mt-2 rounded'
 
   if (!isVisible(solver)) {
     item.style.opacity = 0.5;
@@ -1908,7 +3270,7 @@ const createLegendItem = (solver, color, symbolNumber) => {
   hBar.style.width = '30px';
   hBar.style.backgroundColor = color;
   hBar.style.position = 'absolute';
-  hBar.style.left = 0;
+  hBar.style.left = '1em';
   hBar.style.zIndex = 10;
 
   // Append elements to the legend item
@@ -1948,25 +3310,28 @@ const createSymbol = (symbolNumber, color) => {
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-/**
- * Listener on the system information "+" button
- */
-document.getElementById('btn_subinfo').addEventListener('click', () => {
-  const elmt = document.getElementById('subinfo');
-  const plus = document.getElementById('btn_plus');
-  const minus = document.getElementById('btn_minus');
+document.getElementById('btn-plot-config').addEventListener('click', () => {
+  const elmt = document.getElementById('mobile-plot-form');
 
-  if (elmt.style.display === 'none') {
-      elmt.style.display = 'block';
-      plus.style.display = 'none';
-      minus.style.display = 'inline';
+  if (elmt.style.display === 'block') {
+      elmt.style.display = 'none';
 
       return;
   }
 
-  elmt.style.display = 'none';
-  plus.style.display = 'inline';
-  minus.style.display = 'none';
+  elmt.style.display = 'block';
+});
+
+document.getElementById('btn-main-menu').addEventListener('click', () => {
+  const elmt = document.getElementById('mobile-menu');
+
+  if (elmt.style.display === 'block') {
+      elmt.style.display = 'none';
+
+      return;
+  }
+
+  elmt.style.display = 'block';
 });
 
         </script>

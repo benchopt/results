@@ -5,330 +5,1360 @@
         <meta charset="utf-8" />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./static/utilities.css">
+        <link rel="stylesheet" href="./static/hover_index.css">
 
         <title>Result on nnls benchmark</title>
 
         <style>
             /*
-   Comprehensive Base Stylesheet - https://fvsch.com/base-stylesheet/
-   Makes browser default styles more consistent, creating a canvas that you
-   should modify for your project. Fully commented. Last update: 2011-10-02.
+! tailwindcss v3.1.2 | MIT License | https://tailwindcss.com
 */
 
-/* CONTAINERS */
+/*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  /* 1 */
+  border-width: 0;
+  /* 2 */
+  border-style: solid;
+  /* 2 */
+  border-color: #e5e7eb;
+  /* 2 */
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+*/
+
+html {
+  line-height: 1.5;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  -moz-tab-size: 4;
+  /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4;
+  /* 3 */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* 4 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
 body {
-  margin: auto;
-  max-width: 70em;
-  padding: 1.5em 3% 8em; /* Browsers have default 8px margins _or_ padding! */
-  font-size: 100%; /* See: http://www.informationarchitects.jp/en/100e2r/ */
-  line-height: 1.5; /* Default value, `normal`, depends on the font */
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji; /* ripoff from github */
-}
-/* HTML5 blocks - needed in older browsers */
-article, aside, figcaption, figure, footer, header, nav, section {
-  display: block;
+  margin: 0;
+  /* 1 */
+  line-height: inherit;
+  /* 2 */
 }
 
-/* PARAGRAPHS */
-h1, h2, h3, h4 {
-  line-height: 1.25; /* Bigger text is often nicer with smaller line height */
-  font-weight: bold; /* Browser default. Use `normal` for less bulky titles */
-}
-h1 {
-    margin: 0.5em 0 .5em; /* Titles should be close to the text they describe */
-    font-size: 2em;
-}
-h2 {
-    margin: 2em 0 .5em; /* Titles should be close to the text they describe */
-    font-size: 1.5em;}
-h3 {
-    margin: 3em 0 .5em; /* Titles should be close to the text they describe */
-    font-size: 1.2em;}
-h4 {
-    margin: 1.5em 0 .5em; /* Titles should be close to the text they describe */
-    font-size: 1em;
-}
-ul, ol {
-  margin: 1em 0; /* Default for all browsers except IE */
-  padding-left: 40px; /* IE has a 40px margin-left instead */
-}
-p {
-  margin: 1em 0;
-}
-blockquote {
-  margin: 1em 40px; /* Same for all browsers - Customize or remove */
-}
-figure {
-  margin: 1em 0; /* Default in HTML5 spec: `1em 40px` */
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0;
+  /* 1 */
+  color: inherit;
+  /* 2 */
+  border-top-width: 1px;
+  /* 3 */
 }
 
-/* LINKS */
-/* Default browser styles (from Firefox, similar in most browsers) */
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
 a {
-  text-decoration: none;
-}
-a:link,
-a:visited {
-    color: DodgerBlue;
-}
-a:active {
-    color: #EE0000;
-}
-/* Add your own styles for hover _and_ focus styles */
-a:hover, a:focus {
-  text-decoration: none;
-}
-/* Remove dotted outline clicked links - Keeps outline on focus */
-a:active, a:hover {
-  outline: none;
-}
-/* No border around images in links */
-a img {
-  border: none;
+  color: inherit;
+  text-decoration: inherit;
 }
 
-/* MISC TEXT-LEVEL ELEMENTS */
-/* Make quotations and references more visible */
-q, cite {
-  font-style: italic;
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
 }
-/* Remove automatic quotation marks for inline quotations
-   (`q {quotes:none}` not implemented in WebKit) */
-q:before, q:after {
-  content: "";
+
+/*
+1. Use the user's configured `mono` font family by default.
+2. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
 }
-/* Stopping superscript and subscript from adding to the line's leading */
-sup, sub {
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
   line-height: 0;
+  position: relative;
+  vertical-align: baseline;
 }
 
-/* FORMS */
-fieldset {
-  margin: 0; /* Common default is `0 2px` */
-  padding: 0; /* Common default (roughly): `.35em .625em .75em` */
-  border: none;
-}
-input, button, select {
-  vertical-align: middle; /* Helps keep form elements roughly aligned */
+sub {
+  bottom: -0.25em;
 }
 
-select {
-  border: 1px solid #aaa;
-  border-radius: 3px;
-  padding: 5px;
-  background-color: transparent;
-  padding: 4px;
-  color: #333;
+sup {
+  top: -0.5em;
 }
 
-/* TABLES */
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
 table {
-  border-collapse: collapse; /* Merges cell borders together */
-  /* Browser default: border-collapse: separate; border-spacing: 2px; */
-}
-td, th {
-  padding: 1px; /* Same as browser default - set to "0" to remove padding */
-  vertical-align: top; /* Default is "middle" */
-  text-align: left; /* Default for TH elements is "center" */
-}
-td:first-child, th:first-child {
-  empty-cells: hide; /* Hide empty cells when they're the first in the row */
-}
-
-/* Custom stuff on top of the base style sheet */
-.status {
-    font-weight: bold;
-    font-family: monospace;
-    color: white;
-    padding: .25em .4em;
-    border-radius: .2em;
-}
-.success {
-    background-color: forestgreen;
-}
-.failure {
-    background-color: orangered;
-}
-.error {
-    background-color: firebrick;
-}
-
-.summary a {
-    font-weight: 500;
-}
-
-.highlight {
-    margin: 0;
-}
-
-.highlight pre {
-    padding: 1em;
-    border: 1px solid #eee;
-    background-color: #f5f5f5;
-    margin-bottom: 0.1em;
-    overflow-x: auto;
-}
-
-.source {
-    margin: 0.3em 0 2em;
-    font-size: 90%;
-}
-
-.source a:visited,
-.source a:link {
-    color: #666;
-    text-decoration: underline;
-}
-.source a:hover, a:focus {
-    color: #666;
-    text-decoration: underline;
-}
-
-/* Pandas dataframe css */
-/* Taken from: https://github.com/spatialaudio/nbsphinx/blob/fb3ba670fc1ba5f54d4c487573dbc1b4ecf7e9ff/src/nbsphinx.py#L587-L619 */
-
-table.dataframe {
-  border: none !important;
+  text-indent: 0;
+  /* 1 */
+  border-color: inherit;
+  /* 2 */
   border-collapse: collapse;
-  border-spacing: 0;
-  border-color: transparent;
-  color: black;
-  font-size: .9em;
-  table-layout: fixed;
-  border-radius:6px;
-}
-table.datatable {
-  border-radius:6px;
-}
-table.dataframe thead {
-  border-bottom: 1px solid black;
-  vertical-align: bottom;
-}
-table.dataframe tr,
-table.dataframe th,
-table.dataframe td {
-  text-align: left;
-  vertical-align: middle;
-  padding: 0.5em 0.5em;
-  line-height: normal;
-  white-space: normal;
-  max-width: none;
-  border: none;
-}
-table.dataframe th {
-  font-weight: bold;
-}
-table.dataframe tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-table.datatable.display tbody tr:hover {
-  background-color: #ddd !important;
-}
-a.anchor:visited,
-a.anchor:link {
-    padding-left: .2em;
-    color: #999;
-}
-div.dataTables_filter, div.dataTables_length {
-  padding: 20px;
+  /* 3 */
 }
 
-.backtotop {
-    text-decoration: none;
-    display: flex;
-    position: fixed;
-    font-size: 50px;
-    right: 40px;
-    bottom: 40px;
-    align-items: center;
-    justify-content: center;
-    order: 2;
-    margin-left: auto;
-    z-index: 999;
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  font-weight: inherit;
+  /* 1 */
+  line-height: inherit;
+  /* 1 */
+  color: inherit;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+  padding: 0;
+  /* 3 */
 }
 
-.priority1 {
-    color: purple;
-}
-.priority2 {
-    color: firebrick;
-}
-.priority3 {
-    color: chocolate;
-}
-td.number {
-  text-align: right;
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
 }
 
-/* Style buttons */
-.btn {
-  background-color: DodgerBlue; /* Blue background */
-  border: none; /* Remove borders */
-  color: white; /* White text */
-  padding: 12px 16px; /* Some padding */
-  font-size: 16px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
-  min-height: 46px;
-  /**
-   * Vertically align the icon and the text
-   * inside the button
-   */
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+  /* 1 */
+  background-color: transparent;
+  /* 2 */
+  background-image: none;
+  /* 2 */
 }
 
-/* Darker background on mouse-over */
-.btn:hover {
-  background-color: RoyalBlue;
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
 }
 
-/* The main part of the page should adapt to the presence of the sidebar */
-.main {
-  margin-left: 200px; /* same as sidebar width to avoid overlaps */
-  padding: 1px 16px;
-  height: 1000px;
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
 }
 
-.btn svg {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: white;
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
 }
 
-/* Select all elements after any other element in a .btn */
-.btn > * + * {
-  margin-left: 0.5rem;
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
 }
 
-.space-r-4 > * {
-  margin-right: 1rem;
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */
 }
 
-#btn_subinfo:hover {
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1;
+  /* 1 */
+  color: #9ca3af;
+  /* 2 */
+}
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  opacity: 1;
+  /* 1 */
+  color: #9ca3af;
+  /* 2 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1;
+  /* 1 */
+  color: #9ca3af;
+  /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role="button"] {
   cursor: pointer;
 }
 
-#btn_subinfo svg {
-  width: 1rem;
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  /* 1 */
+  vertical-align: middle;
+  /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+*, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+::-webkit-backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.inset-0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.flex {
+  display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.table {
+  display: table;
+}
+
+.grid {
+  display: grid;
+}
+
+.hidden {
+  display: none;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
+.h-10 {
+  height: 2.5rem;
+}
+
+.h-8 {
+  height: 2rem;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
+.h-5 {
+  height: 1.25rem;
+}
+
+.h-4 {
   height: 1rem;
 }
 
-#plot_legend {
-  display: flex;
-  flex-direction: row;
+.h-12 {
+  height: 3rem;
+}
+
+.min-h-full {
+  min-height: 100%;
+}
+
+.w-96 {
+  width: 24rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.w-5 {
+  width: 1.25rem;
+}
+
+.w-4 {
+  width: 1rem;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.min-w-0 {
+  min-width: 0px;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
   flex-wrap: wrap;
-  padding: 10px;
 }
 
-#legend_title {
-  font-size: 1.2rem;
-  font-weight: bold;
+.items-end {
+  align-items: flex-end;
 }
 
-#legend_help {
-  font-size: 0.75rem;
-  color: #475569;
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
+.space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.border-gray-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.border-gray-800 {
+  --tw-border-opacity: 1;
+  border-color: rgb(31 41 55 / var(--tw-border-opacity));
+}
+
+.border-transparent {
+  border-color: transparent;
+}
+
+.bg-gray-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.bg-gray-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+}
+
+.bg-blue-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+
+.bg-slate-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+}
+
+.bg-blue-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+}
+
+.bg-gray-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.bg-opacity-75 {
+  --tw-bg-opacity: 0.75;
+}
+
+.p-1 {
+  padding: 0.25rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.pt-2 {
+  padding-top: 0.5rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
+}
+
+.pb-0 {
+  padding-bottom: 0;
+}
+
+.pb-1 {
+  padding-bottom: 0.25rem;
+}
+
+.pb-3 {
+  padding-bottom: 0.75rem;
+}
+
+.pt-5 {
+  padding-top: 1.25rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.leading-7 {
+  line-height: 1.75rem;
+}
+
+.leading-6 {
+  line-height: 1.5rem;
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-gray-100 {
+  --tw-text-opacity: 1;
+  color: rgb(243 244 246 / var(--tw-text-opacity));
+}
+
+.text-gray-900 {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+
+.text-gray-700 {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-xl {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.hover\:bg-blue-800:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 64 175 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-blue-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.focus\:border-blue-500:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(59 130 246 / var(--tw-border-opacity));
+}
+
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus\:ring-2:focus {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-inset:focus {
+  --tw-ring-inset: inset;
+}
+
+.focus\:ring-blue-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity));
+}
+
+.focus\:ring-white:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity));
+}
+
+.focus\:ring-gray-500:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(107 114 128 / var(--tw-ring-opacity));
+}
+
+.focus\:ring-offset-2:focus {
+  --tw-ring-offset-width: 2px;
+}
+
+@media (min-width: 640px) {
+  .sm\:my-8 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .sm\:mx-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .sm\:mt-0 {
+    margin-top: 0px;
+  }
+
+  .sm\:ml-3 {
+    margin-left: 0.75rem;
+  }
+
+  .sm\:ml-4 {
+    margin-left: 1rem;
+  }
+
+  .sm\:block {
+    display: block;
+  }
+
+  .sm\:flex {
+    display: flex;
+  }
+
+  .sm\:hidden {
+    display: none;
+  }
+
+  .sm\:h-10 {
+    height: 2.5rem;
+  }
+
+  .sm\:w-full {
+    width: 100%;
+  }
+
+  .sm\:w-10 {
+    width: 2.5rem;
+  }
+
+  .sm\:w-auto {
+    width: auto;
+  }
+
+  .sm\:max-w-lg {
+    max-width: 32rem;
+  }
+
+  .sm\:flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  .sm\:items-start {
+    align-items: flex-start;
+  }
+
+  .sm\:items-center {
+    align-items: center;
+  }
+
+  .sm\:items-stretch {
+    align-items: stretch;
+  }
+
+  .sm\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .sm\:space-x-6 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+    margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
+  .sm\:truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sm\:p-0 {
+    padding: 0px;
+  }
+
+  .sm\:p-6 {
+    padding: 1.5rem;
+  }
+
+  .sm\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .sm\:pb-4 {
+    padding-bottom: 1rem;
+  }
+
+  .sm\:text-left {
+    text-align: left;
+  }
+
+  .sm\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .sm\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .sm\:mr-6 {
+    margin-right: 1.5rem; /* 24px */
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:inline {
+    display: inline;
+  }
+
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:hidden {
+    display: none;
+  }
+
+  .md\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .md\:text-left {
+    text-align: left;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:inline-block {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:mt-0 {
+    margin-top: 0px;
+  }
+
+  .lg\:ml-4 {
+    margin-left: 1rem;
+  }
+
+  .lg\:flex {
+    display: flex;
+  }
+
+  .lg\:items-center {
+    align-items: center;
+  }
+
+  .lg\:justify-between {
+    justify-content: space-between;
+  }
+
+  .lg\:inline {
+    display: inline;
+  }
+
+  .lg\:hidden {
+    display: none;
+  }
+
+  .lg\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .lg\:text-left {
+    text-align: left;
+  }
+
+  .lg\:block {
+    display:block;
+  }
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.px-10 {
+  padding-left: 2.5rem; /* 40px */
+  padding-right: 2.5rem; /* 40px */
+}
+
+.py-10 {
+  padding-top: 2.5rem; /* 40px */
+  padding-bottom: 2.5rem; /* 40px */
+}
+
+.mb-4 {
+  margin-bottom: 1rem; /* 16px */
+}
+
+.mt-4 {
+  margin-top: 1rem; /* 16px */
+}
+
+.mr-6 {
+  margin-right: 1.5rem; /* 24px */
+}
+
+.mr-4 {
+  margin-right: 1rem; /* 24px */
+}
+
+.rounded {
+  border-radius: 0.25rem; /* 4px */
 }
 
 
@@ -560,6 +1590,8 @@ input:focus+.slider {
 }
 
 input:checked+.slider:before {
+  -webkit-transform: translateX(var(--slider-on));
+  -ms-transform: translateX(var(--slider-on));
   transform: translateX(var(--slider-on));
 }
 
@@ -571,93 +1603,404 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
+/*----------------------------------------*/
+/***** Brand text animated *****/
+/*----------------------------------------*/
+
+
+.ml11 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.1em;
+  padding-right: 0.05em;
+  padding-bottom: 0.15em;
+}
+
+.ml11 .line {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background-color: #fff;
+  transform-origin: 0 50%;
+}
+
+.ml11 .line1 { 
+  top: 0; 
+  left: 0;
+}
+
+.ml11 .letter {
+  display: inline-block;
+  line-height: 1em;
+  font-family: 'Kanit', sans-serif;
+}
+
+/*----------------------------------------*/
+/***** Plot *****/
+/*----------------------------------------*/
+
+@media (min-width: 768px) {
+  #unique_plot {
+    flex: 1 1 0%;
+  }
+}
+
+@media (max-width: 767px) {
+  #unique_plot {
+    flex: initial;
+    flex-shrink: 0;
+  }
+}
+
+.js-plotly-plot .plotly .modebar {
+  transform: translateX(-30px);
+}
+
+/*----------------------------------------*/
+/***** Custom legend *****/
+/*----------------------------------------*/
+
+#plot_legend {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#legend_title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+#legend_help {
+  font-size: 0.75rem;
+  color: #475569;
+}
+
+.space-r-2 > * {
+  margin-right: 0.5rem;
+}
+
         </style>
     </head>
     <body>
-        <a id="top"></a>
-        <a href="index.html">
-            <button class="btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 576 512">
-    <path d="M511.8 287.6L512.5 447.7C512.5 450.5 512.3 453.1 512 455.8V472C512 494.1 494.1 512 472 512H456C454.9 512 453.8 511.1 452.7 511.9C451.3 511.1 449.9 512 448.5 512H392C369.9 512 352 494.1 352 472V384C352 366.3 337.7 352 320 352H256C238.3 352 224 366.3 224 384V472C224 494.1 206.1 512 184 512H128.1C126.6 512 125.1 511.9 123.6 511.8C122.4 511.9 121.2 512 120 512H104C81.91 512 64 494.1 64 472V360C64 359.1 64.03 358.1 64.09 357.2V287.6H32.05C14.02 287.6 0 273.5 0 255.5C0 246.5 3.004 238.5 10.01 231.5L266.4 8.016C273.4 1.002 281.4 0 288.4 0C295.4 0 303.4 2.004 309.5 7.014L416 100.7V64C416 46.33 430.3 32 448 32H480C497.7 32 512 46.33 512 64V185L564.8 231.5C572.8 238.5 576.9 246.5 575.8 255.5C575.8 273.5 560.8 287.6 543.8 287.6L511.8 287.6z"/>
-</svg>
+        <!-- Two main columns container -->
+        <div class="flex">
+            <!-- Left column on big screen (plot selectors) -->
+            <div class="hidden lg:flex flex-col w-96 bg-gray-700">
+                <div class="h-screen">
+                    <div class="px-8 h-16 flex items-center bg-gray-800">
+                        <h1 class="ml11">
+                            <span class="text-wrapper">
+                                <span class="line line1"></span>
+                                <span id="brand" class="hidden letters text-2xl text-white">Benchopt</span>
+                            </span>
+                        </h1>
+                    </div>
+                    <div class="flex-1 flex flex-col">
+                        <div class="mt-10 px-8">
+                            <label for="dataset_selector" class="block text-sm font-medium text-white">Dataset:</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <select id="dataset_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({dataset: this.value})">
+                                    <option value="Boston[standardized=True]">Boston[standardized=True]</option>
+                                    <option value="Simulated[n_samples=100,n_features=5000]">Simulated[n_samples=100,n_features=5000]</option>
+                                    <option value="Simulated[n_samples=100,n_features=10000]">Simulated[n_samples=100,n_features=10000]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-8 px-8">
+                            <label for="objective_selector" class="block text-sm font-medium text-white">Objective:</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <select id="objective_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective: this.value})">
+                                    <option value="Non Negative Least Squares[fit_intercept=False]">Non Negative Least Squares[fit_intercept=False]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-8 px-8">
+                            <label for="objective_column" class="block text-sm font-medium text-white">Objective column</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <select id="objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_column: this.value})">
+                                    <option value="objective_value">objective_value</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-8 px-8">
+                            <label for="plot_kind" class="block text-sm font-medium text-white">Chart type</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value})">
+                                    <option value="objective_curve">objective_curve</option>
+                                    <option value="suboptimality_curve">suboptimality_curve</option>
+                                    <option value="relative_suboptimality_curve">relative_suboptimality_curve</option>
+                                    <option value="bar_chart">bar_chart</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="scale-form-group" class="mt-8 px-8">
+                            <label for="change_scaling" class="block text-sm font-medium text-white">Scale</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <select id="change_scaling" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
+                                    <option value="semilog-y">semilog-y</option>
+                                    <option value="semilog-x">semilog-x</option>
+                                    <option value="loglog">loglog</option>
+                                    <option value="linear">linear</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-8 px-8">
+                            <div class="block text-sm font-medium text-white">Quantiles</div>
+                            <label class="block switch">
+                                <input id="change_shades" type="checkbox" checked onchange="setState({with_quantiles: this.checked})">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right column on big screen and main column on mobile -->
+            <div class="w-full flex flex-col overflow-scroll">
+                <!-- Main menu -->
+                <nav class="bg-blue-600">
+                    <div class="px-4">
+                        <div class="relative flex items-center justify-between h-16">
+                            <!-- mobile navbar -->
+                            <div class="absolute inset-0 flex items-center justify-between lg:hidden">
+                                <!-- Mobile menu brand text -->
+                                <span class="text-white text-xl">
+                                    Benchopt
+                                </span>
+                                <!-- Mobile menu button-->
+                                <button type="button" id="btn-main-menu" class="inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                                    <span class="sr-only">Open main menu</span>
+                                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                    <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- big screen navbar-->
+                            <div class="flex-1 flex items-center justify-center lg:items-stretch lg:justify-start">
+                                <div class="hidden lg:block">
+                                    <div class="flex space-x-4">
+                                        <a href="index.html" class="text-gray-100 hover:bg-blue-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</a>
+                                        <a href="https://benchopt.github.io" class="text-gray-100 hover:bg-blue-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium" target="_blank">Website</a>
+                                        <a href="https://github.com/benchopt/benchopt" class="text-gray-100 hover:bg-blue-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium" target="_blank">Github</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile menu, show/hide based on menu state. -->
+                    <div class="hidden" id="mobile-menu">
+                        <div class="px-2 pt-2 pb-3 space-y-1">
+                            <a href="index.html" class="text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Home</a>
+                            <a href="https://benchopt.github.io" class="text-white block px-3 py-2 rounded-md text-base font-medium">Website</a>
+                            <a href="https://github.com/benchopt/benchopt" class="text-white block px-3 py-2 rounded-md text-base font-medium">Github</a>
+                            <a href="outputs/benchmark_nnls_benchopt_run_2020-12-21_10h49m06.csv" class="text-white block px-3 py-2 rounded-md text-base font-medium">Download data</a>
+                        </div>
+                    </div>
+                </nav>
 
-            </button>
-        </a>
-        <a href="benchmark_nnls.html">
-            <button class="btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 448 512"><path d="M447.1 256C447.1 273.7 433.7 288 416 288H109.3l105.4 105.4c12.5 12.5 12.5 32.75 0 45.25C208.4 444.9 200.2 448 192 448s-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L109.3 224H416C433.7 224 447.1 238.3 447.1 256z"/></svg>
-
-                <span>
-                    nnls
-                </span>
-            </button>
-        </a>
-        <a href="outputs/benchmark_nnls_benchopt_run_2020-12-21_10h49m06.csv">
-            <button class="btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 512 512"><path d="M480 352h-133.5l-45.25 45.25C289.2 409.3 273.1 416 256 416s-33.16-6.656-45.25-18.75L165.5 352H32c-17.67 0-32 14.33-32 32v96c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32v-96C512 366.3 497.7 352 480 352zM432 456c-13.2 0-24-10.8-24-24c0-13.2 10.8-24 24-24s24 10.8 24 24C456 445.2 445.2 456 432 456zM233.4 374.6C239.6 380.9 247.8 384 256 384s16.38-3.125 22.62-9.375l128-128c12.49-12.5 12.49-32.75 0-45.25c-12.5-12.5-32.76-12.5-45.25 0L288 274.8V32c0-17.67-14.33-32-32-32C238.3 0 224 14.33 224 32v242.8L150.6 201.4c-12.49-12.5-32.75-12.5-45.25 0c-12.49 12.5-12.49 32.75 0 45.25L233.4 374.6z"/></svg>
-
-                <span>
-                    benchmark_nnls_benchopt_run_2020-12-21_10h49m06.csv
-                </span>
-            </button>
-        </a>
-        <h1 style:>Result on nnls benchmark</h1>
-        <summary></summary>
-
-        <!--Display all system informations if you want to-->
-
-
-        <!-- Add selector to display only one plot -->
-        <div>
-            <label for='dataset_selector'>Dataset:</label>
-            <select id='dataset_selector' onchange="setState({dataset: this.value});">
-                <option value="Boston[standardized=True]">Boston[standardized=True]</option>
-                <option value="Simulated[n_samples=100,n_features=5000]">Simulated[n_samples=100,n_features=5000]</option>
-                <option value="Simulated[n_samples=100,n_features=10000]">Simulated[n_samples=100,n_features=10000]</option>
-            </select>
+                <!-- Plot menu for mobiles -->
+                <nav class="lg:hidden bg-gray-700">
+                    <div class="px-4" id="btn-plot-config">
+                        <div class="relative flex items-center justify-between h-10">
+                            <div class="absolute inset-0 flex items-center justify-between lg:hidden">
+                                <!-- Mobile menu button-->
+                                <span class="flex items-center space-x-2 text-white">
+                                    <span>Change plot</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                                    </svg>
+                                </span>
+                                <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                                    <span class="sr-only">Open main menu</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile menu, show/hide based on menu state. -->
+                    <div class="hidden" id="mobile-plot-form">
+                        <div class="px-2 pt-2 pb-3 space-y-4">
+                            <div class="px-8">
+                                <label for="dataset_selector" class="block text-sm font-medium text-white">Dataset:</label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select id="dataset_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({dataset: this.value})">
+                                        <option value="Boston[standardized=True]">Boston[standardized=True]</option>
+                                        <option value="Simulated[n_samples=100,n_features=5000]">Simulated[n_samples=100,n_features=5000]</option>
+                                        <option value="Simulated[n_samples=100,n_features=10000]">Simulated[n_samples=100,n_features=10000]</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="px-8">
+                                <label for="objective_selector" class="block text-sm font-medium text-white">Objective:</label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select id="objective_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective: this.value})">
+                                        <option value="Non Negative Least Squares[fit_intercept=False]">Non Negative Least Squares[fit_intercept=False]</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="px-8">
+                                <label for="objective_column" class="block text-sm font-medium text-white">Objective column</label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select id="objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_column: this.value})">
+                                        <option value="objective_value">objective_value</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="px-8">
+                                <label for="plot_kind" class="block text-sm font-medium text-white">Chart type</label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value})">
+                                        <option value="objective_curve">objective_curve</option>
+                                        <option value="suboptimality_curve">suboptimality_curve</option>
+                                        <option value="relative_suboptimality_curve">relative_suboptimality_curve</option>
+                                        <option value="bar_chart">bar_chart</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="scale-form-group" class="px-8">
+                                <label for="change_scaling" class="block text-sm font-medium text-white">Scale</label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select id="change_scaling" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
+                                        <option value="semilog-y">semilog-y</option>
+                                        <option value="semilog-x">semilog-x</option>
+                                        <option value="loglog">loglog</option>
+                                        <option value="linear">linear</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mt-8 px-8">
+                                <div class="block text-sm font-medium text-white">Quantiles</div>
+                                <label class="block switch">
+                                    <input id="change_shades" type="checkbox" checked onchange="setState({with_quantiles: this.checked})">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+    
+                <!-- Page heading -->
+                <div class="px-4 pt-4 pb-1 md:py-4 lg:flex lg:items-center lg:justify-between">
+                    <div class="flex-1 min-w-0">
+                        <h2 class="w-full text-center lg:text-left text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Result on nnls benchmark</h2>
+                        <div class="mt-1 flex flex-wrap justify-center lg:justify-start sm:mt-0">
+                            <div class="mt-2">
+                                <button class="inline-flex items-center px-2 py-1 space-x-2 border border-gray-500 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" onclick="document.getElementById('system-modal').style.display = 'block'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="hidden md:inline-block text-sm">Show more</span>
+                                    <span class="md:hidden text-sm">Show system information</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden lg:flex mt-5 lg:mt-0 lg:ml-4">
+                        <span>
+                            <a href="outputs/benchmark_nnls_benchopt_run_2020-12-21_10h49m06.csv" class="inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                <span class="hidden lg:inline">Download data</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+    
+                <!-- Plot -->
+                <div id="unique_plot"></div>
+                <div id="legend_container" class="py-10 bg-slate-200">
+                    <div id="legend_title" class="px-10 mb-4">
+                        Solvers <span id="legend_help">(Click on a solver to hide it or double click to hide all the others)</span>
+                    </div>
+                    <div id="plot_legend" class="px-10 space-r-2"></div>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for='objective_selector'>Objective:</label>
-            <select id='objective_selector' onchange="setState({objective: this.value});">
-                <option value="Non Negative Least Squares[fit_intercept=False]">Non Negative Least Squares[fit_intercept=False]</option>
-            </select>
-            <select id='objective_column' onchange="setState({objective_column: this.value});">
-                <option value="objective_value">value</option>
-            </select>
-        </div>
-        <div>
-            <label for='plot_kind'>Chart type:</label>
-            <select id='plot_kind' onchange="setState({plot_kind: this.value});">
-                <option value="objective_curve">objective curve</option>
-                <option value="suboptimality_curve">suboptimality curve</option>
-                <option value="relative_suboptimality_curve">relative suboptimality curve</option>
-                <option value="bar_chart">bar chart</option>
-            </select>
-            <select id="change_scaling" onchange="setState({scale: this.value});">
-                <option value="semilog-y">semilog-y</option>
-                <option value="semilog-x">semilog-x</option>
-                <option value="loglog">loglog</option>
-                <option value="linear">linear</option>
-            </select>
-        </div>
-        <div style="display: flex; align-items: center;">
-            <p style="margin: 0; margin-right: 4px">Quantiles: </p>
-            <label for='change_shades' class="switch">
-                <input id="change_shades" type="checkbox" checked onchange="setState({with_quantiles: this.checked})">
-                <span class="slider round"></span>
-            </label>
-        </div>
 
-        <div id="unique_plot"></div>
-
-        <div id="legend_title">
-            Solvers <span id="legend_help">(Click on a solver to hide it or double click to hide all the others)</span>
+        <!-- System information modal -->
+        <div id="system-modal" class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+            <div class="fixed z-10 inset-0 overflow-y-auto">
+                <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+                    <div class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">System information</h3>
+                                    <div class="mt-2">
+                                        <ul class="text-sm text-gray-500">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="document.getElementById('system-modal').style.display = 'none'">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="plot_legend" class="space-r-4"></div>
 
         <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+        <!-- Used for the brand animation -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+        <!-- Define the brand animation -->
         <script>
-            window.data = {"Boston[standardized=True]": {"Non Negative Least Squares[fit_intercept=False]": {"objective_value": {"solvers": {"cd": {"scatter": {"x": [0.0002286732196807, 0.0002434812486171, 0.0002374406903982, 0.0002611838281154, 0.000271089375019, 0.0002630818635225, 0.0003027636557817, 0.0002956967800855, 0.0003804545849561], "y": [149813.17, 138673.02087068328, 137637.56356834833, 137624.9261931137, 137624.82437588455, 137624.82382556563, 137624.8238255646, 137624.82382556467, 137624.82382556464], "q1": [0.0001464948058128, 0.00021996423602098, 0.0001996766775846, 0.00021463967859736, 0.00022415407001964, 0.00023109279572962, 0.00026226826012126, 0.0002471625804901, 0.00032703056931492], "q9": [0.00094822570681564, 0.0002717465162277, 0.00025606155395505996, 0.00027187727391716, 0.00027460344135756, 0.0002823762595653, 0.00032643862068646, 0.0003481548279523, 0.00040210671722886]}, "bar": {"y": 0.0002630818635225, "times": [0.0002171117812395, 0.0002630818635225, 0.0002520643174648, 0.0002842731773853, 0.0002795308828353], "text": ""}, "color": "rgba(247.0, 182.0, 210.0, 1.0)", "marker": 14}, "PGD[use_acceleration=False]": {"scatter": {"x": [0.000474015250802, 0.0005207918584346, 0.0005518291145563, 0.0005793292075395, 0.000605970621109, 0.0006533414125442, 0.0007148664444684, 0.0007927026599645, 0.0009048320353031, 0.001067716628313, 0.0013155601918697, 0.0016835611313581, 0.0022221021354198, 0.0030358601361513, 0.0042668133974075, 0.0060727503150701], "y": [149813.17, 144867.6530342135, 142141.1361488192, 140564.28469744997, 139606.8940545692, 138596.87357413786, 137995.20645874407, 137732.99962885218, 137638.37585548437, 137626.18129182272, 137624.87940278073, 137624.82430590532, 137624.82382599916, 137624.82382556458, 137624.8238255646, 137624.82382556467], "q1": [0.00046564899384972, 0.00050771683454508, 0.00054503679275506, 0.0005720213055610399, 0.00059893541038028, 0.00064463838934894, 0.00070774219930164, 0.0007862266153096801, 0.0008983217179774401, 0.0010616898536681399, 0.0013114541769027, 0.0016804348677396, 0.0022156327962875, 0.00302244089543814, 0.00422275513410566, 0.006018079817295], "q9": [0.0007820632308720801, 0.0008537806570529601, 0.00089659355580802, 0.0009371642023324801, 0.00097697339951984, 0.0010558616369962, 0.00114478282630438, 0.00125691629946224, 0.00136960670351974, 0.0015336979180574, 0.0017823394387959802, 0.00215351432561868, 0.0026945669203996, 0.00351668931543818, 0.00473483465611932, 0.0065405938774346405]}, "bar": {"y": 0.0022221021354198, "times": [0.0030033197253942, 0.0022314377129077, 0.0022218488156795, 0.0022221021354198, 0.0022114887833595], "text": ""}, "color": "rgba(127.0, 127.0, 127.0, 1.0)", "marker": 15}, "PGD[use_acceleration=True]": {"scatter": {"x": [0.0004603769630193, 0.0005276910960674, 0.0005780160427093, 0.0006210450083017, 0.0006630569696426, 0.0007351599633693, 0.000833423808217, 0.000958114862442, 0.0011452957987785, 0.0014064647257328, 0.0018113479018211, 0.0024058390408754, 0.0032763108611106, 0.0046063102781772, 0.0065630320459604, 0.0094806123524904], "y": [149813.17, 144867.6530342135, 142141.1361488192, 140193.81814223106, 138978.47831495744, 137916.38194850297, 137632.82288364947, 137632.65987880656, 137625.07976950362, 137624.83827771727, 137624.83327674022, 137624.8240660365, 137624.82382573135, 137624.823825565, 137624.82382556458, 137624.82382556467], "q1": [0.00044547058641908, 0.0005149111151694601, 0.0005641423165798, 0.0006072394549846, 0.00065075345337388, 0.0007218655198812, 0.00081876777112478, 0.0009437453001737401, 0.00112474597990512, 0.00138565227389332, 0.00180540941655632, 0.002397371456027, 0.0032629214227199, 0.00457676164805886, 0.00653099603950974, 0.00944803729653354], "q9": [0.00046787112951272, 0.00053607150912278, 0.00058516338467594, 0.00062878616154192, 0.00067328065633772, 0.0007460065186023, 0.0008442841470241, 0.00096903331577776, 0.00114948935806746, 0.00141045562922954, 0.00182179063558576, 0.00242034383118148, 0.00329395905137058, 0.00461319349706168, 0.00656576007604596, 0.009505445137619941]}, "bar": {"y": 0.0032763108611106, "times": [0.0032956376671791, 0.0032914411276578, 0.0032580159604549, 0.0032763108611106, 0.0032702796161174], "text": ""}, "color": "rgba(199.0, 199.0, 199.0, 1.0)", "marker": 16}, "scipy": {"scatter": {"x": [0.0005327705293893, 0.0005075838416814, 0.0004787091165781, 0.0005804989486932], "y": [137624.82382556464, 139485.9618905969, 138188.86292213816, 137897.49629761648], "q1": [0.0005242545157670601, 0.0005054488778114, 0.0004702351987361, 0.00050950720906256], "q9": [0.0007252003997564, 0.00067030563950534, 0.00066681876778598, 0.0007075775414705]}, "bar": {"y": 0.0005327705293893, "times": [0.0008470583707094, 0.0005305968225002, 0.0005200263112783, 0.0005327705293893, 0.0005424134433269], "text": ""}, "color": "rgba(188.0, 189.0, 34.0, 1.0)", "marker": 17}, "sklearn": {"scatter": {"x": [0.0016944278031587, 0.0017626173794269, 0.0018174778670072, 0.0018671751022338, 0.0018781665712594, 0.0018072314560413, 0.0018453001976013, 0.0018833205103874, 0.0019118525087833], "y": [149813.17, 138673.02087055353, 137637.5635683369, 137624.92619311277, 137624.82437588443, 137624.8238255657, 137624.82382556458, 137624.82382556467, 137624.82382556467], "q1": [0.00148023441433904, 0.0016370840370654599, 0.0016112938523291799, 0.0015647608786820801, 0.0016213428229093, 0.0015427593141794, 0.00159803591668598, 0.00155056044459338, 0.0016460679471492002], "q9": [0.0030693162232637, 0.0018828082829713, 0.0018721695989369598, 0.00190030895173548, 0.00192992314696308, 0.0019409347325563, 0.00193498320877546, 0.00198976285755632, 0.00256755203008644]}, "bar": {"y": 0.0018072314560413, "times": [0.0014620553702116, 0.0019084364175796, 0.0016638152301311, 0.0018072314560413, 0.0019626002758741], "text": ""}, "color": "rgba(219.0, 219.0, 141.0, 1.0)", "marker": 18}}, "transformers": {"c_star": 137624.8238255645, "max_f_0": 144867.6530342135}}}}, "Simulated[n_samples=100,n_features=500]": {"Non Negative Least Squares[fit_intercept=False]": {"objective_value": {"solvers": {"cd": {"scatter": {"x": [0.000516278669238, 0.0007036253809928, 0.0008843690156936, 0.0008037816733121, 0.0011906046420335, 0.0016795322299003, 0.0022792667150497, 0.0030848998576402, 0.0042881108820438, 0.0060725547373294, 0.0084712915122509, 0.0103498119860887, 0.0123225916177034, 0.0138162281364202, 0.0176346050575375, 0.0185855831950902], "y": [64.11124089355452, 3.2311518731403304, 0.2478353963968162, 0.0355509239452887, 0.0050696155213966, 9.69387199047146e-05, 2.5042836472344e-07, 8.818776567732514e-11, 5.748585919760504e-16, 9.464625093770738e-24, 2.30601887691206e-29, 2.5223200689661906e-29, 2.5223200689661906e-29, 1.9789478241064979e-29, 2.5223200689661906e-29, 1.9789478241064979e-29], "q1": [0.00036101303994650003, 0.00058126933872694, 0.00076639465987676, 0.00079464353621004, 0.00114639252424236, 0.0014836095273494, 0.00203629247844214, 0.00284508094191548, 0.00426806434988972, 0.00579993911087512, 0.0077634993940591595, 0.0101702336221933, 0.01188510507345194, 0.0138162281364202, 0.01737358495593069, 0.0185855831950902], "q9": [0.0005398500710724999, 0.0007336031645536201, 0.00090696774423114, 0.0009598713368177, 0.0012981034815310799, 0.00168330967426294, 0.00231176577508448, 0.00320349000394336, 0.00450829379260536, 0.00629018768668174, 0.00851397812366482, 0.0107272740453481, 0.01402376443147654, 0.0138162281364202, 0.01803234573453662, 0.0185855831950902]}, "bar": {"y": 0.0022792667150497, "times": [0.0023126285523176, 0.0018743630498647, 0.0022792667150497, 0.0022791866213083, 0.0023104716092348], "text": ""}, "color": "rgba(247.0, 182.0, 210.0, 1.0)", "marker": 14}, "PGD[use_acceleration=False]": {"scatter": {"x": [0.0038826540112495, 0.0039509776979684, 0.0040062386542558, 0.0040567796677351, 0.0041063856333494, 0.0042006447911262, 0.0043336953967809, 0.00450792722404, 0.0047642644494771, 0.0051399320363998, 0.0057232566177845, 0.00658312253654, 0.0078602787107229, 0.0097840577363967, 0.0126394163817167, 0.0169044807553291, 0.0233375206589698, 0.0331350807100534, 0.0477228723466396, 0.0696748793125152, 0.1037492603063583, 0.1523380205035209, 0.2248521037399768], "y": [64.11124089355452, 36.5176392240345, 23.25801492351267, 15.861490054716043, 11.330071110729032, 6.36525749885292, 3.1559207086544485, 1.4855531893867675, 0.5817497925342004, 0.1774365340281232, 0.0322360082198992, 0.0027757603149816, 7.791298215761279e-05, 3.5023355843160577e-07, 1.1228109395165575e-10, 6.451526725131576e-16, 8.391032117940194e-24, 1.5236697590047729e-30, 5.891604017394763e-31, 5.316232446509077e-31, 8.397720357528654e-31, 8.820461980321652e-31, 8.719832140727421e-31], "q1": [0.00385686121881002, 0.00392661392688744, 0.0039809722453355, 0.00403108149766914, 0.00408120602369306, 0.0041738506406545205, 0.00430608280003066, 0.00447934344410892, 0.00474182181060306, 0.00511620044708244, 0.00569799728691572, 0.0065565880388021, 0.0078168589621782, 0.009733793511986721, 0.01257421225309368, 0.01682939678430554, 0.023242658749222718, 0.0329751171171665, 0.0475029610097408, 0.06929263882338998, 0.10235620029270642, 0.15096060149371618, 0.22380310185253616], "q9": [0.00462691932916632, 0.00471909232437606, 0.00478965379297724, 0.00485597774386404, 0.00491915717720982, 0.00503899753093714, 0.00521095469594, 0.00543510913848872, 0.00576357431709766, 0.006264089420437741, 0.0070125319063663, 0.00812661908566944, 0.00977159440517422, 0.01220980063080784, 0.01581038273870942, 0.02116078101098534, 0.02904045693576332, 0.04102678149938582, 0.058372508734464576, 0.08292437382042404, 0.11949899867177004, 0.17095383740961548, 0.24387766271829597]}, "bar": {"y": 0.0097840577363967, "times": [0.013825099915266, 0.0097840577363967, 0.0097868517041206, 0.0097124259918928, 0.0097658447921276], "text": ""}, "color": "rgba(127.0, 127.0, 127.0, 1.0)", "marker": 15}, "PGD[use_acceleration=True]": {"scatter": {"x": [0.0038417633622884, 0.0039312485605478, 0.0040135905146598, 0.0040807388722896, 0.0041469987481832, 0.0042660366743803, 0.0044432338327169, 0.0046690553426742, 0.0049895327538251, 0.0054643079638481, 0.0061950571835041, 0.007287023589015, 0.0088980644941329, 0.0113537516444921, 0.0149907059967517, 0.0204246081411838, 0.0286400038748979, 0.0409486182034015, 0.0593775808811187, 0.0869183223694562, 0.1283683814108371], "y": [64.11124089355452, 36.5176392240345, 23.25801492351267, 14.128115774928364, 8.312404206330585, 2.7766495597329244, 0.5060999252230702, 0.0237265416229158, 0.0033633841777623, 0.0001608453233027, 6.2947492203601375e-06, 2.1657292384011767e-08, 4.1824134032602186e-11, 5.860184534133009e-15, 1.2548647568348543e-20, 1.1081504224037915e-28, 6.213886952571008e-30, 5.8645232606591644e-30, 8.697181022863909e-30, 8.046794480644339e-30, 6.161694251078114e-30], "q1": [0.0038292992860078203, 0.00392111912369726, 0.00399429909884924, 0.00406216792762272, 0.00412723384797572, 0.00424844250082968, 0.00442256480455394, 0.00464693009853358, 0.00496838055551046, 0.00544691570103164, 0.00617661811411378, 0.00727717615664002, 0.00888479016721244, 0.01131647936999794, 0.01494134701788422, 0.02037493214011192, 0.0285607181489467, 0.04080610573291774, 0.05918935164809224, 0.08683285452425475, 0.12824081294238565], "q9": [0.0038912665098905, 0.00398107543587682, 0.00405183993279928, 0.00411866493523116, 0.00418591462075706, 0.00430671311914918, 0.00448063910007472, 0.0047032788395881, 0.0050266180187463, 0.00550966858863826, 0.00624518692493434, 0.00734147951006884, 0.00895623788237566, 0.01139396540820596, 0.0150356341153383, 0.02049812376499176, 0.02872520126402374, 0.042157999798655484, 0.06302255168557164, 0.09076148234307764, 0.1322172965854406]}, "bar": {"y": 0.007287023589015, "times": [0.0072711687535047, 0.007287023589015, 0.007286187261343, 0.0073579773306846, 0.0073167327791452], "text": ""}, "color": "rgba(199.0, 199.0, 199.0, 1.0)", "marker": 16}, "scipy": {"scatter": {"x": [0.0132387913763523, 0.0012413896620273, 0.0015367567539215, 0.0018145609647035], "y": [6.249822661231577e-29, 58.508939264469575, 54.76144089257267, 50.90190047148462], "q1": [0.01119211986660954, 0.00123466514050954, 0.00145281217992302, 0.00178810358047478], "q9": [0.01534101553261276, 0.00150635987520216, 0.0018433447927236, 0.00221827365458006]}, "bar": {"y": 0.0132387913763523, "times": [0.0156888011842966, 0.0132387913763523, 0.0116778668016195, 0.014819337055087, 0.0108682885766029], "text": ""}, "color": "rgba(188.0, 189.0, 34.0, 1.0)", "marker": 17}, "sklearn": {"scatter": {"x": [0.0024245735257864, 0.0023696795105934, 0.002469278872013, 0.0028370544314384, 0.0028866324573755, 0.0032142978161573, 0.0032134391367435, 0.0038339849561452, 0.0046951957046985, 0.0061683133244514, 0.0074780210852622, 0.0086045991629362, 0.0115408655256032, 0.0151686500757932, 0.0195295820012688, 0.026752431876957347, 0.03822640702128405, 0.0593994949012994, 0.07812578976154319, 0.12700738199055195, 0.1679439730942249, 0.26098831649869675, 0.34771044831722975, 0.5282858861610293], "y": [64.11124089355452, 3.2311518737320752, 0.2478353985235702, 0.0355509249506383, 0.0050696159864402, 9.693878203062842e-05, 2.504311505203458e-07, 8.823810358413689e-11, 7.688462247000101e-16, 6.457223565571908e-17, 6.45604503715894e-17, 6.456043866033483e-17, 6.456043368764925e-17, 6.456043272188249e-17, 6.45604275195331e-17, 6.456042822056063e-17, 6.45604130291653e-17, 6.456040232535111e-17, 6.456039717994642e-17, 6.456038816234651e-17, 6.456035842701056e-17, 6.456038593292082e-17, 6.456040735231232e-17, 6.826238489321805e-17], "q1": [0.0018591750413179, 0.00191421881318088, 0.0020999446511268, 0.00238896198570722, 0.00241869390010826, 0.00267804153263562, 0.0029161866754293, 0.00338395535945888, 0.0029786076396703, 0.0051153749227523405, 0.00608496889472004, 0.00781997889280314, 0.01033459790050978, 0.0138992976397275, 0.01798558756709091, 0.02595430128276343, 0.036734928376972655, 0.05793561711907379, 0.07749513369053596, 0.1266558308154344, 0.15005347132682798, 0.2558072024956345, 0.3255937691777945, 0.5178973462432623], "q9": [0.033978426828980425, 0.00259840600192542, 0.0026847463101148, 0.0028796564787626003, 0.00294065922498696, 0.00325331836938854, 0.00352095589041708, 0.004169617593288401, 0.00470445565879342, 0.00621283240616318, 0.0076004441827535, 0.01061584167182438, 0.01295268051326268, 0.015907360240817, 0.0229376565665006, 0.02763938605785368, 0.03927474431693551, 0.062160558998584685, 0.07877760995179406, 0.12875230591744183, 0.17024750001728534, 0.2640985060483217, 0.3531330874189734, 0.5486517345532775]}, "bar": {"y": 0.0032134391367435, "times": [0.0028572883456945, 0.0032134391367435, 0.0030045341700315, 0.0035455785691738, 0.003484021872282], "text": ""}, "color": "rgba(219.0, 219.0, 141.0, 1.0)", "marker": 18}}, "transformers": {"c_star": -1e-10, "max_f_0": 58.508939264469575}}}}, "Simulated[n_samples=100,n_features=1000]": {"Non Negative Least Squares[fit_intercept=False]": {"objective_value": {"solvers": {"cd": {"scatter": {"x": [0.0008604153990745, 0.0012636575847864, 0.0013315808027982, 0.0018260404467582, 0.0023161638528108, 0.0032455082982778, 0.0044812206178903, 0.0056986436247825, 0.0075886361300945, 0.0096873957663774, 0.0129868648946285, 0.019834067672491], "y": [54.1060333062522, 0.2230588317176619, 0.0004044749143927, 8.308914662585468e-07, 1.5076805924769171e-09, 5.848002885865003e-15, 3.467129104662286e-23, 3.021716223805689e-29, 3.009216938466616e-29, 3.009216938466616e-29, 3.009216938466616e-29, 3.009216938466616e-29], "q1": [0.00042811967432494, 0.0007887266576289201, 0.00114096887409682, 0.0015579074621200001, 0.00214912146329874, 0.0029366303235292203, 0.00353608205914492, 0.00557410717010494, 0.0071140978485345, 0.00901218429207796, 0.0106248535215854, 0.017950759455561578], "q9": [0.00087121389806268, 0.00136410333216184, 0.00154236629605286, 0.00206217430531972, 0.00245543010532848, 0.00330642014741894, 0.0046702977269887395, 0.0061826519668101996, 0.0077015496790409, 0.011062264442443799, 0.01462814100086684, 0.021750292554497678]}, "bar": {"y": 0.0018260404467582, "times": [0.0018260404467582, 0.0020797792822122, 0.0014450065791606, 0.0017272587865591, 0.002035766839981], "text": ""}, "color": "rgba(247.0, 182.0, 210.0, 1.0)", "marker": 14}, "PGD[use_acceleration=False]": {"scatter": {"x": [0.0074055138975381, 0.0075078848749399, 0.0075922645628452, 0.0076801218092441, 0.0077611822634935, 0.0079144593328237, 0.008140955120325, 0.0084341801702976, 0.0088675059378147, 0.0095035675913095, 0.0104836262762546, 0.011956337839365, 0.0141159947961568, 0.0173948034644126, 0.0222154967486858, 0.0295605976134538, 0.04040521197021, 0.0565382614731788, 0.0812227558344602], "y": [54.1060333062522, 28.124398435625487, 16.103429252299268, 9.851232701286824, 6.314499700701645, 2.864126004196277, 1.012097725628943, 0.2896391630168168, 0.0500916932696306, 0.0039441290442366, 8.194181094394395e-05, 2.5915647589688377e-07, 5.421870593606891e-11, 1.4420801880105911e-16, 7.170062969304302e-25, 3.991444670759475e-31, 5.533151591241457e-31, 8.690232252578233e-31, 6.66126505616628e-31], "q1": [0.00720853246748446, 0.0073095250874757, 0.00739330761134616, 0.00747325085103504, 0.00755231343209738, 0.00770356617867938, 0.007924456894397679, 0.00821311622858042, 0.00863931439816946, 0.009272554144263239, 0.01024639047682282, 0.0116893272846937, 0.01382361762225622, 0.01705996021628376, 0.02185748629271978, 0.02916476018726822, 0.040020769461989396, 0.05623381063342088, 0.08046640865504735], "q9": [0.0101048689335584, 0.010249275341629921, 0.01036785952746864, 0.010489130392670581, 0.0106005437672138, 0.0108155325055122, 0.0111260589212179, 0.011539568006992261, 0.01213912852108472, 0.013029631227254802, 0.0143908414989709, 0.01644278019666668, 0.01940451338887214, 0.02381067946553226, 0.0302958600223064, 0.03995976261794562, 0.0539915189146995, 0.0742893125861883, 0.10264230035245413]}, "bar": {"y": 0.011956337839365, "times": [0.0179583802819252, 0.0141693800687789, 0.011956337839365, 0.0116883534938097, 0.0116907879710197], "text": ""}, "color": "rgba(127.0, 127.0, 127.0, 1.0)", "marker": 15}, "PGD[use_acceleration=True]": {"scatter": {"x": [0.0073515512049198, 0.0074833929538726, 0.0075890738517045, 0.0076931733638048, 0.0077936332672834, 0.0079834796488285, 0.0082587916404008, 0.0086050368845462, 0.0091159846633672, 0.0098748486489057, 0.0110614020377397, 0.012900611385703, 0.0154060758650302, 0.0192220173776149, 0.0248932670801877, 0.0333700645714998, 0.0461250077933073, 0.0652404446154832, 0.0939144194126129, 0.1370395421981811], "y": [54.1060333062522, 28.124398435625487, 16.103429252299268, 8.425451885121308, 4.067946321587288, 0.7179710778229099, 0.0089755984263685, 0.0014952146177957, 2.636900725489898e-05, 7.23719195084051e-07, 4.3224789453085207e-10, 5.317549163727754e-12, 4.6748992930885455e-15, 1.869006369372161e-23, 4.991091085229824e-30, 4.514134534502325e-30, 4.503445623310976e-30, 5.952033830981836e-30, 5.5064699383478486e-30, 5.0979801971433165e-30], "q1": [0.0072155229747295204, 0.00734095461666582, 0.00744435898959632, 0.00754374004900452, 0.00764139518141744, 0.00783218108117574, 0.00809719376265996, 0.00843193046748634, 0.00892575010657306, 0.00966198854148384, 0.01080094650387758, 0.01251421980559824, 0.01502286940813062, 0.01883523724973198, 0.0245265051722526, 0.03304163478314872, 0.04582844749093052, 0.06496108844876287, 0.09365462101995944, 0.13668540753424166], "q9": [0.00794816389679906, 0.0080898869782686, 0.00820560567080968, 0.00831408575177186, 0.00842287726700304, 0.00862558931112282, 0.00891849361360068, 0.0092879340052604, 0.00981624647974964, 0.010562870278954459, 0.011719001829624119, 0.01347174309194084, 0.015985543653368878, 0.01979576237499708, 0.02547636255621906, 0.03398010879755014, 0.046755120530724496, 0.06592853069305414, 0.09467855729162687, 0.13816374018788335]}, "bar": {"y": 0.0098748486489057, "times": [0.0109667312353849, 0.0098748486489057, 0.0096676927059888, 0.0099570788443088, 0.0096581857651472], "text": ""}, "color": "rgba(199.0, 199.0, 199.0, 1.0)", "marker": 16}, "scipy": {"scatter": {"x": [0.0213499087840318, 0.0021558068692684, 0.0027099512517452, 0.0032045375555753], "y": [8.120408714101873e-29, 49.1075513046256, 44.35961003112995, 40.6773423368761], "q1": [0.020793415978550882, 0.0019772801548242, 0.002681453898549, 0.00286212190985672], "q9": [0.02348404191434378, 0.00251754894852634, 0.0032392222434282003, 0.0039555501192808]}, "bar": {"y": 0.0213499087840318, "times": [0.0248837154358625, 0.0205352250486612, 0.0211807023733854, 0.0213499087840318, 0.0213845316320657], "text": ""}, "color": "rgba(188.0, 189.0, 34.0, 1.0)", "marker": 17}, "sklearn": {"scatter": {"x": [0.003395577892661, 0.0036688279360532, 0.0035294704139232, 0.0036935061216354, 0.0041695889085531, 0.004170911386609, 0.0051266327500343, 0.0061533171683549, 0.0079470723867416, 0.0098550952970981, 0.0126827135682106, 0.0159832630306482, 0.0193609148263931], "y": [54.1060333062522, 0.2230588309632525, 0.0004044749075114, 8.308910444488294e-07, 1.5076715145374562e-09, 5.901505419891652e-15, 4.946688722639e-17, 4.946017263683404e-17, 4.9404765413092064e-17, 4.935538726224363e-17, 4.9369884464511404e-17, 4.9404672064886125e-17, 4.9404708218712406e-17], "q1": [0.0027351640164852, 0.00281260237097732, 0.0027729239314793802, 0.00312150903046128, 0.0032954946160316002, 0.00323960371315474, 0.00465197041630738, 0.0053536102175712, 0.00626764521002762, 0.00797739475965494, 0.01162508875131604, 0.01439366750419136, 0.01770163439214228], "q9": [0.00420980416238302, 0.00377210006117812, 0.00400339737534522, 0.00407236069440838, 0.00509182177484034, 0.0048580825328826795, 0.0056465212255715795, 0.0069120973348617, 0.0082005660980939, 0.01089696958661074, 0.013915937021374641, 0.016817515715956622, 0.02113703116774552]}, "bar": {"y": 0.0036935061216354, "times": [0.0029977429658174, 0.0041762515902519, 0.0036935061216354, 0.0033071581274271, 0.0039165243506431], "text": ""}, "color": "rgba(219.0, 219.0, 141.0, 1.0)", "marker": 18}}, "transformers": {"c_star": -1e-10, "max_f_0": 49.1075513046256}}}}};
+            var textWrapper = document.querySelector('.ml11 .letters');
+            textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>");
+
+            window.addEventListener('load', () => {
+                document.getElementById('brand').style.display = 'inline';
+
+                anime.timeline({loop: false})
+                    .add({
+                        targets: '.ml11 .line',
+                        scaleY: [0,1],
+                        opacity: [0.5,1],
+                        easing: "easeOutExpo",
+                        duration: 700
+                    })
+                    .add({
+                        targets: '.ml11 .line',
+                        translateX: [0, document.querySelector('.ml11 .letters').getBoundingClientRect().width + 10],
+                        easing: "easeOutExpo",
+                        duration: 700,
+                        delay: 100
+                    }).add({
+                        targets: '.ml11 .letter',
+                        opacity: [0,1],
+                        easing: "easeOutExpo",
+                        duration: 600,
+                        offset: '-=775',
+                        delay: (el, i) => 34 * (i+1)
+                    }).add({
+                        targets: '.ml11 .line',
+                        scaleY: [1,0],
+                        opacity: [1,0.5],
+                        easing: "easeOutExpo",
+                        duration: 700,
+                        translateX: [document.querySelector('.ml11 .letters').getBoundingClientRect().width + 10, document.querySelector('.ml11 .letters').getBoundingClientRect().width + 10],
+                    });
+            });
+        </script>
+        <!-- Manage plot -->
+        <script>
+            window.data = {"Boston[standardized=True]": {"Non Negative Least Squares[fit_intercept=False]": {"objective_value": {"solvers": {"cd": {"scatter": {"x": [0.0002286732196807, 0.0002434812486171, 0.0002374406903982, 0.0002611838281154, 0.000271089375019, 0.0002630818635225, 0.0003027636557817, 0.0002956967800855, 0.0003804545849561], "y": [149813.17, 138673.02087068328, 137637.56356834833, 137624.9261931137, 137624.82437588455, 137624.82382556563, 137624.8238255646, 137624.82382556467, 137624.82382556464], "q1": [0.0001464948058128, 0.00021996423602098, 0.0001996766775846, 0.00021463967859736, 0.00022415407001964, 0.00023109279572962, 0.00026226826012126, 0.0002471625804901, 0.00032703056931492], "q9": [0.00094822570681564, 0.0002717465162277, 0.00025606155395505996, 0.00027187727391716, 0.00027460344135756, 0.0002823762595653, 0.00032643862068646, 0.0003481548279523, 0.00040210671722886]}, "bar": {"y": 0.0002630818635225, "times": [0.0002171117812395, 0.0002630818635225, 0.0002520643174648, 0.0002842731773853, 0.0002795308828353], "text": ""}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 1}, "PGD[use_acceleration=False]": {"scatter": {"x": [0.000474015250802, 0.0005207918584346, 0.0005518291145563, 0.0005793292075395, 0.000605970621109, 0.0006533414125442, 0.0007148664444684, 0.0007927026599645, 0.0009048320353031, 0.001067716628313, 0.0013155601918697, 0.0016835611313581, 0.0022221021354198, 0.0030358601361513, 0.0042668133974075, 0.0060727503150701], "y": [149813.17, 144867.6530342135, 142141.1361488192, 140564.28469744997, 139606.8940545692, 138596.87357413786, 137995.20645874407, 137732.99962885218, 137638.37585548437, 137626.18129182272, 137624.87940278073, 137624.82430590532, 137624.82382599916, 137624.82382556458, 137624.8238255646, 137624.82382556467], "q1": [0.00046564899384972, 0.00050771683454508, 0.00054503679275506, 0.0005720213055610399, 0.00059893541038028, 0.00064463838934894, 0.00070774219930164, 0.0007862266153096801, 0.0008983217179774401, 0.0010616898536681399, 0.0013114541769027, 0.0016804348677396, 0.0022156327962875, 0.00302244089543814, 0.00422275513410566, 0.006018079817295], "q9": [0.0007820632308720801, 0.0008537806570529601, 0.00089659355580802, 0.0009371642023324801, 0.00097697339951984, 0.0010558616369962, 0.00114478282630438, 0.00125691629946224, 0.00136960670351974, 0.0015336979180574, 0.0017823394387959802, 0.00215351432561868, 0.0026945669203996, 0.00351668931543818, 0.00473483465611932, 0.0065405938774346405]}, "bar": {"y": 0.0022221021354198, "times": [0.0030033197253942, 0.0022314377129077, 0.0022218488156795, 0.0022221021354198, 0.0022114887833595], "text": ""}, "color": "rgba(44.0, 160.0, 44.0, 1.0)", "marker": 25}, "PGD[use_acceleration=True]": {"scatter": {"x": [0.0004603769630193, 0.0005276910960674, 0.0005780160427093, 0.0006210450083017, 0.0006630569696426, 0.0007351599633693, 0.000833423808217, 0.000958114862442, 0.0011452957987785, 0.0014064647257328, 0.0018113479018211, 0.0024058390408754, 0.0032763108611106, 0.0046063102781772, 0.0065630320459604, 0.0094806123524904], "y": [149813.17, 144867.6530342135, 142141.1361488192, 140193.81814223106, 138978.47831495744, 137916.38194850297, 137632.82288364947, 137632.65987880656, 137625.07976950362, 137624.83827771727, 137624.83327674022, 137624.8240660365, 137624.82382573135, 137624.823825565, 137624.82382556458, 137624.82382556467], "q1": [0.00044547058641908, 0.0005149111151694601, 0.0005641423165798, 0.0006072394549846, 0.00065075345337388, 0.0007218655198812, 0.00081876777112478, 0.0009437453001737401, 0.00112474597990512, 0.00138565227389332, 0.00180540941655632, 0.002397371456027, 0.0032629214227199, 0.00457676164805886, 0.00653099603950974, 0.00944803729653354], "q9": [0.00046787112951272, 0.00053607150912278, 0.00058516338467594, 0.00062878616154192, 0.00067328065633772, 0.0007460065186023, 0.0008442841470241, 0.00096903331577776, 0.00114948935806746, 0.00141045562922954, 0.00182179063558576, 0.00242034383118148, 0.00329395905137058, 0.00461319349706168, 0.00656576007604596, 0.009505445137619941]}, "bar": {"y": 0.0032763108611106, "times": [0.0032956376671791, 0.0032914411276578, 0.0032580159604549, 0.0032763108611106, 0.0032702796161174], "text": ""}, "color": "rgba(152.0, 223.0, 138.0, 1.0)", "marker": 26}, "scipy": {"scatter": {"x": [0.0005327705293893, 0.0005075838416814, 0.0004787091165781, 0.0005804989486932], "y": [137624.82382556464, 139485.9618905969, 138188.86292213816, 137897.49629761648], "q1": [0.0005242545157670601, 0.0005054488778114, 0.0004702351987361, 0.00050950720906256], "q9": [0.0007252003997564, 0.00067030563950534, 0.00066681876778598, 0.0007075775414705]}, "bar": {"y": 0.0005327705293893, "times": [0.0008470583707094, 0.0005305968225002, 0.0005200263112783, 0.0005327705293893, 0.0005424134433269], "text": ""}, "color": "rgba(214.0, 39.0, 40.0, 1.0)", "marker": 27}, "sklearn": {"scatter": {"x": [0.0016944278031587, 0.0017626173794269, 0.0018174778670072, 0.0018671751022338, 0.0018781665712594, 0.0018072314560413, 0.0018453001976013, 0.0018833205103874, 0.0019118525087833], "y": [149813.17, 138673.02087055353, 137637.5635683369, 137624.92619311277, 137624.82437588443, 137624.8238255657, 137624.82382556458, 137624.82382556467, 137624.82382556467], "q1": [0.00148023441433904, 0.0016370840370654599, 0.0016112938523291799, 0.0015647608786820801, 0.0016213428229093, 0.0015427593141794, 0.00159803591668598, 0.00155056044459338, 0.0016460679471492002], "q9": [0.0030693162232637, 0.0018828082829713, 0.0018721695989369598, 0.00190030895173548, 0.00192992314696308, 0.0019409347325563, 0.00193498320877546, 0.00198976285755632, 0.00256755203008644]}, "bar": {"y": 0.0018072314560413, "times": [0.0014620553702116, 0.0019084364175796, 0.0016638152301311, 0.0018072314560413, 0.0019626002758741], "text": ""}, "color": "rgba(255.0, 152.0, 150.0, 1.0)", "marker": 28}}, "transformers": {"c_star": 137624.8238255645, "max_f_0": 144867.6530342135}}}}, "Simulated[n_samples=100,n_features=500]": {"Non Negative Least Squares[fit_intercept=False]": {"objective_value": {"solvers": {"cd": {"scatter": {"x": [0.000516278669238, 0.0007036253809928, 0.0008843690156936, 0.0008037816733121, 0.0011906046420335, 0.0016795322299003, 0.0022792667150497, 0.0030848998576402, 0.0042881108820438, 0.0060725547373294, 0.0084712915122509, 0.0103498119860887, 0.0123225916177034, 0.0138162281364202, 0.0176346050575375, 0.0185855831950902], "y": [64.11124089355452, 3.2311518731403304, 0.2478353963968162, 0.0355509239452887, 0.0050696155213966, 9.69387199047146e-05, 2.5042836472344e-07, 8.818776567732514e-11, 5.748585919760504e-16, 9.464625093770738e-24, 2.30601887691206e-29, 2.5223200689661906e-29, 2.5223200689661906e-29, 1.9789478241064979e-29, 2.5223200689661906e-29, 1.9789478241064979e-29], "q1": [0.00036101303994650003, 0.00058126933872694, 0.00076639465987676, 0.00079464353621004, 0.00114639252424236, 0.0014836095273494, 0.00203629247844214, 0.00284508094191548, 0.00426806434988972, 0.00579993911087512, 0.0077634993940591595, 0.0101702336221933, 0.01188510507345194, 0.0138162281364202, 0.01737358495593069, 0.0185855831950902], "q9": [0.0005398500710724999, 0.0007336031645536201, 0.00090696774423114, 0.0009598713368177, 0.0012981034815310799, 0.00168330967426294, 0.00231176577508448, 0.00320349000394336, 0.00450829379260536, 0.00629018768668174, 0.00851397812366482, 0.0107272740453481, 0.01402376443147654, 0.0138162281364202, 0.01803234573453662, 0.0185855831950902]}, "bar": {"y": 0.0022792667150497, "times": [0.0023126285523176, 0.0018743630498647, 0.0022792667150497, 0.0022791866213083, 0.0023104716092348], "text": ""}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 1}, "PGD[use_acceleration=False]": {"scatter": {"x": [0.0038826540112495, 0.0039509776979684, 0.0040062386542558, 0.0040567796677351, 0.0041063856333494, 0.0042006447911262, 0.0043336953967809, 0.00450792722404, 0.0047642644494771, 0.0051399320363998, 0.0057232566177845, 0.00658312253654, 0.0078602787107229, 0.0097840577363967, 0.0126394163817167, 0.0169044807553291, 0.0233375206589698, 0.0331350807100534, 0.0477228723466396, 0.0696748793125152, 0.1037492603063583, 0.1523380205035209, 0.2248521037399768], "y": [64.11124089355452, 36.5176392240345, 23.25801492351267, 15.861490054716043, 11.330071110729032, 6.36525749885292, 3.1559207086544485, 1.4855531893867675, 0.5817497925342004, 0.1774365340281232, 0.0322360082198992, 0.0027757603149816, 7.791298215761279e-05, 3.5023355843160577e-07, 1.1228109395165575e-10, 6.451526725131576e-16, 8.391032117940194e-24, 1.5236697590047729e-30, 5.891604017394763e-31, 5.316232446509077e-31, 8.397720357528654e-31, 8.820461980321652e-31, 8.719832140727421e-31], "q1": [0.00385686121881002, 0.00392661392688744, 0.0039809722453355, 0.00403108149766914, 0.00408120602369306, 0.0041738506406545205, 0.00430608280003066, 0.00447934344410892, 0.00474182181060306, 0.00511620044708244, 0.00569799728691572, 0.0065565880388021, 0.0078168589621782, 0.009733793511986721, 0.01257421225309368, 0.01682939678430554, 0.023242658749222718, 0.0329751171171665, 0.0475029610097408, 0.06929263882338998, 0.10235620029270642, 0.15096060149371618, 0.22380310185253616], "q9": [0.00462691932916632, 0.00471909232437606, 0.00478965379297724, 0.00485597774386404, 0.00491915717720982, 0.00503899753093714, 0.00521095469594, 0.00543510913848872, 0.00576357431709766, 0.006264089420437741, 0.0070125319063663, 0.00812661908566944, 0.00977159440517422, 0.01220980063080784, 0.01581038273870942, 0.02116078101098534, 0.02904045693576332, 0.04102678149938582, 0.058372508734464576, 0.08292437382042404, 0.11949899867177004, 0.17095383740961548, 0.24387766271829597]}, "bar": {"y": 0.0097840577363967, "times": [0.013825099915266, 0.0097840577363967, 0.0097868517041206, 0.0097124259918928, 0.0097658447921276], "text": ""}, "color": "rgba(44.0, 160.0, 44.0, 1.0)", "marker": 25}, "PGD[use_acceleration=True]": {"scatter": {"x": [0.0038417633622884, 0.0039312485605478, 0.0040135905146598, 0.0040807388722896, 0.0041469987481832, 0.0042660366743803, 0.0044432338327169, 0.0046690553426742, 0.0049895327538251, 0.0054643079638481, 0.0061950571835041, 0.007287023589015, 0.0088980644941329, 0.0113537516444921, 0.0149907059967517, 0.0204246081411838, 0.0286400038748979, 0.0409486182034015, 0.0593775808811187, 0.0869183223694562, 0.1283683814108371], "y": [64.11124089355452, 36.5176392240345, 23.25801492351267, 14.128115774928364, 8.312404206330585, 2.7766495597329244, 0.5060999252230702, 0.0237265416229158, 0.0033633841777623, 0.0001608453233027, 6.2947492203601375e-06, 2.1657292384011767e-08, 4.1824134032602186e-11, 5.860184534133009e-15, 1.2548647568348543e-20, 1.1081504224037915e-28, 6.213886952571008e-30, 5.8645232606591644e-30, 8.697181022863909e-30, 8.046794480644339e-30, 6.161694251078114e-30], "q1": [0.0038292992860078203, 0.00392111912369726, 0.00399429909884924, 0.00406216792762272, 0.00412723384797572, 0.00424844250082968, 0.00442256480455394, 0.00464693009853358, 0.00496838055551046, 0.00544691570103164, 0.00617661811411378, 0.00727717615664002, 0.00888479016721244, 0.01131647936999794, 0.01494134701788422, 0.02037493214011192, 0.0285607181489467, 0.04080610573291774, 0.05918935164809224, 0.08683285452425475, 0.12824081294238565], "q9": [0.0038912665098905, 0.00398107543587682, 0.00405183993279928, 0.00411866493523116, 0.00418591462075706, 0.00430671311914918, 0.00448063910007472, 0.0047032788395881, 0.0050266180187463, 0.00550966858863826, 0.00624518692493434, 0.00734147951006884, 0.00895623788237566, 0.01139396540820596, 0.0150356341153383, 0.02049812376499176, 0.02872520126402374, 0.042157999798655484, 0.06302255168557164, 0.09076148234307764, 0.1322172965854406]}, "bar": {"y": 0.007287023589015, "times": [0.0072711687535047, 0.007287023589015, 0.007286187261343, 0.0073579773306846, 0.0073167327791452], "text": ""}, "color": "rgba(152.0, 223.0, 138.0, 1.0)", "marker": 26}, "scipy": {"scatter": {"x": [0.0132387913763523, 0.0012413896620273, 0.0015367567539215, 0.0018145609647035], "y": [6.249822661231577e-29, 58.508939264469575, 54.76144089257267, 50.90190047148462], "q1": [0.01119211986660954, 0.00123466514050954, 0.00145281217992302, 0.00178810358047478], "q9": [0.01534101553261276, 0.00150635987520216, 0.0018433447927236, 0.00221827365458006]}, "bar": {"y": 0.0132387913763523, "times": [0.0156888011842966, 0.0132387913763523, 0.0116778668016195, 0.014819337055087, 0.0108682885766029], "text": ""}, "color": "rgba(214.0, 39.0, 40.0, 1.0)", "marker": 27}, "sklearn": {"scatter": {"x": [0.0024245735257864, 0.0023696795105934, 0.002469278872013, 0.0028370544314384, 0.0028866324573755, 0.0032142978161573, 0.0032134391367435, 0.0038339849561452, 0.0046951957046985, 0.0061683133244514, 0.0074780210852622, 0.0086045991629362, 0.0115408655256032, 0.0151686500757932, 0.0195295820012688, 0.026752431876957347, 0.03822640702128405, 0.0593994949012994, 0.07812578976154319, 0.12700738199055195, 0.1679439730942249, 0.26098831649869675, 0.34771044831722975, 0.5282858861610293], "y": [64.11124089355452, 3.2311518737320752, 0.2478353985235702, 0.0355509249506383, 0.0050696159864402, 9.693878203062842e-05, 2.504311505203458e-07, 8.823810358413689e-11, 7.688462247000101e-16, 6.457223565571908e-17, 6.45604503715894e-17, 6.456043866033483e-17, 6.456043368764925e-17, 6.456043272188249e-17, 6.45604275195331e-17, 6.456042822056063e-17, 6.45604130291653e-17, 6.456040232535111e-17, 6.456039717994642e-17, 6.456038816234651e-17, 6.456035842701056e-17, 6.456038593292082e-17, 6.456040735231232e-17, 6.826238489321805e-17], "q1": [0.0018591750413179, 0.00191421881318088, 0.0020999446511268, 0.00238896198570722, 0.00241869390010826, 0.00267804153263562, 0.0029161866754293, 0.00338395535945888, 0.0029786076396703, 0.0051153749227523405, 0.00608496889472004, 0.00781997889280314, 0.01033459790050978, 0.0138992976397275, 0.01798558756709091, 0.02595430128276343, 0.036734928376972655, 0.05793561711907379, 0.07749513369053596, 0.1266558308154344, 0.15005347132682798, 0.2558072024956345, 0.3255937691777945, 0.5178973462432623], "q9": [0.033978426828980425, 0.00259840600192542, 0.0026847463101148, 0.0028796564787626003, 0.00294065922498696, 0.00325331836938854, 0.00352095589041708, 0.004169617593288401, 0.00470445565879342, 0.00621283240616318, 0.0076004441827535, 0.01061584167182438, 0.01295268051326268, 0.015907360240817, 0.0229376565665006, 0.02763938605785368, 0.03927474431693551, 0.062160558998584685, 0.07877760995179406, 0.12875230591744183, 0.17024750001728534, 0.2640985060483217, 0.3531330874189734, 0.5486517345532775]}, "bar": {"y": 0.0032134391367435, "times": [0.0028572883456945, 0.0032134391367435, 0.0030045341700315, 0.0035455785691738, 0.003484021872282], "text": ""}, "color": "rgba(255.0, 152.0, 150.0, 1.0)", "marker": 28}}, "transformers": {"c_star": -1e-10, "max_f_0": 58.508939264469575}}}}, "Simulated[n_samples=100,n_features=1000]": {"Non Negative Least Squares[fit_intercept=False]": {"objective_value": {"solvers": {"cd": {"scatter": {"x": [0.0008604153990745, 0.0012636575847864, 0.0013315808027982, 0.0018260404467582, 0.0023161638528108, 0.0032455082982778, 0.0044812206178903, 0.0056986436247825, 0.0075886361300945, 0.0096873957663774, 0.0129868648946285, 0.019834067672491], "y": [54.1060333062522, 0.2230588317176619, 0.0004044749143927, 8.308914662585468e-07, 1.5076805924769171e-09, 5.848002885865003e-15, 3.467129104662286e-23, 3.021716223805689e-29, 3.009216938466616e-29, 3.009216938466616e-29, 3.009216938466616e-29, 3.009216938466616e-29], "q1": [0.00042811967432494, 0.0007887266576289201, 0.00114096887409682, 0.0015579074621200001, 0.00214912146329874, 0.0029366303235292203, 0.00353608205914492, 0.00557410717010494, 0.0071140978485345, 0.00901218429207796, 0.0106248535215854, 0.017950759455561578], "q9": [0.00087121389806268, 0.00136410333216184, 0.00154236629605286, 0.00206217430531972, 0.00245543010532848, 0.00330642014741894, 0.0046702977269887395, 0.0061826519668101996, 0.0077015496790409, 0.011062264442443799, 0.01462814100086684, 0.021750292554497678]}, "bar": {"y": 0.0018260404467582, "times": [0.0018260404467582, 0.0020797792822122, 0.0014450065791606, 0.0017272587865591, 0.002035766839981], "text": ""}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 1}, "PGD[use_acceleration=False]": {"scatter": {"x": [0.0074055138975381, 0.0075078848749399, 0.0075922645628452, 0.0076801218092441, 0.0077611822634935, 0.0079144593328237, 0.008140955120325, 0.0084341801702976, 0.0088675059378147, 0.0095035675913095, 0.0104836262762546, 0.011956337839365, 0.0141159947961568, 0.0173948034644126, 0.0222154967486858, 0.0295605976134538, 0.04040521197021, 0.0565382614731788, 0.0812227558344602], "y": [54.1060333062522, 28.124398435625487, 16.103429252299268, 9.851232701286824, 6.314499700701645, 2.864126004196277, 1.012097725628943, 0.2896391630168168, 0.0500916932696306, 0.0039441290442366, 8.194181094394395e-05, 2.5915647589688377e-07, 5.421870593606891e-11, 1.4420801880105911e-16, 7.170062969304302e-25, 3.991444670759475e-31, 5.533151591241457e-31, 8.690232252578233e-31, 6.66126505616628e-31], "q1": [0.00720853246748446, 0.0073095250874757, 0.00739330761134616, 0.00747325085103504, 0.00755231343209738, 0.00770356617867938, 0.007924456894397679, 0.00821311622858042, 0.00863931439816946, 0.009272554144263239, 0.01024639047682282, 0.0116893272846937, 0.01382361762225622, 0.01705996021628376, 0.02185748629271978, 0.02916476018726822, 0.040020769461989396, 0.05623381063342088, 0.08046640865504735], "q9": [0.0101048689335584, 0.010249275341629921, 0.01036785952746864, 0.010489130392670581, 0.0106005437672138, 0.0108155325055122, 0.0111260589212179, 0.011539568006992261, 0.01213912852108472, 0.013029631227254802, 0.0143908414989709, 0.01644278019666668, 0.01940451338887214, 0.02381067946553226, 0.0302958600223064, 0.03995976261794562, 0.0539915189146995, 0.0742893125861883, 0.10264230035245413]}, "bar": {"y": 0.011956337839365, "times": [0.0179583802819252, 0.0141693800687789, 0.011956337839365, 0.0116883534938097, 0.0116907879710197], "text": ""}, "color": "rgba(44.0, 160.0, 44.0, 1.0)", "marker": 25}, "PGD[use_acceleration=True]": {"scatter": {"x": [0.0073515512049198, 0.0074833929538726, 0.0075890738517045, 0.0076931733638048, 0.0077936332672834, 0.0079834796488285, 0.0082587916404008, 0.0086050368845462, 0.0091159846633672, 0.0098748486489057, 0.0110614020377397, 0.012900611385703, 0.0154060758650302, 0.0192220173776149, 0.0248932670801877, 0.0333700645714998, 0.0461250077933073, 0.0652404446154832, 0.0939144194126129, 0.1370395421981811], "y": [54.1060333062522, 28.124398435625487, 16.103429252299268, 8.425451885121308, 4.067946321587288, 0.7179710778229099, 0.0089755984263685, 0.0014952146177957, 2.636900725489898e-05, 7.23719195084051e-07, 4.3224789453085207e-10, 5.317549163727754e-12, 4.6748992930885455e-15, 1.869006369372161e-23, 4.991091085229824e-30, 4.514134534502325e-30, 4.503445623310976e-30, 5.952033830981836e-30, 5.5064699383478486e-30, 5.0979801971433165e-30], "q1": [0.0072155229747295204, 0.00734095461666582, 0.00744435898959632, 0.00754374004900452, 0.00764139518141744, 0.00783218108117574, 0.00809719376265996, 0.00843193046748634, 0.00892575010657306, 0.00966198854148384, 0.01080094650387758, 0.01251421980559824, 0.01502286940813062, 0.01883523724973198, 0.0245265051722526, 0.03304163478314872, 0.04582844749093052, 0.06496108844876287, 0.09365462101995944, 0.13668540753424166], "q9": [0.00794816389679906, 0.0080898869782686, 0.00820560567080968, 0.00831408575177186, 0.00842287726700304, 0.00862558931112282, 0.00891849361360068, 0.0092879340052604, 0.00981624647974964, 0.010562870278954459, 0.011719001829624119, 0.01347174309194084, 0.015985543653368878, 0.01979576237499708, 0.02547636255621906, 0.03398010879755014, 0.046755120530724496, 0.06592853069305414, 0.09467855729162687, 0.13816374018788335]}, "bar": {"y": 0.0098748486489057, "times": [0.0109667312353849, 0.0098748486489057, 0.0096676927059888, 0.0099570788443088, 0.0096581857651472], "text": ""}, "color": "rgba(152.0, 223.0, 138.0, 1.0)", "marker": 26}, "scipy": {"scatter": {"x": [0.0213499087840318, 0.0021558068692684, 0.0027099512517452, 0.0032045375555753], "y": [8.120408714101873e-29, 49.1075513046256, 44.35961003112995, 40.6773423368761], "q1": [0.020793415978550882, 0.0019772801548242, 0.002681453898549, 0.00286212190985672], "q9": [0.02348404191434378, 0.00251754894852634, 0.0032392222434282003, 0.0039555501192808]}, "bar": {"y": 0.0213499087840318, "times": [0.0248837154358625, 0.0205352250486612, 0.0211807023733854, 0.0213499087840318, 0.0213845316320657], "text": ""}, "color": "rgba(214.0, 39.0, 40.0, 1.0)", "marker": 27}, "sklearn": {"scatter": {"x": [0.003395577892661, 0.0036688279360532, 0.0035294704139232, 0.0036935061216354, 0.0041695889085531, 0.004170911386609, 0.0051266327500343, 0.0061533171683549, 0.0079470723867416, 0.0098550952970981, 0.0126827135682106, 0.0159832630306482, 0.0193609148263931], "y": [54.1060333062522, 0.2230588309632525, 0.0004044749075114, 8.308910444488294e-07, 1.5076715145374562e-09, 5.901505419891652e-15, 4.946688722639e-17, 4.946017263683404e-17, 4.9404765413092064e-17, 4.935538726224363e-17, 4.9369884464511404e-17, 4.9404672064886125e-17, 4.9404708218712406e-17], "q1": [0.0027351640164852, 0.00281260237097732, 0.0027729239314793802, 0.00312150903046128, 0.0032954946160316002, 0.00323960371315474, 0.00465197041630738, 0.0053536102175712, 0.00626764521002762, 0.00797739475965494, 0.01162508875131604, 0.01439366750419136, 0.01770163439214228], "q9": [0.00420980416238302, 0.00377210006117812, 0.00400339737534522, 0.00407236069440838, 0.00509182177484034, 0.0048580825328826795, 0.0056465212255715795, 0.0069120973348617, 0.0082005660980939, 0.01089696958661074, 0.013915937021374641, 0.016817515715956622, 0.02113703116774552]}, "bar": {"y": 0.0036935061216354, "times": [0.0029977429658174, 0.0041762515902519, 0.0036935061216354, 0.0033071581274271, 0.0039165243506431], "text": ""}, "color": "rgba(255.0, 152.0, 150.0, 1.0)", "marker": 28}}, "transformers": {"c_star": -1e-10, "max_f_0": 49.1075513046256}}}}};
 
             window.addEventListener("load", () => {
                 // Initialize plot state
@@ -1563,7 +2906,9 @@ const isBarChart = () => state().plot_kind === 'bar_chart';
 
 const isVisible = solver => !state().hidden_solvers.includes(solver);
 
-const isSolverAvailable = solver => data(solver).scatter.y.filter(value => !isNaN(value)).length > 0
+const isSolverAvailable = solver => data(solver).scatter.y.filter(value => !isNaN(value)).length > 0;
+
+const isSmallScreen = () => window.screen.availHeight < 900;
 
 /**
  * Check for each solver
@@ -1586,11 +2931,11 @@ const isAvailable = () => {
 const displayScatterElements = shouldBeVisible => {
   if (shouldBeVisible) {
     document.getElementById('change_scaling').style.display = 'inline-block';
-    document.getElementById('legend_title').style.display = 'block';
+    document.getElementById('legend_container').style.display = 'block';
     document.getElementById('plot_legend').style.display = 'flex';
   } else {
     document.getElementById('change_scaling').style.display = 'none';
-    document.getElementById('legend_title').style.display = 'none';
+    document.getElementById('legend_container').style.display = 'none';
     document.getElementById('plot_legend').style.display = 'none';
   }
 };
@@ -1637,9 +2982,11 @@ const getScale = () => {
 
 const getScatterChartLayout = () => {
   const layout = {
-    width: 900,
+    autosize: !isSmallScreen(),
+    modebar: {
+      orientation: 'v',
+    },
     height: 700,
-    autosize: false,
     showlegend: false,
     legend: {
       title: {
@@ -1666,9 +3013,15 @@ const getScatterChartLayout = () => {
       gridcolor: '#ffffff',
       zeroline : false,
     },
-    title: `${state().objective}\nData: ${state().dataset}`,
+    title: `${state().objective}<br />Data: ${state().dataset}`,
     plot_bgcolor: '#e5ecf6',
   };
+
+  if (isSmallScreen()) {
+    layout.width = 900;
+    layout.height = window.screen.availHeight - 200;
+    layout.dragmode = false;
+  }
 
   if (!isAvailable()) {
     layout.annotations = [{
@@ -1689,10 +3042,12 @@ const getScatterChartLayout = () => {
 };
 
 const getBarChartLayout = () => {
+
   const layout = {
-    width: 900,
-    height: 700,
-    autosize: false,
+    autosize: !isSmallScreen(),
+    modebar: {
+      orientation: 'v',
+    },
     yaxis: {
       type: 'log',
       title: 'Time [sec]',
@@ -1704,9 +3059,15 @@ const getBarChartLayout = () => {
       ticktext: getSolvers(),
     },
     showlegend: false,
-    title: `${state().objective}\nData: ${state().dataset}`,
+    title: `${state().objective}<br />Data: ${state().dataset}`,
     plot_bgcolor: '#e5ecf6',
   };
+
+  if (isSmallScreen()) {
+    layout.width = 900;
+    layout.height = window.screen.availHeight - 200;
+    layout.dragmode = false;
+  }
 
   if (!isAvailable()) {
     layout.annotations = [{
@@ -1839,6 +3200,7 @@ const createLegendItem = (solver, color, symbolNumber) => {
   item.style.alignItems = 'center';
   item.style.position = 'relative';
   item.style.cursor = 'pointer';
+  item.className = 'bg-white py-1 px-4 shadow-sm mt-2 rounded'
 
   if (!isVisible(solver)) {
     item.style.opacity = 0.5;
@@ -1887,7 +3249,7 @@ const createLegendItem = (solver, color, symbolNumber) => {
   hBar.style.width = '30px';
   hBar.style.backgroundColor = color;
   hBar.style.position = 'absolute';
-  hBar.style.left = 0;
+  hBar.style.left = '1em';
   hBar.style.zIndex = 10;
 
   // Append elements to the legend item
@@ -1927,25 +3289,28 @@ const createSymbol = (symbolNumber, color) => {
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-/**
- * Listener on the system information "+" button
- */
-document.getElementById('btn_subinfo').addEventListener('click', () => {
-  const elmt = document.getElementById('subinfo');
-  const plus = document.getElementById('btn_plus');
-  const minus = document.getElementById('btn_minus');
+document.getElementById('btn-plot-config').addEventListener('click', () => {
+  const elmt = document.getElementById('mobile-plot-form');
 
-  if (elmt.style.display === 'none') {
-      elmt.style.display = 'block';
-      plus.style.display = 'none';
-      minus.style.display = 'inline';
+  if (elmt.style.display === 'block') {
+      elmt.style.display = 'none';
 
       return;
   }
 
-  elmt.style.display = 'none';
-  plus.style.display = 'inline';
-  minus.style.display = 'none';
+  elmt.style.display = 'block';
+});
+
+document.getElementById('btn-main-menu').addEventListener('click', () => {
+  const elmt = document.getElementById('mobile-menu');
+
+  if (elmt.style.display === 'block') {
+      elmt.style.display = 'none';
+
+      return;
+  }
+
+  elmt.style.display = 'block';
 });
 
         </script>
