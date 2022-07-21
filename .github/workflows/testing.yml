@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies
       env:
         # Need to be of format repo:branch.
-        BENCHOPT_BRANCH: Melvin-klein:pretty_names
+        BENCHOPT_BRANCH: benchopt:main
       run: |
         pip install -r requirements.txt
 
