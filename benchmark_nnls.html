@@ -326,7 +326,6 @@ body {
   height: 1rem;
 }
 
-
   /*----------------------------------------*/
 /***** Stylesheet for the hover index *****/
 /*----------------------------------------*/
@@ -773,6 +772,73 @@ input:checked+.slider:before {
   overflow-y: auto;
 }
 
+/*Plot config styling as a bag of tags*/
+#plot_config_title {
+  font-weight: bold;
+}
+
+.config-item, .config-ctrl {
+  border-radius: 9999px;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: white;
+  margin-left: 2ex;
+
+  cursor: pointer;
+
+  /* font styles*/
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+
+.config-item {
+  background-color: rgb(91, 78, 255);
+  border-color: rgb(55 65 81);
+}
+.config-ctrl {
+  font-size: medium;
+  font-weight: bold;
+  background-color: rgb(34, 30, 94);
+  border-color: rgb(23, 37, 59);
+}
+
+.view_selector_label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.view_selector_select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border-width: 1px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  --tw-shadow: 0 0 #0000;
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.view.active {
+  border-color: rgb(37 99 235);!important;
+  color: rgb(37 99 235);!important;
+}
 </style>
 
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
@@ -803,7 +869,7 @@ input:checked+.slider:before {
   </a>
 </h1>
 
-<p><em>Last updated: 2023-08-11 17:16</em>
+<p><em>Last updated: 2024-04-02 14:55</em>
   with <strong>3</strong> result files in total. <br>
 </p>
 
@@ -842,6 +908,51 @@ input:checked+.slider:before {
   </tr>
 </thead>
 <tbody>
+  <tr>
+    <td class="fname">
+      <a href="benchmark_nnls_benchmark_nnls_benchopt_run_2020-12-16_10h22m24.html">
+        
+        nnls 2020-12-16 10h22m24
+      </a>
+      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_nnls_benchopt_run_2020-12-16_10h22m24.csv" data-html="benchmark_nnls_benchmark_nnls_benchopt_run_2020-12-16_10h22m24.html" style="display:none;">
+    </td>
+    <td class="datasets">
+    <ul style="list-style-type: none; margin-top: 0;">
+      <div class=dataset>
+        
+          Boston
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">standardized=True </span> </li>
+        
+      </div>
+      <div class=dataset>
+        
+          Simulated
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=100,n_features=5000 </span> </li>
+        
+      </div>
+      <div class=dataset>
+        
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=100,n_features=10000 </span> </li>
+        
+      </div>
+    </ul>
+
+    </td>
+    
+    <td class="sysinfo">
+      <ul style="list-style-type: none; margin-top: 0;">
+
+
+    </td>
+    <td class="buttons" style='text-align: center'>
+      <a href="benchmark_nnls_benchmark_nnls_benchopt_run_2020-12-16_10h22m24.html">
+        <button class="btn"><i class="fas fa-chart-line"></i></button>
+      </a>
+      <a href="outputs/benchmark_nnls_benchopt_run_2020-12-16_10h22m24.csv">
+        <button class="btn"><i class="fa fa-download"></i></button>
+      </a>
+    </td>
+  </tr>
   <tr>
     <td class="fname">
       <a href="benchmark_nnls_benchmark_nnls_benchopt_run_2020-12-21_10h49m06.html">
@@ -922,7 +1033,7 @@ input:checked+.slider:before {
       <ul style="list-style-type: none; margin-top: 0;">
           <li>
             <b>CPU</b>: 72
-              <button data-idx=1 id=btn_subinfo1 class="button buttoncent" style="float:right;">
+              <button data-idx=2 id=btn_subinfo2 class="button buttoncent" style="float:right;">
                 <i class='fas fa-plus-circle'></i>
               </button>
               
@@ -932,7 +1043,7 @@ input:checked+.slider:before {
           </li>
 
         <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo1 style="display:none;">
+        <div id=subinfo2 style="display:none;">
               <li>
                 <b>platform</b>: Linux4.15.0-139-generic-x86_64
               </li>
@@ -951,51 +1062,6 @@ input:checked+.slider:before {
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
       <a href="outputs/benchmark_nnls_benchopt_run_2021-09-13_01h40m27.csv">
-        <button class="btn"><i class="fa fa-download"></i></button>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td class="fname">
-      <a href="benchmark_nnls_benchmark_nnls_benchopt_run_2020-12-16_10h22m24.html">
-        
-        nnls 2020-12-16 10h22m24
-      </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_nnls_benchopt_run_2020-12-16_10h22m24.csv" data-html="benchmark_nnls_benchmark_nnls_benchopt_run_2020-12-16_10h22m24.html" style="display:none;">
-    </td>
-    <td class="datasets">
-    <ul style="list-style-type: none; margin-top: 0;">
-      <div class=dataset>
-        
-          Boston
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">standardized=True </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          Simulated
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=100,n_features=5000 </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=100,n_features=10000 </span> </li>
-        
-      </div>
-    </ul>
-
-    </td>
-    
-    <td class="sysinfo">
-      <ul style="list-style-type: none; margin-top: 0;">
-
-
-    </td>
-    <td class="buttons" style='text-align: center'>
-      <a href="benchmark_nnls_benchmark_nnls_benchopt_run_2020-12-16_10h22m24.html">
-        <button class="btn"><i class="fas fa-chart-line"></i></button>
-      </a>
-      <a href="outputs/benchmark_nnls_benchopt_run_2020-12-16_10h22m24.csv">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>

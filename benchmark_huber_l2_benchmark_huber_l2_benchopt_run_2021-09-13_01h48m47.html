@@ -603,6 +603,14 @@ video {
   left: 0px;
 }
 
+.left-0 {
+  left: 0;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -770,6 +778,10 @@ video {
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.space-x-3 > * + * {
+  margin-left: 0.75rem; /* 12px */
+}
+
 .space-y-1 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
@@ -817,13 +829,42 @@ video {
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
+.border-blue-600 {
+  border-color: rgb(37 99 235);
+}
+
 .border-gray-800 {
   --tw-border-opacity: 1;
   border-color: rgb(31 41 55 / var(--tw-border-opacity));
 }
 
+.hover\:border-gray-300:hover	{
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.hover\:border-gray-700:hover	{
+  border-color: rgb(55 65 81);
+}
+
 .border-transparent {
   border-color: transparent;
+}
+
+.border-t {
+  border-top-width: 1px;
+}
+
+.border-t-2 {
+  border-top-width: 2px;
+}
+
+.border-b {
+  border-bottom-width: 1px;
+}
+
+.border-b-2 {
+  border-bottom-width: 2px;
 }
 
 .bg-gray-700 {
@@ -950,6 +991,10 @@ video {
   padding-bottom: 1rem;
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem; /* 40px */
+}
+
 .text-left {
   text-align: left;
 }
@@ -987,12 +1032,24 @@ video {
   font-weight: 500;
 }
 
+.font-semibold {
+  font-weight: 600;
+}
+
+.hover\:font-semibold:hover {
+  font-weight: 600;
+}
+
 .font-bold {
   font-weight: 700;
 }
 
 .capitalize {
   text-transform: capitalize;
+}
+
+.leading-5 {
+  line-height: 1.25rem;
 }
 
 .leading-7 {
@@ -1013,14 +1070,23 @@ video {
   color: rgb(243 244 246 / var(--tw-text-opacity));
 }
 
-.text-gray-900 {
-  --tw-text-opacity: 1;
-  color: rgb(17 24 39 / var(--tw-text-opacity));
+.text-gray-400 {
+  color: rgb(156 163 175);
 }
 
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.hover\:text-gray-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.text-gray-900 {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
 .text-black {
@@ -1034,6 +1100,11 @@ video {
 }
 
 .text-gray-700 {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.hover\:text-gray-700:hover {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
@@ -1325,8 +1396,17 @@ video {
   overflow: scroll;
 }
 
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
 .absolute {
   position: absolute;
+}
+
+.px-1 {
+  padding-left: 0.25rem; /* 4px */
+  padding-right: 0.25rem; /* 4px */
 }
 
 .px-10 {
@@ -1341,6 +1421,10 @@ video {
 
 .mb-4 {
   margin-bottom: 1rem; /* 16px */
+}
+
+.-mb-px {
+  margin-bottom: 1px;
 }
 
 .mt-4 {
@@ -1359,6 +1443,13 @@ video {
   border-radius: 0.25rem; /* 4px */
 }
 
+.whitespace-nowrap	{
+  white-space: nowrap;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
 
             /*----------------------------------------*/
 /***** Stylesheet for the hover index *****/
@@ -1806,6 +1897,73 @@ input:checked+.slider:before {
   overflow-y: auto;
 }
 
+/*Plot config styling as a bag of tags*/
+#plot_config_title {
+  font-weight: bold;
+}
+
+.config-item, .config-ctrl {
+  border-radius: 9999px;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: white;
+  margin-left: 2ex;
+
+  cursor: pointer;
+
+  /* font styles*/
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+
+.config-item {
+  background-color: rgb(91, 78, 255);
+  border-color: rgb(55 65 81);
+}
+.config-ctrl {
+  font-size: medium;
+  font-weight: bold;
+  background-color: rgb(34, 30, 94);
+  border-color: rgb(23, 37, 59);
+}
+
+.view_selector_label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.view_selector_select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border-width: 1px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  --tw-shadow: 0 0 #0000;
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.view.active {
+  border-color: rgb(37 99 235);!important;
+  color: rgb(37 99 235);!important;
+}
         </style>
     </head>
     <body>
@@ -1813,7 +1971,7 @@ input:checked+.slider:before {
         <div class="flex">
             <!-- Left column on big screen (plot selectors) -->
             <div class="hidden lg:flex flex-col w-96 bg-gray-700">
-                <div class="h-screen">
+                <div class="h-screen" onchange="setAllViewsToNonActive()">
                     <div class="px-8 h-16 flex items-center bg-gray-800">
                         <h1 class="ml11">
                             <span class="text-wrapper">
@@ -1876,7 +2034,7 @@ input:checked+.slider:before {
                             </div>
                         </div>
                         <div id="xaxis-type-form-group" class="mt-8 px-8">
-                            <label for="change_scaling" class="block text-sm font-medium text-white">X-axis</label>
+                            <label for="change_xaxis_type" class="block text-sm font-medium text-white">X-axis</label>
                             <div class="mt-1 rounded-md shadow-sm">
                                 <select id="change_xaxis_type" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({xaxis_type: this.value})">
                                    <!-- options will be added dynamically -->
@@ -1889,6 +2047,14 @@ input:checked+.slider:before {
                                 <input id="change_shades" type="checkbox" checked onchange="setState({with_quantiles: this.checked})">
                                 <span class="slider round"></span>
                             </label>
+                        </div>
+                        <div class="flex items-center justify-between mt-8 px-8">
+                            <a href="#" class="w-full inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="return saveView()">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122" />
+                                </svg>
+                                <span class="hidden lg:inline">Save as view</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -1934,6 +2100,8 @@ input:checked+.slider:before {
                             <a href="index.html" class="text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Home</a>
                             <a href="https://benchopt.github.io" class="text-white block px-3 py-2 rounded-md text-base font-medium">Website</a>
                             <a href="https://github.com/benchopt/benchopt" class="text-white block px-3 py-2 rounded-md text-base font-medium">Github</a>
+                            <a href="#" class="text-white block px-3 py-2 rounded-md text-base font-medium" onclick="return exportConfigs()">Download config</a>
+                            <a href="#" class="text-white block px-3 py-2 rounded-md text-base font-medium" onclick="return exportHTML()">Download HTML</a>
                             <a href="outputs/benchmark_huber_l2_benchopt_run_2021-09-13_01h48m47.csv" class="text-white block px-3 py-2 rounded-md text-base font-medium">Download data</a>
                         </div>
                     </div>
@@ -1963,7 +2131,7 @@ input:checked+.slider:before {
                     </div>
                     <!-- Mobile menu, show/hide based on menu state. -->
                     <div class="hidden" id="mobile-plot-form">
-                        <div class="px-2 pt-2 pb-3 space-y-4">
+                        <div class="px-2 pt-2 pb-3 space-y-4" onchange="setAllViewsToNonActive()">
                             <div class="px-8">
                                 <label for="dataset_selector" class="block text-sm font-medium text-white">Dataset:</label>
                                 <div class="mt-1 rounded-md shadow-sm">
@@ -2014,7 +2182,7 @@ input:checked+.slider:before {
                                 </div>
                             </div>
                             <div id="xaxis-type-form-group" class="mt-8 px-8">
-                                <label for="change_scaling" class="block text-sm font-medium text-white">X-axis</label>
+                                <label for="change_xaxis_type_mobile" class="block text-sm font-medium text-white">X-axis</label>
                                 <div class="mt-1 rounded-md shadow-sm">
                                     <select id="change_xaxis_type_mobile" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({xaxis_type: this.value})">
                                        <!-- options will be added dynamically -->
@@ -2027,6 +2195,17 @@ input:checked+.slider:before {
                                     <input id="change_shades" type="checkbox" checked onchange="setState({with_quantiles: this.checked})">
                                     <span class="slider round"></span>
                                 </label>
+                            </div>
+
+                            <div class="flex items-center justify-between mt-8 px-8">
+                                <a href="#"
+                                   class="w-full inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                   onclick="saveView()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122"/>
+                                    </svg>
+                                    <span>Save as view</span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -2054,23 +2233,63 @@ input:checked+.slider:before {
                             </div>
                         </div>
                     </div>
-                    <div class="hidden lg:flex mt-5 lg:mt-0 lg:ml-4">
+                    <div class="hidden lg:flex mt-5 lg:mt-0 lg:ml-4 space-x-4 items-center">
+                        <span class="font-bold">Download :</span>
                         <span>
-                            <a href="outputs/benchmark_huber_l2_benchopt_run_2021-09-13_01h48m47.csv" class="inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <a href="#" class="inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="return exportConfigs()">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
-                                <span class="hidden lg:inline">Download data</span>
+                                <span class="hidden lg:inline">Configs</span>
+                            </a>
+                        </span>
+
+
+                        <span>
+                            <a href="#" class="inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="return exportHTML()">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                                <span class="hidden lg:inline">HTML</span>
+                            </a>
+                        </span>
+
+                        <span>
+                            <a href="outputs/benchmark_huber_l2_benchopt_run_2021-09-13_01h48m47.csv" class="inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                                <span class="hidden lg:inline">Data</span>
                             </a>
                         </span>
                     </div>
                 </div>
 
+                <!-- Plot configuration -->
+                <div id="config_container" class="mt-8">
+                    <div>
+                        <div class="sm:hidden px-4">
+                            <label for="tabs" class="view_selector_label">Select a tab</label>
+                            <select id="tabs" name="tabs" class="block w-full rounded-md px-4 py-2 view_selector_select" onchange="setConfig(this)">
+                                <option value="no_selected_view" >No selected view</option>
+                            </select>
+                        </div>
+                        <div class="hidden sm:block">
+                            <div class="border-t border-b">
+                                <nav id="view-tabs" class="flex space-x-3 px-4 overflow-x-auto items-center" aria-label="Tabs">
+                                    <p class="view mr-6 py-4 px-1 text-sm font-medium border-b-2 border-transparent text-gray-700 whitespace-nowrap">Available plot views : </p>
+                                        <p id="no_view_available" class="text-sm text-gray-400 whitespace-nowrap border-b-2 border-transparent">No plot view available</p>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Plot -->
                 <div id="unique_plot"></div>
-                <div id="legend_container" class="py-10 bg-slate-200">
-                    <div id="legend_title" class="px-10 mb-4">
-                        Solvers <span id="legend_help">(Click on a solver to hide it or double click to hide all the others)</span>
+                <div id="legend_container" class="pb-10 bg-slate-200">
+                    <div class="px-10 mb-4 mt-4 text-base font-medium text-gray-700">
+                        Solvers <span class="text-sm font-medium text-gray-400">(Click on a solver to hide it or double click to hide all the others)</span>
                     </div>
                     <div id="plot_legend" class="px-10 space-r-2"></div>
                 </div>
@@ -2116,6 +2335,9 @@ input:checked+.slider:before {
             </div>
         </div>
 
+        <!-- Text area to copy config from export -->
+        <textarea id="config_export" class="hidden"></textarea>
+
         <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
         <!-- Used for the brand animation -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
@@ -2160,8 +2382,8 @@ input:checked+.slider:before {
         </script>
         <!-- Manage plot -->
         <script>
-            window.data = {"Simulated[n_samples=100,n_features=5000,rho=0]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0231052637100219, 0.0238421820104122, 0.0258402526378631, 0.026332126930356, 0.0307734590023756, 0.0402035452425479, 0.0559748113155365, 0.0968077816069126, 0.1725357640534639, 0.262528533115983, 0.4466064423322677, 0.5444755256175995, 0.5444071888923645, 0.530123870819807, 0.5456010233610868], "y": [5225.444659217283, 5225.444659217283, 3632.894655774168, 2150.225965495626, 1032.9336842144494, 203.3046103254634, 58.291052287132246, 28.553539448921057, 22.17235636671437, 20.213917930945733, 20.07755079698879, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "q1": [0.021948629245161957, 0.023141292110085438, 0.023850332945585202, 0.023553445562720262, 0.029434821754693922, 0.03876762315630908, 0.05427529960870738, 0.09177499003708359, 0.16089162006974217, 0.250410096719861, 0.4297462087124586, 0.5115997105836868, 0.5272686146199703, 0.5172920901328325, 0.5360658656805753], "q9": [0.04773882068693632, 0.03142646588385102, 0.02679485455155368, 0.0298166338354349, 0.04271138757467266, 0.04323113150894636, 0.05798706449568266, 0.10944245047867295, 0.17476374097168443, 0.2897381842136383, 0.5018251243978739, 0.5552120927721262, 0.5994817022234201, 0.5452727828174829, 0.5549569025635719]}, "bar": {"y": 0.6267704907804728, "times": NaN, "text": "Did not converge"}, "color": "rgba(227.0, 119.0, 194.0, 1.0)", "marker": 6, "sampling_strategy": "Time"}}, "transformers": {"c_star": 20.077392360550114, "max_f_0": 5225.444659217283}}}}, "Simulated[n_samples=100,n_features=5000,rho=0.6]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0254054088145494, 0.0258685238659381, 0.0292290933430194, 0.031339656561613, 0.0387950632721185, 0.0514738429337739, 0.0778981186449527, 0.1344727780669927, 0.2432186659425497, 0.3819137532263994, 0.6762419808655977, 0.7784783449023962, 0.7540648560971022, 0.7651688996702433, 0.7663414664566517], "y": [4568.211158541487, 4568.211158541487, 3917.942526639403, 2260.3221535746784, 1351.7985818991112, 324.9496769206961, 143.38898892929276, 24.942149677144187, 18.27929644802045, 17.865908814460127, 17.440562740633425, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "q1": [0.02477669008076188, 0.024662807211279798, 0.0273370679467916, 0.02712742015719406, 0.03422199524939056, 0.04625365920364854, 0.0680374003946781, 0.11539254672825328, 0.2048109337687492, 0.33287171907722946, 0.6179678216576576, 0.7387543573975563, 0.7433021321892739, 0.750265146791935, 0.7385285794734955], "q9": [0.0279099460691213, 0.043673581629991486, 0.03007972650229928, 0.03168406710028646, 0.050188959762454, 0.054377219080924945, 0.07920559868216512, 0.1501998674124479, 0.24914081506431096, 0.38660768494009967, 0.6858050808310509, 0.7861454010009765, 0.7703121084719896, 0.797797828912735, 0.7924939665943385]}, "bar": {"y": 0.7784783449023962, "times": [0.7425992302596569, 0.7855633404105902, 0.7784783449023962, 0.7865334413945675, 0.7361911088228226], "text": ""}, "color": "rgba(227.0, 119.0, 194.0, 1.0)", "marker": 6, "sampling_strategy": "Time"}}, "transformers": {"c_star": 17.44053323380099, "max_f_0": 4568.211158541487}}}}, "Simulated[n_samples=100,n_features=10000,rho=0]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0383295714855194, 0.0389624685049057, 0.0411110017448663, 0.042864229530096, 0.052065011113882, 0.0680019184947013, 0.1011817157268524, 0.1721537988632917, 0.2645433600991964, 0.4550964739173651, 0.7859400473535061, 1.093903947621584, 1.1071386244148016, 1.1354319918900728, 1.1368115562945604], "y": [7501.816396539149, 7501.816396539149, 6919.895436407089, 3682.916749368256, 2012.6108174633523, 547.8074894484771, 180.36910144992373, 49.83817472598153, 22.82668678857099, 22.15476130422233, 21.764003691129915, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "q1": [0.03515922203660008, 0.03683776631951326, 0.04032371900975702, 0.04221070893108838, 0.05043037943541996, 0.06618265621364111, 0.09407290294766421, 0.15627779848873613, 0.2558652281761169, 0.42459170930087564, 0.7769148349761963, 1.0620650872588158, 1.091572504490614, 1.0827919136732818, 1.1153439793735742], "q9": [0.05256251171231266, 0.039862488955259255, 0.06015793271362774, 0.055125153809785825, 0.06789868399500842, 0.0714204758405685, 0.109493588656187, 0.18505051843821999, 0.3285145603120327, 0.5703907322138548, 0.9695668309926987, 1.4670829389244318, 1.476052785664797, 1.485818373039365, 1.4760443974286317]}, "bar": {"y": 1.093903947621584, "times": [1.7130451519042251, 1.0981396194547417, 1.093903947621584, 1.0726397186517715, 1.0550153329968452], "text": ""}, "color": "rgba(227.0, 119.0, 194.0, 1.0)", "marker": 6, "sampling_strategy": "Time"}}, "transformers": {"c_star": 21.761509929661425, "max_f_0": 7501.816396539149}}}}, "Simulated[n_samples=100,n_features=10000,rho=0.6]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0427095498889684, 0.0438527800142765, 0.0527476910501718, 0.0575172714889049, 0.0701222587376833, 0.0980197116732597, 0.1491500586271286, 0.2440168093889951, 0.4438692387193441, 0.6996171362698078, 1.258053665980697, 1.189299562945962, 1.5867477413266895, 1.2303861295804381, 1.5551056489348412, 1.2048652563244104, 1.6065611466765404], "y": [7942.886515530983, 7942.886515530983, 5565.415037240656, 4605.913410386076, 1987.5607809746907, 705.7250032830592, 305.3345917562537, 123.83927184378064, 35.50314019866238, 24.808056132234988, 24.693230308485912, 24.693230308485912, 24.693221115285496, 24.693230308485912, 24.693221115285496, 24.693230308485912, 24.693221115285496], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 622, 1118, 1612, 2897], "q1": [0.03970779664814468, 0.03826485015451904, 0.04863611832261082, 0.0528907440602779, 0.065121903643012, 0.09457298628985876, 0.14830705150961873, 0.23939616158604618, 0.42249788343906397, 0.6950672589242458, 1.2346802059561015, 1.1774177953600884, 1.5867477413266895, 1.2044810341671108, 1.5551056489348412, 1.1909728363156318, 1.6065611466765404], "q9": [0.059224125370383206, 0.057110841199755666, 0.0745236828923225, 0.06590193659067152, 0.07116267457604403, 0.11953473649919032, 0.16670583002269265, 0.2551243998110294, 0.47083433717489237, 0.7826674245297909, 1.3929706387221814, 1.4158371549099684, 1.5867477413266895, 1.2670042239129544, 1.5551056489348412, 1.2250573644414544, 1.6065611466765404]}, "bar": {"y": 1.5867477413266895, "times": [1.5867477413266895], "text": ""}, "color": "rgba(227.0, 119.0, 194.0, 1.0)", "marker": 6, "sampling_strategy": "Time"}}, "transformers": {"c_star": 24.693221115185498, "max_f_0": 7942.886515530983}}}}};
-            window.metadata = {'solvers_description': {}, 'obj_description': ''};
+            window.data = {"Simulated[n_samples=100,n_features=5000,rho=0]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0231052637100219, 0.0238421820104122, 0.0258402526378631, 0.026332126930356, 0.0307734590023756, 0.0402035452425479, 0.0559748113155365, 0.0968077816069126, 0.1725357640534639, 0.262528533115983, 0.4466064423322677, 0.5444755256175995, 0.5444071888923645, 0.530123870819807, 0.5456010233610868], "y": [5225.444659217283, 5225.444659217283, 3632.894655774168, 2150.225965495626, 1032.9336842144494, 203.3046103254634, 58.291052287132246, 28.553539448921057, 22.17235636671437, 20.213917930945733, 20.07755079698879, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "q1": [0.021948629245161957, 0.023141292110085438, 0.023850332945585202, 0.023553445562720262, 0.029434821754693922, 0.03876762315630908, 0.05427529960870738, 0.09177499003708359, 0.16089162006974217, 0.250410096719861, 0.4297462087124586, 0.5115997105836868, 0.5272686146199703, 0.5172920901328325, 0.5360658656805753], "q9": [0.04773882068693632, 0.03142646588385102, 0.02679485455155368, 0.0298166338354349, 0.04271138757467266, 0.04323113150894636, 0.05798706449568266, 0.10944245047867295, 0.17476374097168443, 0.2897381842136383, 0.5018251243978739, 0.5552120927721262, 0.5994817022234201, 0.5452727828174829, 0.5549569025635719]}, "bar": {"y": 0.6267704907804728, "times": NaN, "text": "Did not converge"}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 0, "sampling_strategy": "Time"}}, "transformers": {"c_star": 20.077392360550114, "max_f_0": 5225.444659217283}}}}, "Simulated[n_samples=100,n_features=5000,rho=0.6]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0254054088145494, 0.0258685238659381, 0.0292290933430194, 0.031339656561613, 0.0387950632721185, 0.0514738429337739, 0.0778981186449527, 0.1344727780669927, 0.2432186659425497, 0.3819137532263994, 0.6762419808655977, 0.7784783449023962, 0.7540648560971022, 0.7651688996702433, 0.7663414664566517], "y": [4568.211158541487, 4568.211158541487, 3917.942526639403, 2260.3221535746784, 1351.7985818991112, 324.9496769206961, 143.38898892929276, 24.942149677144187, 18.27929644802045, 17.865908814460127, 17.440562740633425, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "q1": [0.02477669008076188, 0.024662807211279798, 0.0273370679467916, 0.02712742015719406, 0.03422199524939056, 0.04625365920364854, 0.0680374003946781, 0.11539254672825328, 0.2048109337687492, 0.33287171907722946, 0.6179678216576576, 0.7387543573975563, 0.7433021321892739, 0.750265146791935, 0.7385285794734955], "q9": [0.0279099460691213, 0.043673581629991486, 0.03007972650229928, 0.03168406710028646, 0.050188959762454, 0.054377219080924945, 0.07920559868216512, 0.1501998674124479, 0.24914081506431096, 0.38660768494009967, 0.6858050808310509, 0.7861454010009765, 0.7703121084719896, 0.797797828912735, 0.7924939665943385]}, "bar": {"y": 0.7784783449023962, "times": [0.7425992302596569, 0.7855633404105902, 0.7784783449023962, 0.7865334413945675, 0.7361911088228226], "text": ""}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 0, "sampling_strategy": "Time"}}, "transformers": {"c_star": 17.44053323380099, "max_f_0": 4568.211158541487}}}}, "Simulated[n_samples=100,n_features=10000,rho=0]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0383295714855194, 0.0389624685049057, 0.0411110017448663, 0.042864229530096, 0.052065011113882, 0.0680019184947013, 0.1011817157268524, 0.1721537988632917, 0.2645433600991964, 0.4550964739173651, 0.7859400473535061, 1.093903947621584, 1.1071386244148016, 1.1354319918900728, 1.1368115562945604], "y": [7501.816396539149, 7501.816396539149, 6919.895436407089, 3682.916749368256, 2012.6108174633523, 547.8074894484771, 180.36910144992373, 49.83817472598153, 22.82668678857099, 22.15476130422233, 21.764003691129915, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "q1": [0.03515922203660008, 0.03683776631951326, 0.04032371900975702, 0.04221070893108838, 0.05043037943541996, 0.06618265621364111, 0.09407290294766421, 0.15627779848873613, 0.2558652281761169, 0.42459170930087564, 0.7769148349761963, 1.0620650872588158, 1.091572504490614, 1.0827919136732818, 1.1153439793735742], "q9": [0.05256251171231266, 0.039862488955259255, 0.06015793271362774, 0.055125153809785825, 0.06789868399500842, 0.0714204758405685, 0.109493588656187, 0.18505051843821999, 0.3285145603120327, 0.5703907322138548, 0.9695668309926987, 1.4670829389244318, 1.476052785664797, 1.485818373039365, 1.4760443974286317]}, "bar": {"y": 1.093903947621584, "times": [1.7130451519042251, 1.0981396194547417, 1.093903947621584, 1.0726397186517715, 1.0550153329968452], "text": ""}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 0, "sampling_strategy": "Time"}}, "transformers": {"c_star": 21.761509929661425, "max_f_0": 7501.816396539149}}}}, "Simulated[n_samples=100,n_features=10000,rho=0.6]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0427095498889684, 0.0438527800142765, 0.0527476910501718, 0.0575172714889049, 0.0701222587376833, 0.0980197116732597, 0.1491500586271286, 0.2440168093889951, 0.4438692387193441, 0.6996171362698078, 1.258053665980697, 1.189299562945962, 1.5867477413266895, 1.2303861295804381, 1.5551056489348412, 1.2048652563244104, 1.6065611466765404], "y": [7942.886515530983, 7942.886515530983, 5565.415037240656, 4605.913410386076, 1987.5607809746907, 705.7250032830592, 305.3345917562537, 123.83927184378064, 35.50314019866238, 24.808056132234988, 24.693230308485912, 24.693230308485912, 24.693221115285496, 24.693230308485912, 24.693221115285496, 24.693230308485912, 24.693221115285496], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 622, 1118, 1612, 2897], "q1": [0.03970779664814468, 0.03826485015451904, 0.04863611832261082, 0.0528907440602779, 0.065121903643012, 0.09457298628985876, 0.14830705150961873, 0.23939616158604618, 0.42249788343906397, 0.6950672589242458, 1.2346802059561015, 1.1774177953600884, 1.5867477413266895, 1.2044810341671108, 1.5551056489348412, 1.1909728363156318, 1.6065611466765404], "q9": [0.059224125370383206, 0.057110841199755666, 0.0745236828923225, 0.06590193659067152, 0.07116267457604403, 0.11953473649919032, 0.16670583002269265, 0.2551243998110294, 0.47083433717489237, 0.7826674245297909, 1.3929706387221814, 1.4158371549099684, 1.5867477413266895, 1.2670042239129544, 1.5551056489348412, 1.2250573644414544, 1.6065611466765404]}, "bar": {"y": 1.5867477413266895, "times": [1.5867477413266895], "text": ""}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 0, "sampling_strategy": "Time"}}, "transformers": {"c_star": 24.693221115185498, "max_f_0": 7942.886515530983}}}}};
+            window.metadata = {"plot_configs": {}, "solvers_description": {}, "obj_description": ""};
 
             window.addEventListener("load", () => {
                 // Initialize plot state
@@ -2175,6 +2397,10 @@ input:checked+.slider:before {
                     'xaxis_type':  document.getElementById('change_xaxis_type').value || "Time",
                     'hidden_solvers': []
                 });
+                const plot_configs = document.getElementsByClassName('view');
+                if (plot_configs.length > 0 ){
+                    setConfig(plot_configs[1]); // [0] is the span with text : "Available plot views :"
+                }
             });
         </script>
         <script type="text/javascript">
@@ -2819,6 +3045,7 @@ function createPathString(symbolNumber, r) {
  *   - plot_kind (string),
  *   - scale (string)
  *   - with_quantiles (boolean)
+ *   - xaxis_type (string)
  *   - hidden_solvers (array)
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
@@ -2849,6 +3076,19 @@ const setState = (partialState) => {
  * @returns Object
  */
 const state = () => window.state;
+
+/**
+ * Mapping between selectors and configuration
+*/
+const config_mapping = {
+  'dataset': 'dataset_selector',
+  'objective': 'objective_selector',
+  'objective_column': 'objective_column',
+  'kind': 'plot_kind',
+  'scale': 'change_scaling',
+  'with_quantiles': 'change_shades',
+  'xaxis_type':'change_xaxis_type',
+};
 
 /*
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3002,6 +3242,183 @@ const getScatterCurves = () => {
   return curves;
 };
 
+
+
+/*
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * CONFIG MANAGEMENT
+ *
+ * Configs are used to save particular benchmark results' views.
+ *
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
+const get_lim_plotly = (lim, ax) =>{
+  if(getScale()[ax + 'axis'] == 'log'){
+    lim = [Math.log10(parseFloat(lim[0])), Math.log10(parseFloat(lim[1]))]
+  };
+  return lim;
+};
+const get_lim_config = (lim, ax) =>{
+  if(getScale()[ax + 'axis'] == 'log'){
+    lim = [Math.pow(10, lim[0]), Math.pow(10, lim[1])]
+  };
+  return lim;
+};
+
+
+const setConfig = (config_item) =>{
+  // Retrieve the name of the config.
+  let config_name = config_item.textContent;
+  // Select on mobile version
+  if (config_item.tagName === "SELECT") {
+    config_name = config_item.value;
+  }
+
+  // Clear all selected views and select the good one.
+  setAllViewsToNonActive();
+  config_item.classList.add('active');
+  // Select on mobile version
+  if (config_item.tagName === "SELECT") {
+    config_item.value = config_name;
+  }
+
+  if (config_name !== "no_selected_view") {
+    // Get the updated state
+    let config = window.metadata.plot_configs[config_name];
+    let update = {};
+    const lims = ['xlim', 'ylim', 'hidden_solvers']
+    for(let key in config_mapping){
+      if (key in config){
+        value = config[key];
+        document.getElementById(config_mapping[key]).value = value;
+        if (key == "kind"){
+          key = "plot_kind";
+        }
+        update[key] = value;
+      }
+      else if (!lims.includes(key)) {
+        document.getElementById(config_mapping[key]).selectedIndex = 0;
+        update[key] = document.getElementById(config_mapping[key]).value;
+      }
+    }
+
+    setState(update);
+
+    let layout = {};
+    for(const ax of ['x', 'y']){
+      let lim = ax + 'lim';
+      if (config.hasOwnProperty(lim) & (config[lim] != null)){
+        layout[ax +'axis.range'] = get_lim_plotly(config[lim], ax);
+      };
+    };
+
+    // update the plot
+    const div = document.getElementById('unique_plot');
+    Plotly.relayout(div, layout);
+  }
+};
+
+
+const saveView = () => {
+  let n_configs = Object.keys(window.metadata.plot_configs).length;
+
+  let config_name = prompt("Config Name", "Config " + n_configs);
+  if(config_name === null || config_name === ""){
+    return;
+  }
+
+  // Retrieve the drop down menue selected values
+  let config = {};
+  for(let key in config_mapping) {
+    value = config[key];
+    config[key] = document.getElementById(config_mapping[key]).value;
+  }
+
+  // Retrieve the range of the plots.
+  const fig = document.getElementById('unique_plot');
+  config['xlim'] = get_lim_config(fig.layout.xaxis.range, 'x');
+  config['ylim'] = get_lim_config(fig.layout.yaxis.range, 'y');
+
+  let noViewAvailableElement = document.getElementById('no_view_available');
+
+  if (noViewAvailableElement) {
+    noViewAvailableElement.classList.add('hidden');
+  }
+  setAllViewsToNonActive();
+
+  // Only add a button if the config does not exist yet:
+  if (!(config_name in window.metadata.plot_configs)){
+    let viewTabs = document.getElementById("view-tabs");
+    let node = document.createElement("span");
+    node.innerHTML = config_name;
+    node.className = "view border-transparent whitespace-nowrap border-b-2 py-4 px-1 text-sm text-gray-400 hover:text-gray-500 hover:border-gray-300 cursor-pointer active";
+    node.onclick = function() {setConfig(node)};
+    viewTabs.appendChild(node);
+
+    let option = document.createElement("option");
+    option.setAttribute("value", config_name);
+    option.innerHTML = config_name;
+    let tabs = document.getElementById("tabs");
+    tabs.appendChild(option);
+    tabs.value = config_name;
+  }
+
+  // Add the config in the configs mapping.
+  window.metadata.plot_configs[config_name] = config;
+
+  return false;
+};
+
+const setAllViewsToNonActive = () => {
+  let view_items = document.getElementsByClassName('view');
+  for (let i = 0; i < view_items.length; i++) {
+     view_items.item(i).classList.remove('active');
+  }
+
+  document.getElementById('tabs').value = "no_selected_view";
+}
+
+const downloadBlob = (blob, name) => {
+  var tempLink = document.createElement("a");
+  tempLink.setAttribute('href', URL.createObjectURL(blob));
+  tempLink.setAttribute('download', name);
+  tempLink.click();
+  URL.revokeObjectURL(tempLink.href);
+
+  // To prevent the screen from going up when the user clicks on the button
+  return false;
+
+};
+
+const exportConfigs = () => {
+  // Construct the yaml export of the config.
+  var config_yaml = "plot_configs:\n"
+
+  for(var config_name in window.metadata.plot_configs){
+    var config = window.metadata.plot_configs[config_name];
+    config_yaml += "  " + config_name + ":\n";
+    for(var key in config){
+      var value = config[key];
+      if (key === 'xlim' || key === 'ylim')
+        value = "[" + value + "]";
+      config_yaml += "    " + key + ": " + value + "\n";
+    }
+  }
+
+  // Download the resulting yaml file.
+  var blob = new Blob([config_yaml], {type: 'text/yaml'});
+  return downloadBlob(blob, 'config.yml');
+};
+
+const exportHTML = () => {
+  var blob = new Blob(
+    [document.documentElement.innerHTML],
+    {type: 'text/html'}
+  );
+  return downloadBlob(blob, location.pathname.split("/").pop());
+};
+
 /*
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * DATA TRANSFORMERS
@@ -3118,11 +3535,11 @@ const isAvailable = () => {
 
 const displayScatterElements = shouldBeVisible => {
   if (shouldBeVisible) {
-    document.getElementById('change_scaling').style.display = 'inline-block';
+    document.getElementById('scale-form-group').style.display = 'inline-block';
     document.getElementById('legend_container').style.display = 'block';
     document.getElementById('plot_legend').style.display = 'flex';
   } else {
-    document.getElementById('change_scaling').style.display = 'none';
+    document.getElementById('scale-form-group').style.display = 'none';
     document.getElementById('legend_container').style.display = 'none';
     document.getElementById('plot_legend').style.display = 'none';
   }
@@ -3142,7 +3559,11 @@ const barDataToArrays = () => {
 }
 
 const getScale = () => {
-  switch (state().scale) {
+  return _getScale(state().scale)
+}
+
+const _getScale = (scale) => {
+  switch (scale) {
     case 'loglog':
       return {
         xaxis: 'log',
@@ -3507,6 +3928,9 @@ function updateXaxis(idXaxisTypeSelection) {
   });
 
   // set selected value
+  if (!options.has(xaxisType)){
+    alert("Unknown xaxis type '"+ xaxisType + "'.");
+  }
   selection.value = options.has(xaxisType) ? xaxisType : "Time";
 }
 
