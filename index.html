@@ -448,6 +448,7 @@ body {
 
 /* Default color */
 figure.effect-ruby {
+  height: 150px;
   background-color: #2c3e50;
 }
 
@@ -839,6 +840,17 @@ input:checked+.slider:before {
   border-color: rgb(37 99 235);!important;
   color: rgb(37 99 235);!important;
 }
+
+/* Hide q1, q3, max, min, upper fence, lower fence on boxplot */
+g.hovertext:has(path + [data-unformatted*="q1"]),
+g.hovertext:has(path + [data-unformatted*="q3"]),
+g.hovertext:has(path + [data-unformatted*="max"]),
+g.hovertext:has(path + [data-unformatted*="min"]),
+g.hovertext:has(path + [data-unformatted*="upper fence"]),
+g.hovertext:has(path + [data-unformatted*="lower fence"])
+{
+    display: none;
+}
 </style>
 
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
@@ -858,7 +870,7 @@ input:checked+.slider:before {
 <a id="top"></a>
 <h1><a href="https://benchopt.github.io/">Benchopt</a> benchmark results</h1>
 
-<p><em>Last updated: 2024-06-12 17:32</em></p>
+<p><em>Last updated: 2025-04-03 08:57</em></p>
 <p>
     <strong>18</strong> benchmarks in total.
 </p>
@@ -867,7 +879,6 @@ input:checked+.slider:before {
 <div class="content">
 <div class="grid">
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>Bilevel Optimization</h2>
         <p>5 files available</p>
@@ -875,7 +886,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>ConvNet classification fitting</h2>
         <p>3 files available</p>
@@ -883,7 +893,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>FLamby</h2>
         <p>1 files available</p>
@@ -891,7 +900,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>Huber Regression with L2 regularization</h2>
         <p>1 files available</p>
@@ -899,7 +907,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>L1-regularized Quantile Regression</h2>
         <p>4 files available</p>
@@ -907,7 +914,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>L2 Logistic Regression</h2>
         <p>4 files available</p>
@@ -915,7 +921,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>Lasso Path</h2>
         <p>1 files available</p>
@@ -923,7 +928,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>Lasso Regression</h2>
         <p>11 files available</p>
@@ -931,7 +935,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>MCP Regression</h2>
         <p>4 files available</p>
@@ -939,7 +942,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>NeurIPS 22 Benchopt results</h2>
         <p>6 files available</p>
@@ -947,7 +949,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>Non Negative Least Squares</h2>
         <p>3 files available</p>
@@ -955,7 +956,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>Ordinary Least Squares</h2>
         <p>3 files available</p>
@@ -963,7 +963,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>Ridge Regression</h2>
         <p>1 files available</p>
@@ -971,7 +970,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>Ridge regression with postivity constraints</h2>
         <p>2 files available</p>
@@ -979,7 +977,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>SVM Binary Classification (no intercept)</h2>
         <p>1 files available</p>
@@ -987,7 +984,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>Simulation-Based Inference</h2>
         <p>1 files available</p>
@@ -995,7 +991,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>Sparse Logistic Regression</h2>
         <p>3 files available</p>
@@ -1003,7 +998,6 @@ input:checked+.slider:before {
       </figcaption>
     </figure>
     <figure class="effect-ruby">
-      <img src="https://via.placeholder.com/250x150/1E90FF" alt="backgrd"/>
       <figcaption>
         <h2>TV1D</h2>
         <p>1 files available</p>

@@ -448,6 +448,7 @@ body {
 
 /* Default color */
 figure.effect-ruby {
+  height: 150px;
   background-color: #2c3e50;
 }
 
@@ -839,6 +840,17 @@ input:checked+.slider:before {
   border-color: rgb(37 99 235);!important;
   color: rgb(37 99 235);!important;
 }
+
+/* Hide q1, q3, max, min, upper fence, lower fence on boxplot */
+g.hovertext:has(path + [data-unformatted*="q1"]),
+g.hovertext:has(path + [data-unformatted*="q3"]),
+g.hovertext:has(path + [data-unformatted*="max"]),
+g.hovertext:has(path + [data-unformatted*="min"]),
+g.hovertext:has(path + [data-unformatted*="upper fence"]),
+g.hovertext:has(path + [data-unformatted*="lower fence"])
+{
+    display: none;
+}
 </style>
 
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
@@ -869,7 +881,7 @@ input:checked+.slider:before {
   </a>
 </h1>
 
-<p><em>Last updated: 2024-06-12 17:31</em>
+<p><em>Last updated: 2025-04-03 08:52</em>
   with <strong>2</strong> result files in total. <br>
 </p>
 
@@ -910,11 +922,11 @@ input:checked+.slider:before {
 <tbody>
   <tr>
     <td class="fname">
-      <a href="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-13_01h34m42.html">
+      <a href="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.html">
         
-        ridge positive 2021-09-13 01h34m42
+        ridge positive 2021-09-10 18h23m09
       </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_ridge_positive_benchopt_run_2021-09-13_01h34m42.csv" data-html="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-13_01h34m42.html" style="display:none;">
+      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.csv" data-html="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.html" style="display:none;">
     </td>
     <td class="datasets">
     <ul style="list-style-type: none; margin-top: 0;">
@@ -922,11 +934,6 @@ input:checked+.slider:before {
         
           Boston
           <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">standardized=True </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          Finance
         
       </div>
       <div class=dataset>
@@ -968,21 +975,21 @@ input:checked+.slider:before {
 
     </td>
     <td class="buttons" style='text-align: center'>
-      <a href="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-13_01h34m42.html">
+      <a href="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.html">
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
-      <a href="outputs/benchmark_ridge_positive_benchopt_run_2021-09-13_01h34m42.csv">
+      <a href="outputs/benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.csv">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>
   </tr>
   <tr>
     <td class="fname">
-      <a href="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.html">
+      <a href="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-13_01h34m42.html">
         
-        ridge positive 2021-09-10 18h23m09
+        ridge positive 2021-09-13 01h34m42
       </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.csv" data-html="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.html" style="display:none;">
+      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_ridge_positive_benchopt_run_2021-09-13_01h34m42.csv" data-html="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-13_01h34m42.html" style="display:none;">
     </td>
     <td class="datasets">
     <ul style="list-style-type: none; margin-top: 0;">
@@ -990,6 +997,11 @@ input:checked+.slider:before {
         
           Boston
           <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">standardized=True </span> </li>
+        
+      </div>
+      <div class=dataset>
+        
+          Finance
         
       </div>
       <div class=dataset>
@@ -1031,10 +1043,10 @@ input:checked+.slider:before {
 
     </td>
     <td class="buttons" style='text-align: center'>
-      <a href="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.html">
+      <a href="benchmark_ridge_positive_benchmark_ridge_positive_benchopt_run_2021-09-13_01h34m42.html">
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
-      <a href="outputs/benchmark_ridge_positive_benchopt_run_2021-09-10_18h23m09.csv">
+      <a href="outputs/benchmark_ridge_positive_benchopt_run_2021-09-13_01h34m42.csv">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>

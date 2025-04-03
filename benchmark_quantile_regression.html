@@ -448,6 +448,7 @@ body {
 
 /* Default color */
 figure.effect-ruby {
+  height: 150px;
   background-color: #2c3e50;
 }
 
@@ -839,6 +840,17 @@ input:checked+.slider:before {
   border-color: rgb(37 99 235);!important;
   color: rgb(37 99 235);!important;
 }
+
+/* Hide q1, q3, max, min, upper fence, lower fence on boxplot */
+g.hovertext:has(path + [data-unformatted*="q1"]),
+g.hovertext:has(path + [data-unformatted*="q3"]),
+g.hovertext:has(path + [data-unformatted*="max"]),
+g.hovertext:has(path + [data-unformatted*="min"]),
+g.hovertext:has(path + [data-unformatted*="upper fence"]),
+g.hovertext:has(path + [data-unformatted*="lower fence"])
+{
+    display: none;
+}
 </style>
 
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
@@ -869,7 +881,7 @@ input:checked+.slider:before {
   </a>
 </h1>
 
-<p><em>Last updated: 2024-06-12 17:31</em>
+<p><em>Last updated: 2025-04-03 08:55</em>
   with <strong>4</strong> result files in total. <br>
 </p>
 
@@ -973,11 +985,11 @@ input:checked+.slider:before {
   </tr>
   <tr>
     <td class="fname">
-      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2022-03-26_15h44m40.html">
+      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.html">
         
-        quantile regression 2022-03-26 15h44m40
+        quantile regression 2021-09-10 18h22m45
       </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_quantile_regression_benchopt_run_2022-03-26_15h44m40.csv" data-html="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2022-03-26_15h44m40.html" style="display:none;">
+      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.csv" data-html="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.html" style="display:none;">
     </td>
     <td class="datasets">
     <ul style="list-style-type: none; margin-top: 0;">
@@ -999,33 +1011,36 @@ input:checked+.slider:before {
     <td class="sysinfo">
       <ul style="list-style-type: none; margin-top: 0;">
           <li>
-            <b>CPU</b>: 16
+            <b>CPU</b>: 72
               <button data-idx=1 id=btn_subinfo1 class="button buttoncent" style="float:right;">
                 <i class='fas fa-plus-circle'></i>
               </button>
               
           </li>
           <li>
-            <b>RAM (GB)</b>: 32
+            <b>RAM (GB)</b>: 376
           </li>
 
         <!--Case where sub infos are available but somehow main infos are not-->
         <div id=subinfo1 style="display:none;">
               <li>
-                <b>platform</b>: Darwin21.3.0-x86_64
+                <b>platform</b>: Linux4.15.0-139-generic-x86_64
               </li>
               <li>
-                <b>processor</b>: Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz
+                <b>processor</b>: Intel(R) Xeon(R) Gold 6140 CPU @ 2.30GHz
+              </li>
+              <li>
+                <b>nb threads</b>: 1
               </li>
         </div>
       </ul>
 
     </td>
     <td class="buttons" style='text-align: center'>
-      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2022-03-26_15h44m40.html">
+      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.html">
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
-      <a href="outputs/benchmark_quantile_regression_benchopt_run_2022-03-26_15h44m40.csv">
+      <a href="outputs/benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.csv">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>
@@ -1094,11 +1109,11 @@ input:checked+.slider:before {
   </tr>
   <tr>
     <td class="fname">
-      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.html">
+      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2022-03-26_15h44m40.html">
         
-        quantile regression 2021-09-10 18h22m45
+        quantile regression 2022-03-26 15h44m40
       </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.csv" data-html="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.html" style="display:none;">
+      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_quantile_regression_benchopt_run_2022-03-26_15h44m40.csv" data-html="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2022-03-26_15h44m40.html" style="display:none;">
     </td>
     <td class="datasets">
     <ul style="list-style-type: none; margin-top: 0;">
@@ -1120,36 +1135,33 @@ input:checked+.slider:before {
     <td class="sysinfo">
       <ul style="list-style-type: none; margin-top: 0;">
           <li>
-            <b>CPU</b>: 72
+            <b>CPU</b>: 16
               <button data-idx=3 id=btn_subinfo3 class="button buttoncent" style="float:right;">
                 <i class='fas fa-plus-circle'></i>
               </button>
               
           </li>
           <li>
-            <b>RAM (GB)</b>: 376
+            <b>RAM (GB)</b>: 32
           </li>
 
         <!--Case where sub infos are available but somehow main infos are not-->
         <div id=subinfo3 style="display:none;">
               <li>
-                <b>platform</b>: Linux4.15.0-139-generic-x86_64
+                <b>platform</b>: Darwin21.3.0-x86_64
               </li>
               <li>
-                <b>processor</b>: Intel(R) Xeon(R) Gold 6140 CPU @ 2.30GHz
-              </li>
-              <li>
-                <b>nb threads</b>: 1
+                <b>processor</b>: Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz
               </li>
         </div>
       </ul>
 
     </td>
     <td class="buttons" style='text-align: center'>
-      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.html">
+      <a href="benchmark_quantile_regression_benchmark_quantile_regression_benchopt_run_2022-03-26_15h44m40.html">
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
-      <a href="outputs/benchmark_quantile_regression_benchopt_run_2021-09-10_18h22m45.csv">
+      <a href="outputs/benchmark_quantile_regression_benchopt_run_2022-03-26_15h44m40.csv">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>
