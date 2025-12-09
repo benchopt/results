@@ -6,16 +6,19 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   plot_publish:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v5
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v6
       with:
-        python-version: 3.8
+        python-version: 3.12
 
     - name: Install dependencies
       env:
@@ -33,9 +36,6 @@ jobs:
         make render
 
     - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@3.7.1
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: html # The folder the action should deploy.
-        CLEAN: true # Automatically remove deleted files from the deploy branch
+        folder: html
