@@ -1842,12 +1842,12 @@ input:checked+.slider:before {
 }
 
 /* Description solver when hovered */
-.solver-description-container {
+.curve-description-container {
   position: relative;
   display: inline-flex;
 }
 
-.solver-description-content {
+.curve-description-content {
   display: flex;
   flex-direction: column;
   visibility: hidden;
@@ -1872,12 +1872,12 @@ input:checked+.slider:before {
 }
 
 /* Show description when hovered */
-.solver-description-container:hover .solver-description-content {
+.curve-description-container:hover .curve-description-content {
   visibility: visible;
 }
 
 /*Arrow at the bottom of the description*/
-.solver-description-container .solver-description-content::after {
+.curve-description-container .curve-description-content::after {
   content: " ";
   position: absolute;
   top: 100%;
@@ -1888,12 +1888,12 @@ input:checked+.slider:before {
   border-color: rgb(55 65 81) transparent transparent transparent;
 }
 
-.solver-description-title {
+.curve-description-title {
   margin-bottom: 1em;
   font-weight: bolder;
 }
 
-.solver-description-body {
+.curve-description-body {
   max-height: 450px;
   overflow-y: auto;
 }
@@ -1992,53 +1992,27 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                             </span>
                         </h1>
                     </div>
+                    <div class="mt-8 px-8">
+                        <label for="plot_kind" class="block text-sm font-medium text-white">Chart type</label>
+                        <div class="mt-1 rounded-md shadow-sm">
+                            <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value, scale: (this.value === 'boxplot' || this.value === 'bar_chart' ? 'linear' : state().scale)})">
+                                <option value="objective_curve">
+                                    Objective curve
+                                </option>
+                                <option value="bar_chart">
+                                    Bar chart
+                                </option>
+                                <option value="boxplot">
+                                    Boxplot
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="flex-1 flex flex-col">
-                        <div class="mt-10 px-8">
-                            <label for="dataset_selector" class="block text-sm font-medium text-white">Dataset:</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="dataset_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({dataset: this.value})">
-                                    <option value="Simulated[n_samples=100,n_features=5000,rho=0]">Simulated[n_samples=100,n_features=5000,rho=0]</option>
-                                    <option value="Simulated[n_samples=100,n_features=5000,rho=0.6]">Simulated[n_samples=100,n_features=5000,rho=0.6]</option>
-                                    <option value="Simulated[n_samples=100,n_features=10000,rho=0]">Simulated[n_samples=100,n_features=10000,rho=0]</option>
-                                    <option value="Simulated[n_samples=100,n_features=10000,rho=0.6]">Simulated[n_samples=100,n_features=10000,rho=0.6]</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mt-8 px-8">
-                            <label for="objective_selector" class="block text-sm font-medium text-white">Objective:</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="objective_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective: this.value})">
-                                    <option value="Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]">Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="objective-column-form-group" class="mt-8 px-8">
-                            <div class="flex flex-row items-center justify-between text-sm font-medium text-white">
-                                <label for="objective_column" class="block">Objective metrics</label>
-                                <!--don't show description unless it is provided -->
-                            </div>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_column: this.value})">
-                                    <option value="objective_value">objective_value</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mt-8 px-8">
-                            <label for="plot_kind" class="block text-sm font-medium text-white">Chart type</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value, scale: (this.value === 'boxplot' || state().plot_kind === 'boxplot' ? 'linear' : state().scale)})">
-                                    <option value="objective_curve">objective_curve</option>
-                                    <option value="suboptimality_curve">suboptimality_curve</option>
-                                    <option value="relative_suboptimality_curve">relative_suboptimality_curve</option>
-                                    <option value="bar_chart">bar_chart</option>
-                                    <option value="boxplot">boxplot</option>
-                                </select>
-                            </div>
-                        </div>
                         <div id="scale-form-group" class="mt-8 px-8">
-                            <label for="change_scaling" class="block text-sm font-medium text-white">Scale</label>
+                            <label for="change_scale" class="block text-sm font-medium text-white">Scale</label>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <select id="change_scaling" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
+                                <select id="change_scale" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
                                     <option value="linear">linear</option>
                                     <!-- Options for other plots -->
                                     <option class="other_plot_option" value="semilog-y">semilog-y</option>
@@ -2049,25 +2023,6 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                 </select>
                             </div>
                         </div>
-                        <div id="xaxis-type-form-group" class="mt-8 px-8">
-                            <label for="change_xaxis_type" class="block text-sm font-medium text-white">X-axis</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="change_xaxis_type" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({xaxis_type: this.value})">
-                                    <option value="Time" class="hidden">Time</option>
-                                    <option value="Iteration" class="hidden">Iteration</option>
-                                    <option value="Solver" class="hidden">Solver</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="yaxis-type-form-group" class="mt-8 px-8">
-                            <label for="change_yaxis_type" class="block text-sm font-medium text-white">Y-axis</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="change_yaxis_type" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({yaxis_type: this.value})">
-                                    <option value="objective_column">Objective metric</option>
-                                    <option value="time">Time</option>
-                                </select>
-                            </div>
-                        </div>
                         <div id="change-shades-form-group" class="flex items-center justify-between mt-8 px-8">
                             <div class="block text-sm font-medium text-white">Quantiles</div>
                             <label class="block switch">
@@ -2075,6 +2030,134 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                 <span class="slider round"></span>
                             </label>
                         </div>
+                        <div id="change-relative-suboptimal-form-group" class="flex items-center justify-between mt-8 px-8">
+                            <div class="block text-sm font-medium text-white">Suboptimal Curve</div>
+                            <label class="block switch">
+                                <input id="change_suboptimal" type="checkbox" onchange="setState({suboptimal_curve: this.checked})">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div id="change-relative-suboptimal-form-group" class="flex items-center justify-between mt-8 px-8">
+                            <div class="block text-sm font-medium text-white">Relative Curve</div>
+                            <label class="block switch">
+                                <input id="change_relative" type="checkbox" onchange="setState({relative_curve: this.checked})">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                            <div id="objective_curve-custom-params-container">
+                                <div id="objective_curve_dataset_form_group" class="mt-8 px-8">
+                                    <label for="change_objective_curve_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_objective_curve_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_dataset: this.value})">
+                                                <option value="Simulated[n_samples=100,n_features=5000,rho=0]">Simulated[n_samples=100,n_features=5000,rho=0]</option>
+                                                <option value="Simulated[n_samples=100,n_features=5000,rho=0.6]">Simulated[n_samples=100,n_features=5000,rho=0.6]</option>
+                                                <option value="Simulated[n_samples=100,n_features=10000,rho=0]">Simulated[n_samples=100,n_features=10000,rho=0]</option>
+                                                <option value="Simulated[n_samples=100,n_features=10000,rho=0.6]">Simulated[n_samples=100,n_features=10000,rho=0.6]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="objective_curve_objective_form_group" class="mt-8 px-8">
+                                    <label for="change_objective_curve_objective" class="block text-sm font-medium text-white">objective</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_objective_curve_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_objective: this.value})">
+                                                <option value="Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]">Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="objective_curve_objective_column_form_group" class="mt-8 px-8">
+                                    <label for="change_objective_curve_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_objective_curve_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_objective_column: this.value})">
+                                                <option value="objective_value">objective_value</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="objective_curve_X_axis_form_group" class="mt-8 px-8">
+                                    <label for="change_objective_curve_X_axis" class="block text-sm font-medium text-white">X_axis</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_objective_curve_X_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_X_axis: this.value})">
+                                                <option value="Time">Time</option>
+                                                <option value="Iteration">Iteration</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="bar_chart-custom-params-container">
+                                <div id="bar_chart_dataset_form_group" class="mt-8 px-8">
+                                    <label for="change_bar_chart_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_bar_chart_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_dataset: this.value})">
+                                                <option value="Simulated[n_samples=100,n_features=5000,rho=0]">Simulated[n_samples=100,n_features=5000,rho=0]</option>
+                                                <option value="Simulated[n_samples=100,n_features=5000,rho=0.6]">Simulated[n_samples=100,n_features=5000,rho=0.6]</option>
+                                                <option value="Simulated[n_samples=100,n_features=10000,rho=0]">Simulated[n_samples=100,n_features=10000,rho=0]</option>
+                                                <option value="Simulated[n_samples=100,n_features=10000,rho=0.6]">Simulated[n_samples=100,n_features=10000,rho=0.6]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="bar_chart_objective_form_group" class="mt-8 px-8">
+                                    <label for="change_bar_chart_objective" class="block text-sm font-medium text-white">objective</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_bar_chart_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_objective: this.value})">
+                                                <option value="Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]">Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="bar_chart_objective_column_form_group" class="mt-8 px-8">
+                                    <label for="change_bar_chart_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_bar_chart_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_objective_column: this.value})">
+                                                <option value="objective_value">objective_value</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="boxplot-custom-params-container">
+                                <div id="boxplot_dataset_form_group" class="mt-8 px-8">
+                                    <label for="change_boxplot_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_boxplot_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_dataset: this.value})">
+                                                <option value="Simulated[n_samples=100,n_features=5000,rho=0]">Simulated[n_samples=100,n_features=5000,rho=0]</option>
+                                                <option value="Simulated[n_samples=100,n_features=5000,rho=0.6]">Simulated[n_samples=100,n_features=5000,rho=0.6]</option>
+                                                <option value="Simulated[n_samples=100,n_features=10000,rho=0]">Simulated[n_samples=100,n_features=10000,rho=0]</option>
+                                                <option value="Simulated[n_samples=100,n_features=10000,rho=0.6]">Simulated[n_samples=100,n_features=10000,rho=0.6]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="boxplot_objective_form_group" class="mt-8 px-8">
+                                    <label for="change_boxplot_objective" class="block text-sm font-medium text-white">objective</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_boxplot_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_objective: this.value})">
+                                                <option value="Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]">Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="boxplot_objective_column_form_group" class="mt-8 px-8">
+                                    <label for="change_boxplot_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_boxplot_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_objective_column: this.value})">
+                                                <option value="objective_value">objective_value</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="boxplot_X_axis_form_group" class="mt-8 px-8">
+                                    <label for="change_boxplot_X_axis" class="block text-sm font-medium text-white">X_axis</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_boxplot_X_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_X_axis: this.value})">
+                                                <option value="Solver">Solver</option>
+                                                <option value="Iteration">Iteration</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="boxplot_Y_axis_form_group" class="mt-8 px-8">
+                                    <label for="change_boxplot_Y_axis" class="block text-sm font-medium text-white">Y_axis</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_boxplot_Y_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_Y_axis: this.value})">
+                                                <option value="Time">Time</option>
+                                                <option value="Objective Metric">Objective Metric</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         <div class="flex items-center justify-between mt-8 px-8">
                             <a href="#" class="w-full inline-flex items-center justify-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="return saveView()">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -2160,48 +2243,19 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                     <div class="hidden" id="mobile-plot-form">
                         <div class="px-2 pt-2 pb-3 space-y-4" onchange="setAllViewsToNonActive()">
                             <div class="px-8">
-                                <label for="dataset_selector" class="block text-sm font-medium text-white">Dataset:</label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="dataset_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({dataset: this.value})">
-                                        <option value="Simulated[n_samples=100,n_features=5000,rho=0]">Simulated[n_samples=100,n_features=5000,rho=0]</option>
-                                        <option value="Simulated[n_samples=100,n_features=5000,rho=0.6]">Simulated[n_samples=100,n_features=5000,rho=0.6]</option>
-                                        <option value="Simulated[n_samples=100,n_features=10000,rho=0]">Simulated[n_samples=100,n_features=10000,rho=0]</option>
-                                        <option value="Simulated[n_samples=100,n_features=10000,rho=0.6]">Simulated[n_samples=100,n_features=10000,rho=0.6]</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="px-8">
-                                <label for="objective_selector" class="block text-sm font-medium text-white">Objective:</label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="objective_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective: this.value})">
-                                        <option value="Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]">Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="objective-column-form-group" class="px-8">
-                                <label for="objective_column" class="block text-sm font-medium text-white">Objective column</label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_column: this.value})">
-                                        <option value="objective_value">objective_value</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="px-8">
                                 <label for="plot_kind" class="block text-sm font-medium text-white">Chart type</label>
                                 <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value})">
+                                    <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value, scale: (this.value === 'boxplot' || this.value  === 'bar_chart' ? 'linear' : state().scale)})">
                                         <option value="objective_curve">objective_curve</option>
-                                        <option value="suboptimality_curve">suboptimality_curve</option>
-                                        <option value="relative_suboptimality_curve">relative_suboptimality_curve</option>
                                         <option value="bar_chart">bar_chart</option>
                                         <option value="boxplot">boxplot</option>
                                     </select>
                                 </div>
                             </div>
                             <div id="scale-form-group" class="px-8">
-                                <label for="change_scaling" class="block text-sm font-medium text-white">Scale</label>
+                                <label for="change_scale" class="block text-sm font-medium text-white">Scale</label>
                                 <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="change_scaling" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
+                                    <select id="change_scale" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
                                         <option value="linear">linear</option>
                                         <!-- Options for other plots -->
                                         <option class="other_plot_option" value="semilog-y">semilog-y</option>
@@ -2212,25 +2266,6 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                     </select>
                                 </div>
                             </div>
-                            <div id="xaxis-type-form-group" class="mt-8 px-8">
-                                <label for="change_xaxis_type_mobile" class="block text-sm font-medium text-white">X-axis</label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="change_xaxis_type_mobile" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({xaxis_type: this.value})">
-                                        <option value="Time" class="hidden">Time</option>
-                                        <option value="Iteration" class="hidden">Iteration</option>
-                                        <option value="Solver" class="hidden">Solver</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="yaxis-type-form-group" class="mt-8 px-8">
-                                <label for="change_yaxis_type_mobile" class="block text-sm font-medium text-white">Y-axis</label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="change_yaxis_type_mobile" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({yaxis_type: this.value})">
-                                        <option value="objective_column">Objective metric</option>
-                                        <option value="time">Time</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div id="change-shades-form-group" class="flex items-center justify-between mt-8 px-8">
                                 <div class="block text-sm font-medium text-white">Quantiles</div>
                                 <label class="block switch">
@@ -2238,7 +2273,137 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                     <span class="slider round"></span>
                                 </label>
                             </div>
-
+                            <div id="change-relative-suboptimal-form-group" class="flex items-center justify-between mt-8 px-8">
+                                <div class="block text-sm font-medium text-white">Suboptimal Curve</div>
+                                <label class="block switch">
+                                    <input id="change_suboptimal" type="checkbox" onchange="setState({suboptimal_curve: this.checked})">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div id="change-relative-suboptimal-form-group" class="flex items-center justify-between mt-8 px-8">
+                                <div class="block text-sm font-medium text-white">Relative Curve</div>
+                                <label class="block switch">
+                                    <input id="change_relative" type="checkbox" onchange="setState({relative_curve: this.checked})">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div>
+                            <div>
+                                <div id="objective_curve-custom-params-container">
+                                    <div id="objective_curve_dataset_form_group" class="mt-8 px-8">
+                                        <label for="change_objective_curve_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_objective_curve_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_dataset: this.value})">
+                                                    <option value="Simulated[n_samples=100,n_features=5000,rho=0]">Simulated[n_samples=100,n_features=5000,rho=0]</option>
+                                                    <option value="Simulated[n_samples=100,n_features=5000,rho=0.6]">Simulated[n_samples=100,n_features=5000,rho=0.6]</option>
+                                                    <option value="Simulated[n_samples=100,n_features=10000,rho=0]">Simulated[n_samples=100,n_features=10000,rho=0]</option>
+                                                    <option value="Simulated[n_samples=100,n_features=10000,rho=0.6]">Simulated[n_samples=100,n_features=10000,rho=0.6]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="objective_curve_objective_form_group" class="mt-8 px-8">
+                                        <label for="change_objective_curve_objective" class="block text-sm font-medium text-white">objective</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_objective_curve_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_objective: this.value})">
+                                                    <option value="Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]">Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="objective_curve_objective_column_form_group" class="mt-8 px-8">
+                                        <label for="change_objective_curve_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_objective_curve_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_objective_column: this.value})">
+                                                    <option value="objective_value">objective_value</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="objective_curve_X_axis_form_group" class="mt-8 px-8">
+                                        <label for="change_objective_curve_X_axis" class="block text-sm font-medium text-white">X_axis</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_objective_curve_X_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_X_axis: this.value})">
+                                                    <option value="Time">Time</option>
+                                                    <option value="Iteration">Iteration</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="bar_chart-custom-params-container">
+                                    <div id="bar_chart_dataset_form_group" class="mt-8 px-8">
+                                        <label for="change_bar_chart_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_bar_chart_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_dataset: this.value})">
+                                                    <option value="Simulated[n_samples=100,n_features=5000,rho=0]">Simulated[n_samples=100,n_features=5000,rho=0]</option>
+                                                    <option value="Simulated[n_samples=100,n_features=5000,rho=0.6]">Simulated[n_samples=100,n_features=5000,rho=0.6]</option>
+                                                    <option value="Simulated[n_samples=100,n_features=10000,rho=0]">Simulated[n_samples=100,n_features=10000,rho=0]</option>
+                                                    <option value="Simulated[n_samples=100,n_features=10000,rho=0.6]">Simulated[n_samples=100,n_features=10000,rho=0.6]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="bar_chart_objective_form_group" class="mt-8 px-8">
+                                        <label for="change_bar_chart_objective" class="block text-sm font-medium text-white">objective</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_bar_chart_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_objective: this.value})">
+                                                    <option value="Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]">Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="bar_chart_objective_column_form_group" class="mt-8 px-8">
+                                        <label for="change_bar_chart_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_bar_chart_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_objective_column: this.value})">
+                                                    <option value="objective_value">objective_value</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="boxplot-custom-params-container">
+                                    <div id="boxplot_dataset_form_group" class="mt-8 px-8">
+                                        <label for="change_boxplot_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_boxplot_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_dataset: this.value})">
+                                                    <option value="Simulated[n_samples=100,n_features=5000,rho=0]">Simulated[n_samples=100,n_features=5000,rho=0]</option>
+                                                    <option value="Simulated[n_samples=100,n_features=5000,rho=0.6]">Simulated[n_samples=100,n_features=5000,rho=0.6]</option>
+                                                    <option value="Simulated[n_samples=100,n_features=10000,rho=0]">Simulated[n_samples=100,n_features=10000,rho=0]</option>
+                                                    <option value="Simulated[n_samples=100,n_features=10000,rho=0.6]">Simulated[n_samples=100,n_features=10000,rho=0.6]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="boxplot_objective_form_group" class="mt-8 px-8">
+                                        <label for="change_boxplot_objective" class="block text-sm font-medium text-white">objective</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_boxplot_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_objective: this.value})">
+                                                    <option value="Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]">Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="boxplot_objective_column_form_group" class="mt-8 px-8">
+                                        <label for="change_boxplot_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_boxplot_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_objective_column: this.value})">
+                                                    <option value="objective_value">objective_value</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="boxplot_X_axis_form_group" class="mt-8 px-8">
+                                        <label for="change_boxplot_X_axis" class="block text-sm font-medium text-white">X_axis</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_boxplot_X_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_X_axis: this.value})">
+                                                    <option value="Solver">Solver</option>
+                                                    <option value="Iteration">Iteration</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="boxplot_Y_axis_form_group" class="mt-8 px-8">
+                                        <label for="change_boxplot_Y_axis" class="block text-sm font-medium text-white">Y_axis</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_boxplot_Y_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_Y_axis: this.value})">
+                                                    <option value="Time">Time</option>
+                                                    <option value="Objective Metric">Objective Metric</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="flex items-center justify-between mt-8 px-8">
                                 <a href="#"
                                    class="w-full inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -2328,12 +2493,15 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                 </div>
 
                 <!-- Plot -->
-                <div id="unique_plot"></div>
-                <div id="legend_container" class="pb-10 bg-slate-200">
-                    <div class="px-10 mb-4 mt-4 text-base font-medium text-gray-700">
-                        Solvers <span class="text-sm font-medium text-gray-400">(Click on a solver to hide it or double click to hide all the others)</span>
+                <div id="plot_container" class="flex flex-col flex-1">
+                    <div id="scatter_plot_container" class="flex-1"></div>
+                    <div id="legend_container" class="pb-10 bg-slate-200">
+                        <div class="px-10 mb-4 mt-4 text-base font-medium text-gray-700">
+                            Solvers
+                            <span class="text-sm font-medium text-gray-400">(Click on a solver to hide it or double click to hide all the others)</span>
+                        </div>
+                        <div id="plot_legend" class="px-10 space-r-2"></div>
                     </div>
-                    <div id="plot_legend" class="px-10 space-r-2"></div>
                 </div>
             </div>
         </div>
@@ -2424,21 +2592,30 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
         </script>
         <!-- Manage plot -->
         <script>
-            window._data = {"Simulated[n_samples=100,n_features=5000,rho=0]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0231052637100219, 0.0238421820104122, 0.0258402526378631, 0.026332126930356, 0.0307734590023756, 0.0402035452425479, 0.0559748113155365, 0.0968077816069126, 0.1725357640534639, 0.262528533115983, 0.4466064423322677, 0.5444755256175995, 0.5444071888923645, 0.530123870819807, 0.5456010233610868], "y": [5225.444659217283, 5225.444659217283, 3632.894655774168, 2150.225965495626, 1032.9336842144494, 203.3046103254634, 58.291052287132246, 28.553539448921057, 22.17235636671437, 20.213917930945733, 20.07755079698879, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "q1": [0.021948629245161957, 0.023141292110085438, 0.023850332945585202, 0.023553445562720262, 0.029434821754693922, 0.03876762315630908, 0.05427529960870738, 0.09177499003708359, 0.16089162006974217, 0.250410096719861, 0.4297462087124586, 0.5115997105836868, 0.5272686146199703, 0.5172920901328325, 0.5360658656805753], "q9": [0.04773882068693632, 0.03142646588385102, 0.02679485455155368, 0.0298166338354349, 0.04271138757467266, 0.04323113150894636, 0.05798706449568266, 0.10944245047867295, 0.17476374097168443, 0.2897381842136383, 0.5018251243978739, 0.5552120927721262, 0.5994817022234201, 0.5452727828174829, 0.5549569025635719]}, "bar": {"y": 0.6267704907804728, "times": NaN, "text": "Did not converge"}, "boxplot": {"by_solver": {"final_times": [0.6267704907804728, 0.5593605395406485, 0.5384108070284128, 0.5491991322487593, 0.5586600601673126], "final_objective_value": [20.077392360650112, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692]}, "by_iteration": {"times": [[0.0599761512130498, 0.0293828248977661, 0.0214868541806936, 0.0226412918418645, 0.0231052637100219], [0.0227649081498384, 0.0242956969887018, 0.0238421820104122, 0.0361803118139505, 0.023705868050456], [0.024472203105688, 0.0267308671027421, 0.0258402526378631, 0.02343575283885, 0.0268375128507614], [0.026332126930356, 0.0314700175076723, 0.0223176199942827, 0.0273365583270788, 0.0254071839153766], [0.0289559327065944, 0.0343756955116987, 0.0301531553268432, 0.0307734590023756, 0.0482685156166553], [0.0382192470133304, 0.0452492665499448, 0.0402039289474487, 0.0402035452425479, 0.0395901873707771], [0.0533329583704471, 0.0586762782186269, 0.0556888114660978, 0.0569532439112663, 0.0559748113155365], [0.0895630922168493, 0.0997278001159429, 0.095092836767435, 0.1159188840538263, 0.0968077816069126], [0.1725357640534639, 0.1717426776885986, 0.1536575816571712, 0.1729888450354337, 0.1759470049291849], [0.3023624494671821, 0.2708017863333225, 0.262528533115983, 0.2427083160728216, 0.2619627676904201], [0.5329749751836061, 0.4200450126081705, 0.4551003482192755, 0.4466064423322677, 0.4442980028688907], [0.5489894226193428, 0.5593605395406485, 0.5093767233192921, 0.514934191480279, 0.5444755256175995], [0.6267704907804728, 0.5585485193878412, 0.5239447094500065, 0.5322544723749161, 0.5444071888923645], [0.530123870819807, 0.5393832586705685, 0.5090373884886503, 0.5491991322487593, 0.5296741425991058], [0.5494021661579609, 0.5456010233610868, 0.5384108070284128, 0.5345025714486837, 0.5586600601673126]], "objective": [[5225.444659217283, 5225.444659217283, 5225.444659217283, 5225.444659217283, 5225.444659217283], [5225.444659217283, 5225.444659217283, 5225.444659217283, 5225.444659217283, 5225.444659217283], [3632.8946557741633, 3632.894655774168, 3632.894655774168, 3632.894655774168, 3632.894655774168], [2150.2259654956288, 2150.225965495626, 2150.225965495626, 2150.225965495626, 2150.225965495626], [1032.9336842144369, 1032.9336842144494, 1032.9336842144494, 1032.9336842144494, 1032.9336842144494], [203.30461032544895, 203.3046103254634, 203.3046103254634, 203.3046103254634, 203.3046103254634], [58.29105228720432, 58.291052287132246, 58.291052287132246, 58.291052287132246, 58.291052287132246], [28.553539448483576, 28.553539448921057, 28.553539448921057, 28.553539448921057, 28.553539448921057], [22.17235664714752, 22.17235636671437, 22.17235636671437, 22.17235636671437, 22.17235636671437], [20.21388532185037, 20.213917930945733, 20.213917930945733, 20.213917930945733, 20.213917930945733], [20.077394319118174, 20.07755079698879, 20.07755079698879, 20.07755079698879, 20.07755079698879], [20.077392360650112, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], [20.077392360650112, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], [20.077392360650112, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], [20.077392360650112, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692]]}}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 0, "sampling_strategy": "Time"}}, "transformers": {"c_star": 20.077392360550114, "max_f_0": 5225.444659217283}}}}, "Simulated[n_samples=100,n_features=5000,rho=0.6]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0254054088145494, 0.0258685238659381, 0.0292290933430194, 0.031339656561613, 0.0387950632721185, 0.0514738429337739, 0.0778981186449527, 0.1344727780669927, 0.2432186659425497, 0.3819137532263994, 0.6762419808655977, 0.7784783449023962, 0.7540648560971022, 0.7651688996702433, 0.7663414664566517], "y": [4568.211158541487, 4568.211158541487, 3917.942526639403, 2260.3221535746784, 1351.7985818991112, 324.9496769206961, 143.38898892929276, 24.942149677144187, 18.27929644802045, 17.865908814460127, 17.440562740633425, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "q1": [0.02477669008076188, 0.024662807211279798, 0.0273370679467916, 0.02712742015719406, 0.03422199524939056, 0.04625365920364854, 0.0680374003946781, 0.11539254672825328, 0.2048109337687492, 0.33287171907722946, 0.6179678216576576, 0.7387543573975563, 0.7433021321892739, 0.750265146791935, 0.7385285794734955], "q9": [0.0279099460691213, 0.043673581629991486, 0.03007972650229928, 0.03168406710028646, 0.050188959762454, 0.054377219080924945, 0.07920559868216512, 0.1501998674124479, 0.24914081506431096, 0.38660768494009967, 0.6858050808310509, 0.7861454010009765, 0.7703121084719896, 0.797797828912735, 0.7924939665943385]}, "bar": {"y": 0.7784783449023962, "times": [0.7425992302596569, 0.7855633404105902, 0.7784783449023962, 0.7865334413945675, 0.7361911088228226], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.8137269243597984, 0.7855633404105902, 0.7784783449023962, 0.7865334413945675, 0.7591922506690025], "final_objective_value": [17.44053323390099, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691]}, "by_iteration": {"times": [[0.0253507699817419, 0.0286969598382711, 0.0254054088145494, 0.0267294254153966, 0.0243939701467752], [0.0238879453390836, 0.0552080273628234, 0.0263719130307436, 0.0258685238659381, 0.0258251000195741], [0.0261083412915468, 0.0301873292773962, 0.0299183223396539, 0.0291801579296588, 0.0292290933430194], [0.0264055058360099, 0.0313419513404369, 0.0282102916389703, 0.031339656561613, 0.0319121442735195], [0.032048312947154, 0.039604565128684, 0.0387950632721185, 0.0374825187027454, 0.057245222851634], [0.0429758336395025, 0.0523931086063385, 0.0511703975498676, 0.0514738429337739, 0.0556999593973159], [0.0639469213783741, 0.0787756852805614, 0.0794922076165676, 0.0778981186449527, 0.0741731189191341], [0.1028669234365224, 0.1341809816658496, 0.1344727780669927, 0.1604246366769075, 0.1348627135157585], [0.1856274306774139, 0.2483418900519609, 0.2335861884057521, 0.249673431739211, 0.2432186659425497], [0.3207942266017198, 0.3819137532263994, 0.3872315287590027, 0.3509879577904939, 0.3856719192117452], [0.5829851850867271, 0.6762419808655977, 0.6704417765140533, 0.6895254366099834, 0.680224547162652], [0.7425992302596569, 0.7855633404105902, 0.7784783449023962, 0.7865334413945675, 0.7361911088228226], [0.7724644932895899, 0.739047471433878, 0.7540648560971022, 0.7670835312455893, 0.7496841233223677], [0.8137269243597984, 0.7651688996702433, 0.7739041857421398, 0.7648643590509892, 0.7405323386192322], [0.8055341336876154, 0.7247527986764908, 0.772933715954423, 0.7663414664566517, 0.7591922506690025]], "objective": [[4568.211158541485, 4568.211158541487, 4568.211158541487, 4568.211158541487, 4568.211158541487], [4568.211158541485, 4568.211158541487, 4568.211158541487, 4568.211158541487, 4568.211158541487], [3917.942526639404, 3917.942526639403, 3917.942526639403, 3917.942526639403, 3917.942526639403], [2260.322153574677, 2260.3221535746784, 2260.3221535746784, 2260.3221535746784, 2260.3221535746784], [1351.7985818991208, 1351.7985818991112, 1351.7985818991112, 1351.7985818991112, 1351.7985818991112], [324.94967692073647, 324.9496769206961, 324.9496769206961, 324.9496769206961, 324.9496769206961], [143.38898892928898, 143.38898892929276, 143.38898892929276, 143.38898892929276, 143.38898892929276], [24.9421496771732, 24.942149677144187, 24.942149677144187, 24.942149677144187, 24.942149677144187], [18.27929646942743, 18.27929644802045, 18.27929644802045, 18.27929644802045, 18.27929644802045], [17.993200161437542, 17.865908814460127, 17.865908814460127, 17.865908814460127, 17.865908814460127], [17.44093066455559, 17.440562740633425, 17.440562740633425, 17.440562740633425, 17.440562740633425], [17.44053323390099, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], [17.44053323390099, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], [17.44053323390099, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], [17.44053323390099, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691]]}}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 0, "sampling_strategy": "Time"}}, "transformers": {"c_star": 17.44053323380099, "max_f_0": 4568.211158541487}}}}, "Simulated[n_samples=100,n_features=10000,rho=0]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0383295714855194, 0.0389624685049057, 0.0411110017448663, 0.042864229530096, 0.052065011113882, 0.0680019184947013, 0.1011817157268524, 0.1721537988632917, 0.2645433600991964, 0.4550964739173651, 0.7859400473535061, 1.093903947621584, 1.1071386244148016, 1.1354319918900728, 1.1368115562945604], "y": [7501.816396539149, 7501.816396539149, 6919.895436407089, 3682.916749368256, 2012.6108174633523, 547.8074894484771, 180.36910144992373, 49.83817472598153, 22.82668678857099, 22.15476130422233, 21.764003691129915, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "q1": [0.03515922203660008, 0.03683776631951326, 0.04032371900975702, 0.04221070893108838, 0.05043037943541996, 0.06618265621364111, 0.09407290294766421, 0.15627779848873613, 0.2558652281761169, 0.42459170930087564, 0.7769148349761963, 1.0620650872588158, 1.091572504490614, 1.0827919136732818, 1.1153439793735742], "q9": [0.05256251171231266, 0.039862488955259255, 0.06015793271362774, 0.055125153809785825, 0.06789868399500842, 0.0714204758405685, 0.109493588656187, 0.18505051843821999, 0.3285145603120327, 0.5703907322138548, 0.9695668309926987, 1.4670829389244318, 1.476052785664797, 1.485818373039365, 1.4760443974286317]}, "bar": {"y": 1.093903947621584, "times": [1.7130451519042251, 1.0981396194547417, 1.093903947621584, 1.0726397186517715, 1.0550153329968452], "text": ""}, "boxplot": {"by_solver": {"final_times": [1.7130451519042251, 1.111159736290574, 1.148126969113946, 1.1216203439980743, 1.149155868217349], "final_objective_value": [21.761509929761424, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687]}, "by_iteration": {"times": [[0.0403354205191135, 0.0607139058411121, 0.0341280288994312, 0.0367060117423534, 0.0383295714855194], [0.0357509888708591, 0.0404215641319751, 0.0389624685049057, 0.0390238761901855, 0.0384679324924945], [0.0600715856999158, 0.0406241454184055, 0.0602154973894357, 0.0411110017448663, 0.0401234347373247], [0.0418397691100835, 0.0429748017340898, 0.0427671186625957, 0.0632253885269165, 0.042864229530096], [0.0523527469485998, 0.0507858805358409, 0.052065011113882, 0.050193378701806, 0.0782626420259475], [0.0729582272469997, 0.0691138487309217, 0.0680019184947013, 0.0655583310872316, 0.0671191439032554], [0.1133197918534278, 0.1011817157268524, 0.1004865653812885, 0.0897971279919147, 0.1037542838603258], [0.1900950204581022, 0.1721537988632917, 0.1774837654083967, 0.156902527436614, 0.1558613125234842], [0.3605571687221527, 0.2645433600991964, 0.2581677157431841, 0.2804506476968527, 0.2543302364647388], [0.6441235560923815, 0.4597914963960647, 0.4194506797939539, 0.4323032535612583, 0.4550964739173651], [1.0802627243101597, 0.7859400473535061, 0.7749704904854298, 0.8035229910165071, 0.7798313517123461], [1.7130451519042251, 1.0981396194547417, 1.093903947621584, 1.0726397186517715, 1.0550153329968452], [1.711668625473976, 1.1071386244148016, 1.122629025951028, 1.0903119929134846, 1.093463271856308], [1.7102600429207089, 1.092675756663084, 1.1354319918900728, 1.0762026850134134, 1.149155868217349], [1.694656016305089, 1.111159736290574, 1.148126969113946, 1.1216203439980743, 1.1368115562945604]], "objective": [[7501.816396539149, 7501.816396539149, 7501.816396539149, 7501.816396539149, 7501.816396539149], [7501.816396539149, 7501.816396539149, 7501.816396539149, 7501.816396539149, 7501.816396539149], [6919.89543640706, 6919.895436407089, 6919.895436407089, 6919.895436407089, 6919.895436407089], [3682.91674936826, 3682.916749368256, 3682.916749368256, 3682.916749368256, 3682.916749368256], [2012.6108174633544, 2012.6108174633523, 2012.6108174633523, 2012.6108174633523, 2012.6108174633523], [547.8074894484854, 547.8074894484771, 547.8074894484771, 547.8074894484771, 547.8074894484771], [180.36910144992527, 180.36910144992373, 180.36910144992373, 180.36910144992373, 180.36910144992373], [49.83817472600146, 49.83817472598153, 49.83817472598153, 49.83817472598153, 49.83817472598153], [22.82668678897916, 22.82668678857099, 22.82668678857099, 22.82668678857099, 22.82668678857099], [22.142475353737613, 22.15476130422233, 22.15476130422233, 22.15476130422233, 22.15476130422233], [21.769077220006796, 21.764003691129915, 21.764003691129915, 21.764003691129915, 21.764003691129915], [21.761509929761424, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], [21.761509929761424, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], [21.761509929761424, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], [21.761509929761424, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687]]}}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 0, "sampling_strategy": "Time"}}, "transformers": {"c_star": 21.761509929661425, "max_f_0": 7501.816396539149}}}}, "Simulated[n_samples=100,n_features=10000,rho=0.6]": {"Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]": {"objective_value": {"solvers": {"sklearn": {"scatter": {"x": [0.0427095498889684, 0.0438527800142765, 0.0527476910501718, 0.0575172714889049, 0.0701222587376833, 0.0980197116732597, 0.1491500586271286, 0.2440168093889951, 0.4438692387193441, 0.6996171362698078, 1.258053665980697, 1.189299562945962, 1.5867477413266895, 1.2303861295804381, 1.5551056489348412, 1.2048652563244104, 1.6065611466765404], "y": [7942.886515530983, 7942.886515530983, 5565.415037240656, 4605.913410386076, 1987.5607809746907, 705.7250032830592, 305.3345917562537, 123.83927184378064, 35.50314019866238, 24.808056132234988, 24.693230308485912, 24.693230308485912, 24.693221115285496, 24.693230308485912, 24.693221115285496, 24.693230308485912, 24.693221115285496], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 622, 1118, 1612, 2897], "q1": [0.03970779664814468, 0.03826485015451904, 0.04863611832261082, 0.0528907440602779, 0.065121903643012, 0.09457298628985876, 0.14830705150961873, 0.23939616158604618, 0.42249788343906397, 0.6950672589242458, 1.2346802059561015, 1.1774177953600884, 1.5867477413266895, 1.2044810341671108, 1.5551056489348412, 1.1909728363156318, 1.6065611466765404], "q9": [0.059224125370383206, 0.057110841199755666, 0.0745236828923225, 0.06590193659067152, 0.07116267457604403, 0.11953473649919032, 0.16670583002269265, 0.2551243998110294, 0.47083433717489237, 0.7826674245297909, 1.3929706387221814, 1.4158371549099684, 1.5867477413266895, 1.2670042239129544, 1.5551056489348412, 1.2250573644414544, 1.6065611466765404]}, "bar": {"y": 1.5867477413266895, "times": [1.5867477413266895], "text": ""}, "boxplot": {"by_solver": {"final_times": [1.6065611466765404, 1.232784053310752, 1.258053665980697, 1.2929285261780024, 1.271952997893095], "final_objective_value": [24.693221115285496, 24.693230308485912, 24.693230308485912, 24.693230308485912, 24.693230308485912]}, "by_iteration": {"times": [[0.0411097314208745, 0.0687979850918054, 0.0387731734663248, 0.0427095498889684, 0.0448633357882499], [0.0371016468852758, 0.0438527800142765, 0.0400096550583839, 0.0442393124103546, 0.0656918603926897], [0.0459427610039711, 0.0527476910501718, 0.0888646654784679, 0.0530122090131044, 0.0526761543005704], [0.0714651383459568, 0.0510133951902389, 0.0575172714889049, 0.0557067673653364, 0.0575571339577436], [0.0624065902084112, 0.0707175284624099, 0.0701222587376833, 0.0691948737949132, 0.0714594386518001], [0.0934217292815446, 0.1207142937928438, 0.09629987180233, 0.1177654005587101, 0.0980197116732597], [0.1490882728248834, 0.1477862372994423, 0.1539959367364645, 0.1491500586271286, 0.1751790922135114], [0.2481576669961214, 0.2440168093889951, 0.2597688883543014, 0.2395303770899772, 0.2393066845834255], [0.4636227767914533, 0.4186167903244495, 0.4756420440971851, 0.4438692387193441, 0.4283195231109857], [0.8278173729777336, 0.7149425018578768, 0.6996171362698078, 0.6959224957972765, 0.6944971010088921], [1.4596653804183006, 1.232784053310752, 1.258053665980697, 1.2929285261780024, 1.2375244349241257], [1.5313542317599058, 1.18624646961689, 1.1715320125222206, 1.2425615396350622, 1.189299562945962], [1.5867477413266895, 1.2053151745349169, 1.2554570846259594, 1.2041235454380512, 1.271952997893095], [1.5551056489348412, 1.201214037835598, 1.232146317139268, 1.186583749949932, 1.2085164748132229], [1.6065611466765404]], "objective": [[7942.886515530983, 7942.886515530983, 7942.886515530983, 7942.886515530983, 7942.886515530983], [7942.886515530983, 7942.886515530983, 7942.886515530983, 7942.886515530983, 7942.886515530983], [5565.41503724065, 5565.415037240656, 5565.415037240656, 5565.415037240656, 5565.415037240656], [4605.91341038607, 4605.913410386076, 4605.913410386076, 4605.913410386076, 4605.913410386076], [1987.560780974692, 1987.5607809746907, 1987.5607809746907, 1987.5607809746907, 1987.5607809746907], [705.725003283055, 705.7250032830592, 705.7250032830592, 705.7250032830592, 705.7250032830592], [305.3345917562425, 305.3345917562537, 305.3345917562537, 305.3345917562537, 305.3345917562537], [123.83927184384602, 123.83927184378064, 123.83927184378064, 123.83927184378064, 123.83927184378064], [35.50314021430762, 35.50314019866238, 35.50314019866238, 35.50314019866238, 35.50314019866238], [24.77901219506329, 24.808056132234988, 24.808056132234988, 24.808056132234988, 24.808056132234988], [24.69343284631345, 24.693230308485912, 24.693230308485912, 24.693230308485912, 24.693230308485912], [24.693221115285496, 24.693230308485912, 24.693230308485912, 24.693230308485912, 24.693230308485912], [24.693221115285496, 24.693230308485912, 24.693230308485912, 24.693230308485912, 24.693230308485912], [24.693221115285496, 24.693230308485912, 24.693230308485912, 24.693230308485912, 24.693230308485912], [24.693221115285496]]}}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 0, "sampling_strategy": "Time"}}, "transformers": {"c_star": 24.693221115185498, "max_f_0": 7942.886515530983}}}}};
+            window._custom_plots = {"objective_curve": {"objective_curve_Simulated[n_samples=100,n_features=5000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0] ", "xlabel": "Time", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0.0231052637100219, 0.0238421820104122, 0.0258402526378631, 0.026332126930356, 0.0307734590023756, 0.0402035452425479, 0.0559748113155365, 0.0968077816069126, 0.1725357640534639, 0.262528533115983, 0.4466064423322677, 0.5444755256175995, 0.5444071888923645, 0.530123870819807, 0.5456010233610868], "y": [5225.444659217283, 5225.444659217283, 3632.894655774168, 2150.225965495626, 1032.9336842144494, 203.3046103254634, 58.291052287132246, 28.553539448921057, 22.17235636671437, 20.213917930945733, 20.07755079698879, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)", "marker": 66, "q1": [0.021948629245161957, 0.023141292110085438, 0.023850332945585202, 0.023553445562720262, 0.029434821754693922, 0.03876762315630908, 0.05427529960870738, 0.09177499003708359, 0.16089162006974217, 0.250410096719861, 0.4297462087124586, 0.5115997105836868, 0.5272686146199703, 0.5172920901328325, 0.5360658656805753], "q9": [0.04773882068693632, 0.03142646588385102, 0.02679485455155368, 0.0298166338354349, 0.04271138757467266, 0.04323113150894636, 0.05798706449568266, 0.10944245047867295, 0.17476374097168443, 0.2897381842136383, 0.5018251243978739, 0.5552120927721262, 0.5994817022234201, 0.5452727828174829, 0.5549569025635719]}]}, "objective_curve_Simulated[n_samples=100,n_features=5000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0] ", "xlabel": "Iteration", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "y": [5225.444659217283, 5225.444659217283, 3632.894655774168, 2150.225965495626, 1032.9336842144494, 203.3046103254634, 58.291052287132246, 28.553539448921057, 22.17235636671437, 20.213917930945733, 20.07755079698879, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)", "marker": 66}]}, "objective_curve_Simulated[n_samples=100,n_features=5000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0.6] ", "xlabel": "Time", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0.0254054088145494, 0.0258685238659381, 0.0292290933430194, 0.031339656561613, 0.0387950632721185, 0.0514738429337739, 0.0778981186449527, 0.1344727780669927, 0.2432186659425497, 0.3819137532263994, 0.6762419808655977, 0.7784783449023962, 0.7540648560971022, 0.7651688996702433, 0.7663414664566517], "y": [4568.211158541487, 4568.211158541487, 3917.942526639403, 2260.3221535746784, 1351.7985818991112, 324.9496769206961, 143.38898892929276, 24.942149677144187, 18.27929644802045, 17.865908814460127, 17.440562740633425, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)", "marker": 66, "q1": [0.02477669008076188, 0.024662807211279798, 0.0273370679467916, 0.02712742015719406, 0.03422199524939056, 0.04625365920364854, 0.0680374003946781, 0.11539254672825328, 0.2048109337687492, 0.33287171907722946, 0.6179678216576576, 0.7387543573975563, 0.7433021321892739, 0.750265146791935, 0.7385285794734955], "q9": [0.0279099460691213, 0.043673581629991486, 0.03007972650229928, 0.03168406710028646, 0.050188959762454, 0.054377219080924945, 0.07920559868216512, 0.1501998674124479, 0.24914081506431096, 0.38660768494009967, 0.6858050808310509, 0.7861454010009765, 0.7703121084719896, 0.797797828912735, 0.7924939665943385]}]}, "objective_curve_Simulated[n_samples=100,n_features=5000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0.6] ", "xlabel": "Iteration", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "y": [4568.211158541487, 4568.211158541487, 3917.942526639403, 2260.3221535746784, 1351.7985818991112, 324.9496769206961, 143.38898892929276, 24.942149677144187, 18.27929644802045, 17.865908814460127, 17.440562740633425, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)", "marker": 66}]}, "objective_curve_Simulated[n_samples=100,n_features=10000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0] ", "xlabel": "Time", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0.0383295714855194, 0.0389624685049057, 0.0411110017448663, 0.042864229530096, 0.052065011113882, 0.0680019184947013, 0.1011817157268524, 0.1721537988632917, 0.2645433600991964, 0.4550964739173651, 0.7859400473535061, 1.093903947621584, 1.1071386244148016, 1.1354319918900728, 1.1368115562945604], "y": [7501.816396539149, 7501.816396539149, 6919.895436407089, 3682.916749368256, 2012.6108174633523, 547.8074894484771, 180.36910144992373, 49.83817472598153, 22.82668678857099, 22.15476130422233, 21.764003691129915, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)", "marker": 66, "q1": [0.03515922203660008, 0.03683776631951326, 0.04032371900975702, 0.04221070893108838, 0.05043037943541996, 0.06618265621364111, 0.09407290294766421, 0.15627779848873613, 0.2558652281761169, 0.42459170930087564, 0.7769148349761963, 1.0620650872588158, 1.091572504490614, 1.0827919136732818, 1.1153439793735742], "q9": [0.05256251171231266, 0.039862488955259255, 0.06015793271362774, 0.055125153809785825, 0.06789868399500842, 0.0714204758405685, 0.109493588656187, 0.18505051843821999, 0.3285145603120327, 0.5703907322138548, 0.9695668309926987, 1.4670829389244318, 1.476052785664797, 1.485818373039365, 1.4760443974286317]}]}, "objective_curve_Simulated[n_samples=100,n_features=10000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0] ", "xlabel": "Iteration", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897], "y": [7501.816396539149, 7501.816396539149, 6919.895436407089, 3682.916749368256, 2012.6108174633523, 547.8074894484771, 180.36910144992373, 49.83817472598153, 22.82668678857099, 22.15476130422233, 21.764003691129915, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)", "marker": 66}]}, "objective_curve_Simulated[n_samples=100,n_features=10000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0.6] ", "xlabel": "Time", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0.0427095498889684, 0.0438527800142765, 0.0527476910501718, 0.0575172714889049, 0.0701222587376833, 0.0980197116732597, 0.1491500586271286, 0.2440168093889951, 0.4438692387193441, 0.6996171362698078, 1.258053665980697, 1.189299562945962, 1.5867477413266895, 1.2303861295804381, 1.5551056489348412, 1.2048652563244104, 1.6065611466765404], "y": [7942.886515530983, 7942.886515530983, 5565.415037240656, 4605.913410386076, 1987.5607809746907, 705.7250032830592, 305.3345917562537, 123.83927184378064, 35.50314019866238, 24.808056132234988, 24.693230308485912, 24.693230308485912, 24.693221115285496, 24.693230308485912, 24.693221115285496, 24.693230308485912, 24.693221115285496], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)", "marker": 66, "q1": [0.03970779664814468, 0.03826485015451904, 0.04863611832261082, 0.0528907440602779, 0.065121903643012, 0.09457298628985876, 0.14830705150961873, 0.23939616158604618, 0.42249788343906397, 0.6950672589242458, 1.2346802059561015, 1.1774177953600884, 1.5867477413266895, 1.2044810341671108, 1.5551056489348412, 1.1909728363156318, 1.6065611466765404], "q9": [0.059224125370383206, 0.057110841199755666, 0.0745236828923225, 0.06590193659067152, 0.07116267457604403, 0.11953473649919032, 0.16670583002269265, 0.2551243998110294, 0.47083433717489237, 0.7826674245297909, 1.3929706387221814, 1.4158371549099684, 1.5867477413266895, 1.2670042239129544, 1.5551056489348412, 1.2250573644414544, 1.6065611466765404]}]}, "objective_curve_Simulated[n_samples=100,n_features=10000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0.6] ", "xlabel": "Iteration", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 622, 1118, 1612, 2897], "y": [7942.886515530983, 7942.886515530983, 5565.415037240656, 4605.913410386076, 1987.5607809746907, 705.7250032830592, 305.3345917562537, 123.83927184378064, 35.50314019866238, 24.808056132234988, 24.693230308485912, 24.693230308485912, 24.693221115285496, 24.693230308485912, 24.693221115285496, 24.693230308485912, 24.693221115285496], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)", "marker": 66}]}}, "bar_chart": {"bar_chart_Simulated[n_samples=100,n_features=5000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0]", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": 0.6267704907804728, "times": NaN, "text": "Did not converge", "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "bar_chart_Simulated[n_samples=100,n_features=5000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0.6]", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": 0.8137269243597984, "times": NaN, "text": "Did not converge", "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "bar_chart_Simulated[n_samples=100,n_features=10000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0]", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": 1.7130451519042251, "times": NaN, "text": "Did not converge", "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "bar_chart_Simulated[n_samples=100,n_features=10000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0.6]", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": 1.5867477413266895, "times": [1.5867477413266895], "text": "", "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}}, "boxplot": {"boxplot_Simulated[n_samples=100,n_features=5000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Solver_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0]", "xlabel": "Solver", "ylabel": "Time", "type": "boxplot", "data": [{"x": ["sklearn"], "y": [[0.5494021661579609]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=5000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Solver_Objective Metric": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0]", "xlabel": "Solver", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": ["sklearn"], "y": [[20.077392360650112]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=5000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0]", "xlabel": "Iteration", "ylabel": "Time", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "y": [[0.0599761512130498, 0.0293828248977661, 0.0214868541806936, 0.0226412918418645, 0.0231052637100219], [0.0227649081498384, 0.0242956969887018, 0.0238421820104122, 0.0361803118139505, 0.023705868050456], [0.024472203105688, 0.0267308671027421, 0.0258402526378631, 0.02343575283885, 0.0268375128507614], [0.026332126930356, 0.0314700175076723, 0.0223176199942827, 0.0273365583270788, 0.0254071839153766], [0.0289559327065944, 0.0343756955116987, 0.0301531553268432, 0.0307734590023756, 0.0482685156166553], [0.0382192470133304, 0.0452492665499448, 0.0402039289474487, 0.0402035452425479, 0.0395901873707771], [0.0533329583704471, 0.0586762782186269, 0.0556888114660978, 0.0569532439112663, 0.0559748113155365], [0.0895630922168493, 0.0997278001159429, 0.095092836767435, 0.1159188840538263, 0.0968077816069126], [0.1725357640534639, 0.1717426776885986, 0.1536575816571712, 0.1729888450354337, 0.1759470049291849], [0.3023624494671821, 0.2708017863333225, 0.262528533115983, 0.2427083160728216, 0.2619627676904201], [0.5329749751836061, 0.4200450126081705, 0.4551003482192755, 0.4466064423322677, 0.4442980028688907], [0.5489894226193428, 0.5593605395406485, 0.5093767233192921, 0.514934191480279, 0.5444755256175995], [0.6267704907804728, 0.5585485193878412, 0.5239447094500065, 0.5322544723749161, 0.5444071888923645], [0.530123870819807, 0.5393832586705685, 0.5090373884886503, 0.5491991322487593, 0.5296741425991058], [0.5494021661579609, 0.5456010233610868, 0.5384108070284128, 0.5345025714486837, 0.5586600601673126]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=5000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration_Objective Metric": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0]", "xlabel": "Iteration", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "y": [[5225.444659217283, 5225.444659217283, 5225.444659217283, 5225.444659217283, 5225.444659217283], [5225.444659217283, 5225.444659217283, 5225.444659217283, 5225.444659217283, 5225.444659217283], [3632.8946557741633, 3632.894655774168, 3632.894655774168, 3632.894655774168, 3632.894655774168], [2150.2259654956288, 2150.225965495626, 2150.225965495626, 2150.225965495626, 2150.225965495626], [1032.9336842144369, 1032.9336842144494, 1032.9336842144494, 1032.9336842144494, 1032.9336842144494], [203.30461032544895, 203.3046103254634, 203.3046103254634, 203.3046103254634, 203.3046103254634], [58.29105228720432, 58.291052287132246, 58.291052287132246, 58.291052287132246, 58.291052287132246], [28.553539448483576, 28.553539448921057, 28.553539448921057, 28.553539448921057, 28.553539448921057], [22.17235664714752, 22.17235636671437, 22.17235636671437, 22.17235636671437, 22.17235636671437], [20.21388532185037, 20.213917930945733, 20.213917930945733, 20.213917930945733, 20.213917930945733], [20.077394319118174, 20.07755079698879, 20.07755079698879, 20.07755079698879, 20.07755079698879], [20.077392360650112, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], [20.077392360650112, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], [20.077392360650112, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692], [20.077392360650112, 20.07740103477692, 20.07740103477692, 20.07740103477692, 20.07740103477692]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=5000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Solver_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0.6]", "xlabel": "Solver", "ylabel": "Time", "type": "boxplot", "data": [{"x": ["sklearn"], "y": [[0.8055341336876154]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=5000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Solver_Objective Metric": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0.6]", "xlabel": "Solver", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": ["sklearn"], "y": [[17.44053323390099]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=5000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0.6]", "xlabel": "Iteration", "ylabel": "Time", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "y": [[0.0253507699817419, 0.0286969598382711, 0.0254054088145494, 0.0267294254153966, 0.0243939701467752], [0.0238879453390836, 0.0552080273628234, 0.0263719130307436, 0.0258685238659381, 0.0258251000195741], [0.0261083412915468, 0.0301873292773962, 0.0299183223396539, 0.0291801579296588, 0.0292290933430194], [0.0264055058360099, 0.0313419513404369, 0.0282102916389703, 0.031339656561613, 0.0319121442735195], [0.032048312947154, 0.039604565128684, 0.0387950632721185, 0.0374825187027454, 0.057245222851634], [0.0429758336395025, 0.0523931086063385, 0.0511703975498676, 0.0514738429337739, 0.0556999593973159], [0.0639469213783741, 0.0787756852805614, 0.0794922076165676, 0.0778981186449527, 0.0741731189191341], [0.1028669234365224, 0.1341809816658496, 0.1344727780669927, 0.1604246366769075, 0.1348627135157585], [0.1856274306774139, 0.2483418900519609, 0.2335861884057521, 0.249673431739211, 0.2432186659425497], [0.3207942266017198, 0.3819137532263994, 0.3872315287590027, 0.3509879577904939, 0.3856719192117452], [0.5829851850867271, 0.6762419808655977, 0.6704417765140533, 0.6895254366099834, 0.680224547162652], [0.7425992302596569, 0.7855633404105902, 0.7784783449023962, 0.7865334413945675, 0.7361911088228226], [0.7724644932895899, 0.739047471433878, 0.7540648560971022, 0.7670835312455893, 0.7496841233223677], [0.8137269243597984, 0.7651688996702433, 0.7739041857421398, 0.7648643590509892, 0.7405323386192322], [0.8055341336876154, 0.7247527986764908, 0.772933715954423, 0.7663414664566517, 0.7591922506690025]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=5000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration_Objective Metric": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=5000,rho=0.6]", "xlabel": "Iteration", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "y": [[4568.211158541485, 4568.211158541487, 4568.211158541487, 4568.211158541487, 4568.211158541487], [4568.211158541485, 4568.211158541487, 4568.211158541487, 4568.211158541487, 4568.211158541487], [3917.942526639404, 3917.942526639403, 3917.942526639403, 3917.942526639403, 3917.942526639403], [2260.322153574677, 2260.3221535746784, 2260.3221535746784, 2260.3221535746784, 2260.3221535746784], [1351.7985818991208, 1351.7985818991112, 1351.7985818991112, 1351.7985818991112, 1351.7985818991112], [324.94967692073647, 324.9496769206961, 324.9496769206961, 324.9496769206961, 324.9496769206961], [143.38898892928898, 143.38898892929276, 143.38898892929276, 143.38898892929276, 143.38898892929276], [24.9421496771732, 24.942149677144187, 24.942149677144187, 24.942149677144187, 24.942149677144187], [18.27929646942743, 18.27929644802045, 18.27929644802045, 18.27929644802045, 18.27929644802045], [17.993200161437542, 17.865908814460127, 17.865908814460127, 17.865908814460127, 17.865908814460127], [17.44093066455559, 17.440562740633425, 17.440562740633425, 17.440562740633425, 17.440562740633425], [17.44053323390099, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], [17.44053323390099, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], [17.44053323390099, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691], [17.44053323390099, 17.44053404634691, 17.44053404634691, 17.44053404634691, 17.44053404634691]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=10000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Solver_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0]", "xlabel": "Solver", "ylabel": "Time", "type": "boxplot", "data": [{"x": ["sklearn"], "y": [[1.694656016305089]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=10000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Solver_Objective Metric": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0]", "xlabel": "Solver", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": ["sklearn"], "y": [[21.761509929761424]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=10000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0]", "xlabel": "Iteration", "ylabel": "Time", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "y": [[0.0403354205191135, 0.0607139058411121, 0.0341280288994312, 0.0367060117423534, 0.0383295714855194], [0.0357509888708591, 0.0404215641319751, 0.0389624685049057, 0.0390238761901855, 0.0384679324924945], [0.0600715856999158, 0.0406241454184055, 0.0602154973894357, 0.0411110017448663, 0.0401234347373247], [0.0418397691100835, 0.0429748017340898, 0.0427671186625957, 0.0632253885269165, 0.042864229530096], [0.0523527469485998, 0.0507858805358409, 0.052065011113882, 0.050193378701806, 0.0782626420259475], [0.0729582272469997, 0.0691138487309217, 0.0680019184947013, 0.0655583310872316, 0.0671191439032554], [0.1133197918534278, 0.1011817157268524, 0.1004865653812885, 0.0897971279919147, 0.1037542838603258], [0.1900950204581022, 0.1721537988632917, 0.1774837654083967, 0.156902527436614, 0.1558613125234842], [0.3605571687221527, 0.2645433600991964, 0.2581677157431841, 0.2804506476968527, 0.2543302364647388], [0.6441235560923815, 0.4597914963960647, 0.4194506797939539, 0.4323032535612583, 0.4550964739173651], [1.0802627243101597, 0.7859400473535061, 0.7749704904854298, 0.8035229910165071, 0.7798313517123461], [1.7130451519042251, 1.0981396194547417, 1.093903947621584, 1.0726397186517715, 1.0550153329968452], [1.711668625473976, 1.1071386244148016, 1.122629025951028, 1.0903119929134846, 1.093463271856308], [1.7102600429207089, 1.092675756663084, 1.1354319918900728, 1.0762026850134134, 1.149155868217349], [1.694656016305089, 1.111159736290574, 1.148126969113946, 1.1216203439980743, 1.1368115562945604]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=10000,rho=0]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration_Objective Metric": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0]", "xlabel": "Iteration", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "y": [[7501.816396539149, 7501.816396539149, 7501.816396539149, 7501.816396539149, 7501.816396539149], [7501.816396539149, 7501.816396539149, 7501.816396539149, 7501.816396539149, 7501.816396539149], [6919.89543640706, 6919.895436407089, 6919.895436407089, 6919.895436407089, 6919.895436407089], [3682.91674936826, 3682.916749368256, 3682.916749368256, 3682.916749368256, 3682.916749368256], [2012.6108174633544, 2012.6108174633523, 2012.6108174633523, 2012.6108174633523, 2012.6108174633523], [547.8074894484854, 547.8074894484771, 547.8074894484771, 547.8074894484771, 547.8074894484771], [180.36910144992527, 180.36910144992373, 180.36910144992373, 180.36910144992373, 180.36910144992373], [49.83817472600146, 49.83817472598153, 49.83817472598153, 49.83817472598153, 49.83817472598153], [22.82668678897916, 22.82668678857099, 22.82668678857099, 22.82668678857099, 22.82668678857099], [22.142475353737613, 22.15476130422233, 22.15476130422233, 22.15476130422233, 22.15476130422233], [21.769077220006796, 21.764003691129915, 21.764003691129915, 21.764003691129915, 21.764003691129915], [21.761509929761424, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], [21.761509929761424, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], [21.761509929761424, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687], [21.761509929761424, 21.761510093615687, 21.761510093615687, 21.761510093615687, 21.761510093615687]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=10000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Solver_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0.6]", "xlabel": "Solver", "ylabel": "Time", "type": "boxplot", "data": [{"x": ["sklearn"], "y": [[1.6065611466765404]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=10000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Solver_Objective Metric": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0.6]", "xlabel": "Solver", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": ["sklearn"], "y": [[24.693221115285496]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=10000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration_Time": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0.6]", "xlabel": "Iteration", "ylabel": "Time", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "y": [[0.0411097314208745, 0.0687979850918054, 0.0387731734663248, 0.0427095498889684, 0.0448633357882499], [0.0371016468852758, 0.0438527800142765, 0.0400096550583839, 0.0442393124103546, 0.0656918603926897], [0.0459427610039711, 0.0527476910501718, 0.0888646654784679, 0.0530122090131044, 0.0526761543005704], [0.0714651383459568, 0.0510133951902389, 0.0575172714889049, 0.0557067673653364, 0.0575571339577436], [0.0624065902084112, 0.0707175284624099, 0.0701222587376833, 0.0691948737949132, 0.0714594386518001], [0.0934217292815446, 0.1207142937928438, 0.09629987180233, 0.1177654005587101, 0.0980197116732597], [0.1490882728248834, 0.1477862372994423, 0.1539959367364645, 0.1491500586271286, 0.1751790922135114], [0.2481576669961214, 0.2440168093889951, 0.2597688883543014, 0.2395303770899772, 0.2393066845834255], [0.4636227767914533, 0.4186167903244495, 0.4756420440971851, 0.4438692387193441, 0.4283195231109857], [0.8278173729777336, 0.7149425018578768, 0.6996171362698078, 0.6959224957972765, 0.6944971010088921], [1.4596653804183006, 1.232784053310752, 1.258053665980697, 1.2929285261780024, 1.2375244349241257], [1.5313542317599058, 1.18624646961689, 1.1715320125222206, 1.2425615396350622, 1.189299562945962], [1.5867477413266895, 1.2053151745349169, 1.2554570846259594, 1.2041235454380512, 1.271952997893095], [1.5551056489348412, 1.201214037835598, 1.232146317139268, 1.186583749949932, 1.2085164748132229], [1.6065611466765404]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}, "boxplot_Simulated[n_samples=100,n_features=10000,rho=0.6]_Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]_objective_value_Iteration_Objective Metric": {"title": "Huber Regression with L2 regularization[epsilon=1.35,lmbd=1.0]<br />Data: Simulated[n_samples=100,n_features=10000,rho=0.6]", "xlabel": "Iteration", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "y": [[7942.886515530983, 7942.886515530983, 7942.886515530983, 7942.886515530983, 7942.886515530983], [7942.886515530983, 7942.886515530983, 7942.886515530983, 7942.886515530983, 7942.886515530983], [5565.41503724065, 5565.415037240656, 5565.415037240656, 5565.415037240656, 5565.415037240656], [4605.91341038607, 4605.913410386076, 4605.913410386076, 4605.913410386076, 4605.913410386076], [1987.560780974692, 1987.5607809746907, 1987.5607809746907, 1987.5607809746907, 1987.5607809746907], [705.725003283055, 705.7250032830592, 705.7250032830592, 705.7250032830592, 705.7250032830592], [305.3345917562425, 305.3345917562537, 305.3345917562537, 305.3345917562537, 305.3345917562537], [123.83927184384602, 123.83927184378064, 123.83927184378064, 123.83927184378064, 123.83927184378064], [35.50314021430762, 35.50314019866238, 35.50314019866238, 35.50314019866238, 35.50314019866238], [24.77901219506329, 24.808056132234988, 24.808056132234988, 24.808056132234988, 24.808056132234988], [24.69343284631345, 24.693230308485912, 24.693230308485912, 24.693230308485912, 24.693230308485912], [24.693221115285496, 24.693230308485912, 24.693230308485912, 24.693230308485912, 24.693230308485912], [24.693221115285496, 24.693230308485912, 24.693230308485912, 24.693230308485912, 24.693230308485912], [24.693221115285496, 24.693230308485912, 24.693230308485912, 24.693230308485912, 24.693230308485912], [24.693221115285496]], "label": "sklearn", "color": "rgba(227, 119, 194, 1.0)"}]}}};
             window.metadata = {"plot_configs": {}, "solvers_description": {}, "obj_description": ""};
 
             window.addEventListener("load", () => {
                 // Initialize plot state
                 setState({
-                    'dataset': document.getElementById('dataset_selector').value,
-                    'objective': document.getElementById('objective_selector').value,
-                    'objective_column': document.getElementById('objective_column').value,
                     'plot_kind': document.getElementById('plot_kind').value,
-                    'scale': document.getElementById('change_scaling').value,
+                    'scale': document.getElementById('change_scale').value,
                     'with_quantiles': document.getElementById('change_shades').checked,
-                    'xaxis_type':  document.getElementById('change_xaxis_type').value || "Time",
-                    'yaxis_type':  document.getElementById('change_xaxis_type').value || "Time",
-                    'hidden_solvers': []
+                    'suboptimal_curve': document.getElementById('change_suboptimal').checked,
+                    'relative_curve': document.getElementById('change_relative').checked,
+                    'hidden_curves': [],
+                            'objective_curve_dataset': document.getElementById('change_objective_curve_dataset').value,
+                            'objective_curve_objective': document.getElementById('change_objective_curve_objective').value,
+                            'objective_curve_objective_column': document.getElementById('change_objective_curve_objective_column').value,
+                            'objective_curve_X_axis': document.getElementById('change_objective_curve_X_axis').value,
+                            'bar_chart_dataset': document.getElementById('change_bar_chart_dataset').value,
+                            'bar_chart_objective': document.getElementById('change_bar_chart_objective').value,
+                            'bar_chart_objective_column': document.getElementById('change_bar_chart_objective_column').value,
+                            'boxplot_dataset': document.getElementById('change_boxplot_dataset').value,
+                            'boxplot_objective': document.getElementById('change_boxplot_objective').value,
+                            'boxplot_objective_column': document.getElementById('change_boxplot_objective_column').value,
+                            'boxplot_X_axis': document.getElementById('change_boxplot_X_axis').value,
+                            'boxplot_Y_axis': document.getElementById('change_boxplot_Y_axis').value,
                 });
                 const plot_configs = document.getElementsByClassName('view');
                 if (plot_configs.length > 0 ){
@@ -3088,9 +3265,7 @@ function createPathString(symbolNumber, r) {
  *   - plot_kind (string),
  *   - scale (string)
  *   - with_quantiles (boolean)
- *   - xaxis_type (string)
- *   - yaxis_type (string)
- *   - hidden_solvers (array)
+ *   - hidden_curves (array)
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
@@ -3128,11 +3303,12 @@ const config_mapping = {
   'dataset': 'dataset_selector',
   'objective': 'objective_selector',
   'objective_column': 'objective_column',
-  'kind': 'plot_kind',
-  'scale': 'change_scaling',
+  'plot_kind': 'plot_kind',
+  'scale': 'change_scale',
   'with_quantiles': 'change_shades',
-  'xaxis_type':'change_xaxis_type',
-  'yaxis_type':'change_yaxis_type',
+  'suboptimal_curve': 'change_suboptimal',
+  'relative_curve': 'change_relative',
+  'hidden_curves': '',
 };
 
 /*
@@ -3148,10 +3324,17 @@ const config_mapping = {
  * Create/Update the plot.
  */
 const renderPlot = () => {
-  const div = document.getElementById('unique_plot');
+  let div;
+  if (isChart('scatter')) {
+    div = document.getElementById('scatter_plot_container');
+  } else {
+    div = document.getElementById('plot_container');
+  }
   const data = getChartData();
   const layout = getLayout();
 
+  Plotly.purge(document.getElementById('scatter_plot_container'));
+  Plotly.purge(document.getElementById('plot_container'));
   Plotly.react(div, data, layout);
 };
 
@@ -3161,15 +3344,14 @@ const renderPlot = () => {
  * @returns {Array|*[]}
  */
 const getChartData = () => {
-  if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve'])) {
-    return getScatterCurves();
+  if (isChart('scatter')) {
+    return getScatterData();
   } else if (isChart('bar_chart')) {
     return getBarData();
   } else if (isChart('boxplot')) {
     return getBoxplotData();
   }
-
-  throw new Error('Unknown plot kind.');
+  throw new Error("Unknown plot kind : " + state().plot_kind);
 }
 
 /**
@@ -3178,15 +3360,14 @@ const getChartData = () => {
  * @returns Object
  */
 const getLayout = () => {
-  if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve'])) {
+  if (isChart('scatter')) {
     return getScatterChartLayout();
   } else if (isChart('bar_chart')) {
     return getBarChartLayout();
   } else if (isChart('boxplot')) {
     return getBoxplotChartLayout();
   }
-
-  throw new Error('Unknown plot kind.');
+  throw new Error("Unknown plot kind : " + state().plot_kind);
 }
 
 /**
@@ -3213,16 +3394,16 @@ const getBarData = () => {
     textangle: '-90',
   }];
 
-  x.forEach(solver => {
-    // Add times for each convergent solver
+  getPlotData().data.forEach(curveData => {
+    // Add times for each convergent bar
     // Check if text is not 'Did not converge'
-    if (data(solver).bar.text === '') {
-      let nbTimes = data(solver).bar.times.length
+    if (curveData.text === '') {
+      let nbTimes = curveData.times.length
 
       barData.push({
         type: 'scatter',
-        x: new Array(nbTimes).fill(solver),
-        y: data(solver).bar.times,
+        x: new Array(nbTimes).fill(curveData.label),
+        y: curveData.times,
         marker: {
           color: 'black',
           symbol: 'line-ew-open'
@@ -3237,120 +3418,105 @@ const getBarData = () => {
   return barData;
 };
 
+
 const getBoxplotData = () => {
-  return state('xaxis_type') === 'Solver' ? getSolverBoxplotData() : getIterationBoxplotData();
-}
-
-const getSolverBoxplotData = () => {
   const boxplotData = [];
 
-  getSolvers().forEach(solver => {
-    boxplotData.push({
-      y: state("yaxis_type") === 'time' ? data(solver).boxplot.by_solver.final_times : data(solver).boxplot.by_solver.final_objective_value,
-      type: 'box',
-      name: solver,
+  getPlotData().data.forEach(plotData => {
+    plotData.x.forEach((label, i) => {
+      boxplotData.push({
+        y: plotData.y[i],
+        name: label,
+        type: 'box',
+        line: {color: plotData.color},
+        fillcolor: plotData.color,
+        boxpoints: false
+      });
     });
   });
 
-  return boxplotData
+  return boxplotData;
+};
+
+
+const getPlotData = () => {
+  let dropdowns = getPlotDropdowns();
+  let dropdown_values = dropdowns.map(dropdown => state()[dropdown]);
+  let data_key = [state().plot_kind, ...dropdown_values].join('_');
+  return window._custom_plots[state().plot_kind][data_key];
 }
 
-const getIterationBoxplotData = () => {
-  const boxplotData = [];
-
-  getSolvers().forEach(solver => {
-
-    // Build x
-    let x = [];
-    const iterations = data().solvers[solver].boxplot.by_iteration.times;
-
-    for (let iteration = 0; iteration < iterations.length; iteration++) {
-      for (let repetition = 0; repetition < iterations[iteration].length; repetition++) {
-        x.push(iteration)
-      }
-    }
-
-    let y = [];
-    let values = state("yaxis_type") === 'time' ? data(solver).boxplot.by_iteration.times : data(solver).boxplot.by_iteration.objective;
-    for (let iteration = 0; iteration < iterations.length; iteration++) {
-      for (let repetition = 0; repetition < iterations[iteration].length; repetition++) {
-        y.push(values[iteration][repetition])
-      }
-    }
-
-    boxplotData.push({
-      y: y,
-      x: x,
-      type: 'box',
-    });
-  });
-
-  return boxplotData
-}
 
 /**
  * Gives the data formatted for plotlyJS scatter chart.
  *
  * @returns {array}
  */
-const getScatterCurves = () => {
+const getScatterData = () => {
   // create a list of object to plot in plotly
   const curves = [];
 
-  // For each solver, add the median curve with proper style and visibility.
-  let xaxisType = state().xaxis_type;
+  // get the minimum y value over all curves
+  let min_y = Infinity;
+  getPlotData().data.forEach(curveData => {
+    min_y = Math.min(min_y, ...curveData.y);
+  });
+  min_y -=  1e-10; // to avoid zeros in log scale
 
-  getSolvers().forEach(solver => {
-    const solverSamplingStrategy = data(solver)['sampling_strategy'];
-
-    // plot only solvers that were stopped using xaxis type
-    // plot all solver if xaxis type is `time`
-    if(xaxisType !== "Time" && solverSamplingStrategy !== xaxisType) {
-      return
+  getPlotData().data.forEach(curveData => {
+    label = curveData.label;
+    y = curveData.y;
+    if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
+      q1 = curveData.q1;
+      q9 = curveData.q9;
     }
-
-    const ScatterXaxisProperty = xaxisType === "Time" ? 'x' : 'stop_val';
-
+    if (state().suboptimal_curve) {
+      y = y.map(value => value - min_y);
+      if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
+        q1 = q1.map(value => value - min_y);
+        q9 = q9.map(value => value - min_y);
+      }
+    }
+    if (state().relative_curve) {
+      y = y.map(value => value / (y[0] - min_y));
+      if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
+        q1 = q1.map(value => value / (y[0] - min_y));
+        q9 = q9.map(value => value / (y[0] - min_y));
+      }
+    }
     curves.push({
       type: 'scatter',
-      name: solver,
+      name: label,
       mode: 'lines+markers',
       line: {
-        color: data(solver).color,
+        color: curveData.color,
       },
       marker: {
-        symbol: data(solver).marker,
+        symbol: curveData.marker,
         size: 10,
+        color: curveData.color,
       },
-      legendgroup: solver,
-      hovertemplate: solver + ' <br> (%{x:.1e},%{y:.1e}) <extra></extra>',
-      visible: isVisible(solver) ? true : 'legendonly',
-      x: data(solver).scatter[ScatterXaxisProperty],
-      y: useTransformer(data(solver).scatter.y, 'y', data().transformers),
+      legendgroup: label,
+      hovertemplate: label + ' <br> (%{x:.1e},%{y:.1e}) <extra></extra>',
+      visible: isVisible(label) ? true : 'legendonly',
+      x: curveData.x,
+      y: y,
     });
 
-    // skip plotting quantiles if xaxis is not time
-    // as stop_val are predefined and hence deterministic
-    if(xaxisType !== "Time") {
-      return
-    }
-
-    if (state().with_quantiles) {
-      // Add shaded area for each solver, with proper style and visibility.
-
+    if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
       curves.push({
         type: 'scatter',
         mode: 'lines',
         showlegend: false,
         line: {
           width: 0,
-          color: data(solver).color,
+          color: curveData.color,
         },
-        legendgroup: solver,
+        legendgroup: label,
         hovertemplate: '(%{x:.1e},%{y:.1e}) <extra></extra>',
-        visible: isVisible(solver) ? true : 'legendonly',
-        x: data(solver).scatter['q1'],
-        y: useTransformer(data(solver).scatter.y, 'y', data().transformers),
+        visible: isVisible(label) ? true : 'legendonly',
+        x: q1,
+        y: y,
       }, {
         type: 'scatter',
         mode: 'lines',
@@ -3358,20 +3524,19 @@ const getScatterCurves = () => {
         fill: 'tonextx',
         line: {
           width: 0,
-          color: data(solver).color,
+          color: curveData.color,
         },
-        legendgroup: solver,
+        legendgroup: label,
         hovertemplate: '(%{x:.1e},%{y:.1e}) <extra></extra>',
-        visible: isVisible(solver) ? true : 'legendonly',
-        x: data(solver).scatter['q9'],
-        y: useTransformer(data(solver).scatter.y, 'y', data().transformers),
+        visible: isVisible(label) ? true : 'legendonly',
+        x: q9,
+        y: y,
       });
     }
   });
 
   return curves;
 };
-
 
 
 /*
@@ -3383,19 +3548,14 @@ const getScatterCurves = () => {
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-const get_lim_plotly = (lim, ax) =>{
-  if(getScale()[ax + 'axis'] == 'log'){
-    lim = [Math.log10(parseFloat(lim[0])), Math.log10(parseFloat(lim[1]))]
-  };
-  return lim;
-};
-
-const get_lim_config = (lim, ax) => {
-  if(getScale()[ax + 'axis'] == 'log'){
-    lim = [Math.pow(10, lim[0]), Math.pow(10, lim[1])]
-  };
-  return lim;
-};
+const DEFAULT_CONFIG_OPTIONS = [
+  "plot_kind",
+  "hidden_curves",
+  "scale",
+  "with_quantiles",
+  "suboptimal_curve",
+  "relative_curve",
+];
 
 const setConfig = (config_item) => {
   if (!config_item) {
@@ -3421,31 +3581,24 @@ const setConfig = (config_item) => {
     // Get the updated state
     let config = window.metadata.plot_configs[config_name];
     let update = {};
-    const lims = ['xlim', 'ylim', 'hidden_solvers']
-    for(let key in config_mapping){
-      if (key in config){
-        const value = config[key];
-        document.getElementById(config_mapping[key]).value = value;
-        if (key === "kind"){
-          key = "plot_kind";
+    // const lims = ['xlim', 'ylim', 'hidden_curves']
+    const lims = ['hidden_curves']
+    for(let key in config){
+      const value = config[key];
+      if (key in config_mapping) {
+        if (config_mapping[key] !== '') {
+          div_key = config_mapping[key];
+          document.getElementById(div_key).value = value;
         }
-        update[key] = value;
       }
-      else if (!lims.includes(key)) {
-        document.getElementById(config_mapping[key]).selectedIndex = 0;
-        update[key] = document.getElementById(config_mapping[key]).value;
+      else {
+        div_key = "change_" + key;
+        document.getElementById(div_key).value = value;
       }
+      update[key] = value;
     }
 
     setState(update);
-
-    let layout = {};
-    for(const ax of ['x', 'y']){
-      let lim = ax + 'lim';
-      if (config.hasOwnProperty(lim) & (config[lim] != null)) {
-        layout[ax +'axis.range'] = get_lim_plotly(config[lim], ax);
-      }
-    }
 
     // update the plot
     renderPlot();
@@ -3462,14 +3615,13 @@ const saveView = () => {
 
   // Retrieve the dropdown menu selected values
   let config = {};
-  for(let key in config_mapping) {
-    config[key] = document.getElementById(config_mapping[key]).value;
+  dropdowns = getPlotDropdowns();
+  for(let key of dropdowns) {
+    config[key] = state()[key];
   }
-
-  // Retrieve the range of the plots.
-  const fig = document.getElementById('unique_plot');
-  config['xlim'] = get_lim_config(fig.layout.xaxis.range, 'x');
-  config['ylim'] = get_lim_config(fig.layout.yaxis.range, 'y');
+  for (let option of DEFAULT_CONFIG_OPTIONS) {
+    config[option] = state()[option];
+  }
 
   let noViewAvailableElement = document.getElementById('no_view_available');
 
@@ -3551,78 +3703,6 @@ const exportHTML = () => {
 
 /*
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * DATA TRANSFORMERS
- *
- * Transformers are used to modify data
- * on the fly.
- *
- * WARNING : If you add a new transformer function,
- * don't forget to register it in the object : window.transformers,
- * at the end of this section.
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- */
-
-/**
- * Select the right transformer according to the state.
- * If the requested transformer does not exists,
- * it returns raw data.
- *
- * @param {Object} data
- * @param {String} solver
- * @param {String} axis it could be x, y, q1, q9
- * @returns {array}
- */
-const useTransformer = (data, axis, options) => {
-  try {
-    let transformer = 'transformer_' + axis + '_' + state().plot_kind;
-    return window.transformers[transformer](data, options);
-  } catch(error) {
-    return data;
-  }
-};
-
-/**
- * Transform data on the y axis for subotimality curve.
- *
- * @param {Object} data
- * @param {String} solver
- * @returns {array}
- */
-const transformer_y_suboptimality_curve = (y, options) => {
-  // Retrieve c_star value
-  const c_star = options.c_star;
-
-  // Compute suboptimality for each data
-  return y.map(value => value - c_star);
-};
-
-/**
- * Transform data ont the y axis for relative suboptimality curve.
- *
- * @param {Object} data
- * @param {String} solver
- * @returns {array}
- */
-const transformer_y_relative_suboptimality_curve = (y, options) => {
-  // Retrieve transformer values
-  const c_star = options.c_star;
-  const max_f_0 = options.max_f_0;
-
-  // Compute relative suboptimality for each data
-  return y.map(value => (value - c_star) / (max_f_0 - c_star));
-};
-
-/**
- * Store all the transformer functions to be callable
- * by the useTransformer function.
- */
-window.transformers = {
-  transformer_y_suboptimality_curve,
-  transformer_y_relative_suboptimality_curve,
-};
-
-/*
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * LEFT SIDEBAR MANAGEMENT
  *
  * Functions that control the left sidebar.
@@ -3633,33 +3713,21 @@ window.transformers = {
  * Render sidebar
  */
 const renderSidebar = () => {
-  renderObjectiveColumnSelector();
   renderScaleSelector();
-  renderXAxisTypeSelector();
-  renderYAxisTypeSelector();
   renderWithQuantilesToggle();
+  renderSuboptimalRelativeToggle();
   mapSelectorsToState();
+  renderPlotDropdowns();
 }
-
-/**
- * Render Objective Column selector
- */
-const renderObjectiveColumnSelector = () => {
-  if (isChart('boxplot') && state('yaxis_type') === 'time') {
-    hide(document.querySelectorAll("#objective-column-form-group"));
-  } else {
-    show(document.querySelectorAll("#objective-column-form-group"), 'block');
-  }
-};
 
 /**
  * Render Scale selector
  */
 const renderScaleSelector = () => {
-  if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve', 'boxplot'])) {
-    show(document.querySelectorAll("#scale-form-group"), 'block');
-  } else {
+  if (isChart('bar_chart')) {
     hide(document.querySelectorAll("#scale-form-group"));
+  } else {
+    show(document.querySelectorAll("#scale-form-group"), 'block');
   }
 
   if (isChart('boxplot')) {
@@ -3675,79 +3743,34 @@ const renderScaleSelector = () => {
  * Render WithQuantile toggle
  */
 const renderWithQuantilesToggle = () => {
-  if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve'])) {
+  if (isChart('scatter')) {
     show(document.querySelectorAll("#change-shades-form-group"), 'flex');
   } else {
     hide(document.querySelectorAll("#change-shades-form-group"));
   }
 };
 
-/**
- * Render xaxis type selector
- */
-const renderXAxisTypeSelector = () => {
-  if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve', 'boxplot'])) {
-    show(document.querySelectorAll("#xaxis-type-form-group"), 'block');
+const renderSuboptimalRelativeToggle = () => {
+  if (isChart('scatter')) {
+    show(document.querySelectorAll("#change-relative-suboptimal-form-group"), 'flex');
   } else {
-    hide(document.querySelectorAll("#xaxis-type-form-group"));
-    return;
-  }
-
-  // One for desktop and one for mobile
-  xAxisTypeSelectors().forEach(selector => {
-    const optionToHide = isChart('boxplot') ? "Time" : "Solver";
-    hide(xAxisTypeOption(optionToHide));
-
-    const optionToShow = isChart('boxplot') ? "Solver" : "Time";
-    show(xAxisTypeOption(optionToShow));
-
-    if (isChart('boxplot') || isIterationSamplingStrategy()) {
-      show(xAxisTypeOption('Iteration'));
-    }
-  });
-
-  // X axis type 'Time' does not exist for boxplot,
-  // it only can be one of : 'Solver', 'Iteration',
-  // so we have to change its value with an allowed value.
-  // It's the same thing if we change to curve plot.
-  if (isChart('boxplot') && state().xaxis_type === 'Time') {
-    setState({xaxis_type: 'Solver'});
-  } else if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve']) && state().xaxis_type === 'Solver') {
-    setState({xaxis_type: 'Time'});
+    hide(document.querySelectorAll("#change-relative-suboptimal-form-group"));
   }
 };
 
-/**
- * Render yaxis type selector
- */
-const renderYAxisTypeSelector = () => {
-  if (isChart('boxplot')) {
-    show(document.querySelectorAll("#yaxis-type-form-group"), 'block');
-  } else {
-    hide(document.querySelectorAll("#yaxis-type-form-group"));
-  }
-};
+const renderPlotDropdowns = () => {
+  hide(document.querySelectorAll(`[id$='-custom-params-container']`));
+  show(document.querySelectorAll(`#${state().plot_kind}-custom-params-container`), 'block');
 
-const xAxisTypeSelectors = () => {
-  return document.querySelectorAll("#change_xaxis_type, #change_xaxis_type_mobile");
-};
-
-const xAxisTypeOption = (type) => {
-  return document.querySelectorAll(
-      `#change_xaxis_type [value="${type}"], #change_xaxis_type_mobile [value="${type}"]`
-  );
-};
+}
 
 const mapSelectorsToState = () => {
   const currentState = state();
-
-  document.getElementById('dataset_selector').value = currentState.dataset;
-  document.getElementById('objective_selector').value = currentState.objective;
-  document.getElementById('objective_column').value = currentState.objective_column;
   document.getElementById('plot_kind').value = currentState.plot_kind;
-  document.getElementById('change_scaling').value = currentState.scale;
-  document.getElementById('change_xaxis_type').value = currentState.xaxis_type;
+  document.getElementById('change_scale').value = currentState.scale;
   document.getElementById('change_shades').checked = currentState.with_quantiles;
+  document.getElementById('change_suboptimal').checked = currentState.suboptimal_curve;
+  document.getElementById('change_relative').checked = currentState.relative_curve;
 };
 
 /*
@@ -3758,25 +3781,43 @@ const mapSelectorsToState = () => {
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-const data = (solver = null) => {
-  return solver ?
-    window._data[state().dataset][state().objective][state().objective_column].solvers[solver]:
-    window._data[state().dataset][state().objective][state().objective_column]
+// Get the data for a given plot state, indexed by curve names.
+const data = (curve = null) => {
+  let curves = getPlotData().data.reduce(
+    (map, obj) => {map[obj.label] = obj; return map}, {}
+  );
+  return curve ? curves[curve]: curves;
 }
 
-const getSolvers = () => Object.keys(data().solvers);
+const getPlotDropdowns = () => {
+  let kind = state().plot_kind;
+  let params = [];
+  Object.keys(state()).forEach(key => {
+    if (key.includes(kind)) {
+      params.push(key);
+    }
+  });
+  return params;
+}
+
+const getCurves = () => Object.keys(data());
 
 const isChart = chart => {
   if (typeof chart === 'string' || chart instanceof String) {
     chart = [chart]
   }
 
-  return chart.includes(state().plot_kind);
+  let plot_kind = state().plot_kind;
+  if (!["bar_chart", "boxplot"].includes(plot_kind)) {
+    let custom_data = getPlotData();
+    plot_kind = custom_data.type;
+  }
+  return chart.includes(plot_kind);
 }
 
-const isVisible = solver => !state().hidden_solvers.includes(solver);
+const isVisible = curve => !state().hidden_curves.includes(curve);
 
-const isSolverAvailable = solver => data(solver).scatter.y.filter(value => !isNaN(value)).length > 0;
+const isSolverAvailable = solver => data(solver) !== null;
 
 const isSmallScreen = () => window.screen.availHeight < 900;
 
@@ -3789,7 +3830,7 @@ const isSmallScreen = () => window.screen.availHeight < 900;
 const isAvailable = () => {
   let isNotAvailable = true;
 
-  getSolvers().forEach(solver => {
+  getCurves().forEach(solver => {
     if (isSolverAvailable(solver)) {
       isNotAvailable = false;
     }
@@ -3801,11 +3842,11 @@ const isAvailable = () => {
 const barDataToArrays = () => {
   const colors = [], texts = [], x = [], y = [];
 
-  getSolvers().forEach(solver => {
-    x.push(solver);
-    y.push(data(solver).bar.y);
-    colors.push(data(solver).bar.text === '' ? data(solver).color : NON_CONVERGENT_COLOR);
-    texts.push(data(solver).bar.text);
+  getPlotData().data.forEach(plotData => {
+    x.push(plotData.label);
+    y.push(plotData.y);
+    colors.push(plotData.text === '' ? plotData.color : NON_CONVERGENT_COLOR);
+    texts.push(plotData.text);
   });
 
   return {x, y, colors, texts}
@@ -3847,8 +3888,86 @@ const _getScale = (scale) => {
   }
 }
 
+const getBarChartLayout = () => {
+  let data = getPlotData();
+  const layout = {
+    autosize: !isSmallScreen(),
+    modebar: {
+      orientation: 'v',
+    },
+    yaxis: {
+      type: 'log',
+      title: data["ylabel"],
+      tickformat: '.1e',
+      gridcolor: '#ffffff',
+    },
+    xaxis: {
+      tickangle: -60,
+      ticktext: Array(data.data.map(d => d.label)),
+    },
+    showlegend: false,
+    title: data["title"],
+    plot_bgcolor: '#e5ecf6',
+  };
+
+  if (isSmallScreen()) {
+    layout.width = 900;
+    layout.height = window.screen.availHeight - 200;
+    layout.dragmode = false;
+  }
+
+  // TODO what does this do ??
+  if (!isAvailable()) {
+    layout.annotations = [{
+      xref: 'paper',
+      yref: 'paper',
+      x: 0.5,
+      y: 0.5,
+      text: 'Not available',
+      showlegend: false,
+      showarrow: false,
+      font: {
+        color: 'black',
+        size: 32,
+      }
+    }];
+  }
+  return layout;
+};
+
+const getBoxplotChartLayout = () => {
+  plot_info = getPlotData()
+  const layout = {
+    autosize: !isSmallScreen(),
+    modebar: {
+      orientation: 'v',
+    },
+    yaxis: {
+      type: getScale().yaxis,
+      title: plot_info["ylabel"],
+      tickformat: '.1e',
+      gridcolor: '#ffffff',
+    },
+    xaxis: {
+      tickangle: (typeof plot_info.data[0].x[0] === "string") ? -60 : 0,
+    },
+    showlegend: false,
+    title: plot_info["title"],
+    plot_bgcolor: '#e5ecf6',
+  };
+
+  if (isSmallScreen()) {
+    layout.width = 900;
+    layout.height = window.screen.availHeight - 200;
+    layout.dragmode = false;
+  }
+
+  return layout;
+};
+
+
 const getScatterChartLayout = () => {
-  let xaxisType = state().xaxis_type;
+  let customData = getPlotData();
 
   const layout = {
     autosize: !isSmallScreen(),
@@ -3869,20 +3988,20 @@ const getScatterChartLayout = () => {
     },
     xaxis: {
       type: getScale().xaxis,
-      title: xaxisType === "Time" ? "Time [sec]": xaxisType,
-      tickformat:  ["Time", "Tolerance"].includes(xaxisType) ? '.1e': '',
+      title: customData.xlabel,
+      tickformat: '.1e', // TODO adapt if xaxis is not numeric
       tickangle: -45,
       gridcolor: '#ffffff',
       zeroline : false,
     },
     yaxis: {
       type: getScale().yaxis,
-      title: getYLabel(),
+      title: customData.ylabel,
       tickformat: '.1e',
       gridcolor: '#ffffff',
       zeroline : false,
     },
-    title: `${state().objective}<br />Data: ${state().dataset}`,
+    title: `${customData.title}`,
     plot_bgcolor: '#e5ecf6',
   };
 
@@ -3910,112 +4029,6 @@ const getScatterChartLayout = () => {
   return layout;
 };
 
-const getBarChartLayout = () => {
-  const layout = {
-    autosize: !isSmallScreen(),
-    modebar: {
-      orientation: 'v',
-    },
-    yaxis: {
-      type: 'log',
-      title: 'Time [sec]',
-      tickformat: '.1e',
-      gridcolor: '#ffffff',
-    },
-    xaxis: {
-      tickangle: -60,
-      ticktext: getSolvers(),
-    },
-    showlegend: false,
-    title: `${state().objective}<br />Data: ${state().dataset}`,
-    plot_bgcolor: '#e5ecf6',
-  };
-
-  if (isSmallScreen()) {
-    layout.width = 900;
-    layout.height = window.screen.availHeight - 200;
-    layout.dragmode = false;
-  }
-
-  if (!isAvailable()) {
-    layout.annotations = [{
-      xref: 'paper',
-      yref: 'paper',
-      x: 0.5,
-      y: 0.5,
-      text: 'Not available',
-      showarrow: false,
-      font: {
-        color: 'black',
-        size: 32,
-      }
-    }];
-  }
-
-  return layout;
-};
-
-const getBoxplotChartLayout = () => {
-  const layout = {
-    autosize: !isSmallScreen(),
-    modebar: {
-      orientation: 'v',
-    },
-    yaxis: {
-      type: getScale().yaxis,
-      title: getYLabel(),
-      tickformat: '.1e',
-      gridcolor: '#ffffff',
-    },
-    xaxis: {
-      tickangle: -60,
-    },
-    showlegend: false,
-    title: `${state().objective}<br />Data: ${state().dataset}`,
-    plot_bgcolor: '#e5ecf6',
-  };
-
-  if (isSmallScreen()) {
-    layout.width = 900;
-    layout.height = window.screen.availHeight - 200;
-    layout.dragmode = false;
-  }
-
-  return layout;
-};
-
-const getYLabel = () => {
-  switch(state('plot_kind')) {
-    case 'objective_curve':
-      return 'F(x)';
-    case 'suboptimality_curve':
-      return 'F(x) - F(x*)';
-    case 'relative_suboptimality_curve':
-      return 'F(x) - F(x*) / F(x0) - F(x*)'
-    case 'bar_chart':
-      return 'Time [sec]';
-    case 'boxplot':
-      return state('yaxis_type') === 'time' ?
-          'Time [sec]'
-          : (state('xaxis_type') === "Solver" ? "Final " : "") + state('objective_column');
-    default:
-      return 'unknown';
-  }
-};
-
-/**
- * Returns true if sampling strategy 'Iteration' value is in data
- *
- * @returns {boolean}
- */
-const isIterationSamplingStrategy = () => {
-  let options = new Set(['Time']);
-  // get solvers run for selected (dataset, objective, objective colum)
-  // and select their unique sampling strategies
-  getSolvers().forEach(solver => options.add(data().solvers[solver].sampling_strategy));
-
-  return options.has('Iteration')
-};
 
 /**
  * Hide an HTML element by applying a none value to its display style property.
@@ -4045,18 +4058,18 @@ const show = (HTMLElements, style = 'initial') => {
 };
 
 /*
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * MANAGE HIDDEN SOLVERS
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * MANAGE HIDDEN CURVES
  *
- * Functions to hide/display and memorize solvers which were clicked
- * by user on the legend of the plot.
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Functions to hide/display and memorize curves which
+ * were clicked by user on the legend of the plot.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
-const getSolverFromEvent = event => {
+const getCurveFromEvent = event => {
   const target = event.currentTarget;
 
   for (let i = 0; i < target.children.length; i++) {
-    if (target.children[i].className === 'solver') {
+    if (target.children[i].className === 'curve') {
       return target.children[i].firstChild.nodeValue;
     }
   }
@@ -4064,39 +4077,39 @@ const getSolverFromEvent = event => {
   return null;
 };
 
-const purgeHiddenSolvers = () => setState({hidden_solvers: []});
+const purgeHiddenCurves = () => setState({hidden_curves: []});
 
-const hideAllSolversExcept = solver => {setState({hidden_solvers: getSolvers().filter(elmt => elmt !== solver)})};
+const hideAllCurvesExcept = curve => {setState({hidden_curves: getCurves().filter(elmt => elmt !== curve)})};
 
-const hideSolver = solver => isVisible(solver) ? setState({hidden_solvers: [...state().hidden_solvers, solver]}) : null;
+const hideCurve = curve => isVisible(curve) ? setState({hidden_curves: [...state().hidden_curves, curve]}) : null;
 
-const showSolver = solver => setState({hidden_solvers: state().hidden_solvers.filter(hidden => hidden !== solver)});
+const showCurve = curve => setState({hidden_curves: state().hidden_curves.filter(hidden => hidden !== curve)});
 
 /**
- * Add or remove solver name from the list of hidden solvers.
+ * Add or remove curve name from the list of hidden curves.
  *
- * @param {String} solver
+ * @param {String} curve
  * @returns {void}
  */
-const handleSolverClick = solver => {
-  if (!isVisible(solver)) {
-    showSolver(solver);
+const handleCurveClick = curve => {
+  if (!isVisible(curve)) {
+    showCurve(curve);
 
     return;
   }
 
-  hideSolver(solver);
+  hideCurve(curve);
 };
 
-const handleSolverDoubleClick = solver => {
-  // If all solvers except one are hidden, so double click should show all solvers
-  if (state().hidden_solvers.length === getSolvers().length - 1) {
-    purgeHiddenSolvers();
+const handleCurveDoubleClick = curve => {
+  // If all curves except one are hidden, so double click should show all curves
+  if (state().hidden_curves.length === getCurves().length - 1) {
+    purgeHiddenCurves();
 
     return;
   }
 
-  hideAllSolversExcept(solver);
+  hideAllCurvesExcept(curve);
 };
 
 /*
@@ -4113,8 +4126,7 @@ const handleSolverDoubleClick = solver => {
  */
 const renderLegend = () => {
   const legendContainer = document.getElementById('legend_container')
-
-  if (!isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve'])) {
+  if (!isChart('scatter')) {
     hide(legendContainer);
     return;
   } else {
@@ -4124,41 +4136,43 @@ const renderLegend = () => {
   const legend = document.getElementById('plot_legend');
 
   legend.innerHTML = '';
-  const solversDescription = window.metadata["solvers_description"];
+  const curvesDescription = window.metadata["solvers_description"];
 
-  getSolvers().forEach(solver => {
-    const color = data().solvers[solver].color;
-    const symbolNumber = data().solvers[solver].marker;
+  getCurves().forEach(curve => {
+    const curve_data = data(curve);
+    const color = curve_data.color;
+    const symbolNumber = curve_data.marker;
 
-    let legendItem = createLegendItem(solver, color, symbolNumber);
+    let legendItem = createLegendItem(curve, color, symbolNumber);
 
     // preserve compatibility with prev version
-    if(solversDescription === null || solversDescription === undefined) {
+    if(curvesDescription === null || curvesDescription === undefined) {
       legend.appendChild(legendItem);
       return;
     }
 
-    let payload = {
-      description: solversDescription[solver],
-    }
-
-    legend.appendChild(
-      createSolverDescription(legendItem, payload)
+    let payload = createSolverDescription(
+      legendItem, {
+        description: curvesDescription[curve],
+      }
     );
+    if (payload !== undefined) {
+      legend.appendChild(payload);
+    }
   });
 }
 
 /**
- * Creates a legend item which contains the solver name,
- * the solver marker as an SVG and an horizontal bar with
- * the solver color.
+ * Creates a legend item which contains the curve name,
+ * the curve marker as an SVG and an horizontal bar with
+ * the curve color.
  *
- * @param {String} solver
+ * @param {String} curve
  * @param {String} color
  * @param {int} symbolNumber
- * @retuns {HTMLElement}
+ * @returns {HTMLElement}
  */
-const createLegendItem = (solver, color, symbolNumber) => {
+const createLegendItem = (curve, color, symbolNumber) => {
   // Create item container
   const item = document.createElement('div');
   item.style.display = 'flex';
@@ -4168,46 +4182,46 @@ const createLegendItem = (solver, color, symbolNumber) => {
   item.style.cursor = 'pointer';
   item.className = 'bg-white py-1 px-4 shadow-sm mt-2 rounded'
 
-  if (!isVisible(solver)) {
+  if (!isVisible(curve)) {
     item.style.opacity = 0.5;
   }
 
-  // Click on a solver in the legend
+  // Click on a curve in the legend
   item.addEventListener('click', event => {
-    solver = getSolverFromEvent(event);
+    curve = getCurveFromEvent(event);
 
-    if (!getSolvers().includes(solver)) {
-      console.error('An invalid solver has been handled during the click event.');
+    if (!getCurves().includes(curve)) {
+      console.error('An invalid curve has been handled during the click event.');
 
       return;
     }
 
     // In javascript we must simulate double click.
-    // So first click is handled and kept in memory (window.clickedSolver)
+    // So first click is handled and kept in memory (window.clickedCurve)
     // during 500ms, if nothing else happen timeout will execute
     // single click function. However, if an other click happen during this
     // 500ms, it clears the timeout and execute the double click function.
-    if (!window.clickedSolver) {
-      window.clickedSolver = solver;
+    if (!window.clickedCurve) {
+      window.clickedCurve = curve;
 
       // Timeout will execute single click function after 500ms
       window.clickedTimeout = setTimeout(() => {
-        window.clickedSolver = null;
+        window.clickedCurve = null;
 
-        handleSolverClick(solver);
+        handleCurveClick(curve);
       }, 500);
-    } else if (window.clickedSolver === solver) {
+    } else if (window.clickedCurve === curve) {
       clearTimeout(window.clickedTimeout);
-      window.clickedSolver = null;
-      handleSolverDoubleClick(solver);
+      window.clickedCurve = null;
+      handleCurveDoubleClick(curve);
     }
   });
 
-  // Create the HTML text node for the solver name in the legend
+  // Create the HTML text node for the curve name in the legend
   const textContainer = document.createElement('div');
   textContainer.style.marginLeft = '0.5rem';
-  textContainer.className = 'solver';
-  textContainer.appendChild(document.createTextNode(solver));
+  textContainer.className = 'curve';
+  textContainer.appendChild(document.createTextNode(curve));
 
   // Create the horizontal bar in the legend to represent the curve
   const hBar = document.createElement('div');
@@ -4229,14 +4243,14 @@ const createLegendItem = (solver, color, symbolNumber) => {
 
 function createSolverDescription(legendItem, { description }) {
   if (description === null || description === undefined || description === "")
-    description = "No description provided";
+    return legendItem;
 
   let descriptionContainer = document.createElement("div");
-  descriptionContainer.setAttribute("class", "solver-description-container")
+  descriptionContainer.setAttribute("class", "curve-description-container")
 
   descriptionContainer.innerHTML = `
-  <div class="solver-description-content text-sm">
-    <span class="solver-description-body">${description}</span>
+  <div class="curve-description-content text-sm">
+    <span class="curve-description-body">${description}</span>
   </div>
   `;
 

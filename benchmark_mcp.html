@@ -717,12 +717,12 @@ input:checked+.slider:before {
 }
 
 /* Description solver when hovered */
-.solver-description-container {
+.curve-description-container {
   position: relative;
   display: inline-flex;
 }
 
-.solver-description-content {
+.curve-description-content {
   display: flex;
   flex-direction: column;
   visibility: hidden;
@@ -747,12 +747,12 @@ input:checked+.slider:before {
 }
 
 /* Show description when hovered */
-.solver-description-container:hover .solver-description-content {
+.curve-description-container:hover .curve-description-content {
   visibility: visible;
 }
 
 /*Arrow at the bottom of the description*/
-.solver-description-container .solver-description-content::after {
+.curve-description-container .curve-description-content::after {
   content: " ";
   position: absolute;
   top: 100%;
@@ -763,12 +763,12 @@ input:checked+.slider:before {
   border-color: rgb(55 65 81) transparent transparent transparent;
 }
 
-.solver-description-title {
+.curve-description-title {
   margin-bottom: 1em;
   font-weight: bolder;
 }
 
-.solver-description-body {
+.curve-description-body {
   max-height: 450px;
   overflow-y: auto;
 }
@@ -881,7 +881,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
   </a>
 </h1>
 
-<p><em>Last updated: 2025-04-03 08:53</em>
+<p><em>Last updated: 2025-12-09 06:22</em>
   with <strong>4</strong> result files in total. <br>
 </p>
 
@@ -928,68 +928,6 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
 <tbody>
   <tr>
     <td class="fname">
-      <a href="benchmark_mcp_benchmark_mcp_benchopt_run_2021-09-10_18h27m03.html">
-        
-        mcp 2021-09-10 18h27m03
-      </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_mcp_benchopt_run_2021-09-10_18h27m03.csv" data-html="benchmark_mcp_benchmark_mcp_benchopt_run_2021-09-10_18h27m03.html" style="display:none;">
-    </td>
-    <td class="datasets">
-    <ul style="list-style-type: none; margin-top: 0;">
-      <div class=dataset>
-        
-          Simulated
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=4,n_features=7 </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=6,n_features=12 </span> </li>
-        
-      </div>
-    </ul>
-
-    </td>
-    
-    <td class="sysinfo">
-      <ul style="list-style-type: none; margin-top: 0;">
-          <li>
-            <b>CPU</b>: 72
-              <button data-idx=0 id=btn_subinfo0 class="button buttoncent" style="float:right;">
-                <i class='fas fa-plus-circle'></i>
-              </button>
-              
-          </li>
-          <li>
-            <b>RAM (GB)</b>: 376
-          </li>
-
-        <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo0 style="display:none;">
-              <li>
-                <b>platform</b>: Linux4.15.0-139-generic-x86_64
-              </li>
-              <li>
-                <b>processor</b>: Intel(R) Xeon(R) Gold 6140 CPU @ 2.30GHz
-              </li>
-              <li>
-                <b>nb threads</b>: 1
-              </li>
-        </div>
-      </ul>
-
-    </td>
-    <td class="buttons" style='text-align: center'>
-      <a href="benchmark_mcp_benchmark_mcp_benchopt_run_2021-09-10_18h27m03.html">
-        <button class="btn"><i class="fas fa-chart-line"></i></button>
-      </a>
-      <a href="outputs/benchmark_mcp_benchopt_run_2021-09-10_18h27m03.csv">
-        <button class="btn"><i class="fa fa-download"></i></button>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td class="fname">
       <a href="benchmark_mcp_benchmark_mcp_benchopt_run_2020-12-16_10h35m29.html">
         
         mcp 2020-12-16 10h35m29
@@ -1023,6 +961,68 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
       <a href="outputs/benchmark_mcp_benchopt_run_2020-12-16_10h35m29.csv">
+        <button class="btn"><i class="fa fa-download"></i></button>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td class="fname">
+      <a href="benchmark_mcp_benchmark_mcp_benchopt_run_2021-09-10_18h27m03.html">
+        
+        mcp 2021-09-10 18h27m03
+      </a>
+      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_mcp_benchopt_run_2021-09-10_18h27m03.csv" data-html="benchmark_mcp_benchmark_mcp_benchopt_run_2021-09-10_18h27m03.html" style="display:none;">
+    </td>
+    <td class="datasets">
+    <ul style="list-style-type: none; margin-top: 0;">
+      <div class=dataset>
+        
+          Simulated
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=4,n_features=7 </span> </li>
+        
+      </div>
+      <div class=dataset>
+        
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_samples=6,n_features=12 </span> </li>
+        
+      </div>
+    </ul>
+
+    </td>
+    
+    <td class="sysinfo">
+      <ul style="list-style-type: none; margin-top: 0;">
+          <li>
+            <b>CPU</b>: 72
+              <button data-idx=1 id=btn_subinfo1 class="button buttoncent" style="float:right;">
+                <i class='fas fa-plus-circle'></i>
+              </button>
+              
+          </li>
+          <li>
+            <b>RAM (GB)</b>: 376
+          </li>
+
+        <!--Case where sub infos are available but somehow main infos are not-->
+        <div id=subinfo1 style="display:none;">
+              <li>
+                <b>platform</b>: Linux4.15.0-139-generic-x86_64
+              </li>
+              <li>
+                <b>processor</b>: Intel(R) Xeon(R) Gold 6140 CPU @ 2.30GHz
+              </li>
+              <li>
+                <b>nb threads</b>: 1
+              </li>
+        </div>
+      </ul>
+
+    </td>
+    <td class="buttons" style='text-align: center'>
+      <a href="benchmark_mcp_benchmark_mcp_benchopt_run_2021-09-10_18h27m03.html">
+        <button class="btn"><i class="fas fa-chart-line"></i></button>
+      </a>
+      <a href="outputs/benchmark_mcp_benchopt_run_2021-09-10_18h27m03.csv">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>

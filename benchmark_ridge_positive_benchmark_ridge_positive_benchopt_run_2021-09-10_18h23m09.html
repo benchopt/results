@@ -1842,12 +1842,12 @@ input:checked+.slider:before {
 }
 
 /* Description solver when hovered */
-.solver-description-container {
+.curve-description-container {
   position: relative;
   display: inline-flex;
 }
 
-.solver-description-content {
+.curve-description-content {
   display: flex;
   flex-direction: column;
   visibility: hidden;
@@ -1872,12 +1872,12 @@ input:checked+.slider:before {
 }
 
 /* Show description when hovered */
-.solver-description-container:hover .solver-description-content {
+.curve-description-container:hover .curve-description-content {
   visibility: visible;
 }
 
 /*Arrow at the bottom of the description*/
-.solver-description-container .solver-description-content::after {
+.curve-description-container .curve-description-content::after {
   content: " ";
   position: absolute;
   top: 100%;
@@ -1888,12 +1888,12 @@ input:checked+.slider:before {
   border-color: rgb(55 65 81) transparent transparent transparent;
 }
 
-.solver-description-title {
+.curve-description-title {
   margin-bottom: 1em;
   font-weight: bolder;
 }
 
-.solver-description-body {
+.curve-description-body {
   max-height: 450px;
   overflow-y: auto;
 }
@@ -1992,51 +1992,27 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                             </span>
                         </h1>
                     </div>
+                    <div class="mt-8 px-8">
+                        <label for="plot_kind" class="block text-sm font-medium text-white">Chart type</label>
+                        <div class="mt-1 rounded-md shadow-sm">
+                            <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value, scale: (this.value === 'boxplot' || this.value === 'bar_chart' ? 'linear' : state().scale)})">
+                                <option value="objective_curve">
+                                    Objective curve
+                                </option>
+                                <option value="bar_chart">
+                                    Bar chart
+                                </option>
+                                <option value="boxplot">
+                                    Boxplot
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="flex-1 flex flex-col">
-                        <div class="mt-10 px-8">
-                            <label for="dataset_selector" class="block text-sm font-medium text-white">Dataset:</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="dataset_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({dataset: this.value})">
-                                    <option value="Boston[standardized=True]">Boston[standardized=True]</option>
-                                    <option value="Simulated[n_samples=1000,n_features=50,use_sparse=False]">Simulated[n_samples=1000,n_features=50,use_sparse=False]</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mt-8 px-8">
-                            <label for="objective_selector" class="block text-sm font-medium text-white">Objective:</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="objective_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective: this.value})">
-                                    <option value="Ridge regression with postivity constraints[reg=1]">Ridge regression with postivity constraints[reg=1]</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="objective-column-form-group" class="mt-8 px-8">
-                            <div class="flex flex-row items-center justify-between text-sm font-medium text-white">
-                                <label for="objective_column" class="block">Objective metrics</label>
-                                <!--don't show description unless it is provided -->
-                            </div>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_column: this.value})">
-                                    <option value="objective_value">objective_value</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mt-8 px-8">
-                            <label for="plot_kind" class="block text-sm font-medium text-white">Chart type</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value, scale: (this.value === 'boxplot' || state().plot_kind === 'boxplot' ? 'linear' : state().scale)})">
-                                    <option value="objective_curve">objective_curve</option>
-                                    <option value="suboptimality_curve">suboptimality_curve</option>
-                                    <option value="relative_suboptimality_curve">relative_suboptimality_curve</option>
-                                    <option value="bar_chart">bar_chart</option>
-                                    <option value="boxplot">boxplot</option>
-                                </select>
-                            </div>
-                        </div>
                         <div id="scale-form-group" class="mt-8 px-8">
-                            <label for="change_scaling" class="block text-sm font-medium text-white">Scale</label>
+                            <label for="change_scale" class="block text-sm font-medium text-white">Scale</label>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <select id="change_scaling" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
+                                <select id="change_scale" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
                                     <option value="linear">linear</option>
                                     <!-- Options for other plots -->
                                     <option class="other_plot_option" value="semilog-y">semilog-y</option>
@@ -2047,25 +2023,6 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                 </select>
                             </div>
                         </div>
-                        <div id="xaxis-type-form-group" class="mt-8 px-8">
-                            <label for="change_xaxis_type" class="block text-sm font-medium text-white">X-axis</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="change_xaxis_type" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({xaxis_type: this.value})">
-                                    <option value="Time" class="hidden">Time</option>
-                                    <option value="Iteration" class="hidden">Iteration</option>
-                                    <option value="Solver" class="hidden">Solver</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="yaxis-type-form-group" class="mt-8 px-8">
-                            <label for="change_yaxis_type" class="block text-sm font-medium text-white">Y-axis</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select id="change_yaxis_type" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({yaxis_type: this.value})">
-                                    <option value="objective_column">Objective metric</option>
-                                    <option value="time">Time</option>
-                                </select>
-                            </div>
-                        </div>
                         <div id="change-shades-form-group" class="flex items-center justify-between mt-8 px-8">
                             <div class="block text-sm font-medium text-white">Quantiles</div>
                             <label class="block switch">
@@ -2073,6 +2030,128 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                 <span class="slider round"></span>
                             </label>
                         </div>
+                        <div id="change-relative-suboptimal-form-group" class="flex items-center justify-between mt-8 px-8">
+                            <div class="block text-sm font-medium text-white">Suboptimal Curve</div>
+                            <label class="block switch">
+                                <input id="change_suboptimal" type="checkbox" onchange="setState({suboptimal_curve: this.checked})">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div id="change-relative-suboptimal-form-group" class="flex items-center justify-between mt-8 px-8">
+                            <div class="block text-sm font-medium text-white">Relative Curve</div>
+                            <label class="block switch">
+                                <input id="change_relative" type="checkbox" onchange="setState({relative_curve: this.checked})">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                            <div id="objective_curve-custom-params-container">
+                                <div id="objective_curve_dataset_form_group" class="mt-8 px-8">
+                                    <label for="change_objective_curve_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_objective_curve_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_dataset: this.value})">
+                                                <option value="Boston[standardized=True]">Boston[standardized=True]</option>
+                                                <option value="Simulated[n_samples=1000,n_features=50,use_sparse=False]">Simulated[n_samples=1000,n_features=50,use_sparse=False]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="objective_curve_objective_form_group" class="mt-8 px-8">
+                                    <label for="change_objective_curve_objective" class="block text-sm font-medium text-white">objective</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_objective_curve_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_objective: this.value})">
+                                                <option value="Ridge regression with postivity constraints[reg=1]">Ridge regression with postivity constraints[reg=1]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="objective_curve_objective_column_form_group" class="mt-8 px-8">
+                                    <label for="change_objective_curve_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_objective_curve_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_objective_column: this.value})">
+                                                <option value="objective_value">objective_value</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="objective_curve_X_axis_form_group" class="mt-8 px-8">
+                                    <label for="change_objective_curve_X_axis" class="block text-sm font-medium text-white">X_axis</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_objective_curve_X_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_X_axis: this.value})">
+                                                <option value="Time">Time</option>
+                                                <option value="Iteration">Iteration</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="bar_chart-custom-params-container">
+                                <div id="bar_chart_dataset_form_group" class="mt-8 px-8">
+                                    <label for="change_bar_chart_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_bar_chart_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_dataset: this.value})">
+                                                <option value="Boston[standardized=True]">Boston[standardized=True]</option>
+                                                <option value="Simulated[n_samples=1000,n_features=50,use_sparse=False]">Simulated[n_samples=1000,n_features=50,use_sparse=False]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="bar_chart_objective_form_group" class="mt-8 px-8">
+                                    <label for="change_bar_chart_objective" class="block text-sm font-medium text-white">objective</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_bar_chart_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_objective: this.value})">
+                                                <option value="Ridge regression with postivity constraints[reg=1]">Ridge regression with postivity constraints[reg=1]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="bar_chart_objective_column_form_group" class="mt-8 px-8">
+                                    <label for="change_bar_chart_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_bar_chart_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_objective_column: this.value})">
+                                                <option value="objective_value">objective_value</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="boxplot-custom-params-container">
+                                <div id="boxplot_dataset_form_group" class="mt-8 px-8">
+                                    <label for="change_boxplot_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_boxplot_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_dataset: this.value})">
+                                                <option value="Boston[standardized=True]">Boston[standardized=True]</option>
+                                                <option value="Simulated[n_samples=1000,n_features=50,use_sparse=False]">Simulated[n_samples=1000,n_features=50,use_sparse=False]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="boxplot_objective_form_group" class="mt-8 px-8">
+                                    <label for="change_boxplot_objective" class="block text-sm font-medium text-white">objective</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_boxplot_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_objective: this.value})">
+                                                <option value="Ridge regression with postivity constraints[reg=1]">Ridge regression with postivity constraints[reg=1]</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="boxplot_objective_column_form_group" class="mt-8 px-8">
+                                    <label for="change_boxplot_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_boxplot_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_objective_column: this.value})">
+                                                <option value="objective_value">objective_value</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="boxplot_X_axis_form_group" class="mt-8 px-8">
+                                    <label for="change_boxplot_X_axis" class="block text-sm font-medium text-white">X_axis</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_boxplot_X_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_X_axis: this.value})">
+                                                <option value="Solver">Solver</option>
+                                                <option value="Iteration">Iteration</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="boxplot_Y_axis_form_group" class="mt-8 px-8">
+                                    <label for="change_boxplot_Y_axis" class="block text-sm font-medium text-white">Y_axis</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_boxplot_Y_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_Y_axis: this.value})">
+                                                <option value="Time">Time</option>
+                                                <option value="Objective Metric">Objective Metric</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         <div class="flex items-center justify-between mt-8 px-8">
                             <a href="#" class="w-full inline-flex items-center justify-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onclick="return saveView()">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -2158,46 +2237,19 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                     <div class="hidden" id="mobile-plot-form">
                         <div class="px-2 pt-2 pb-3 space-y-4" onchange="setAllViewsToNonActive()">
                             <div class="px-8">
-                                <label for="dataset_selector" class="block text-sm font-medium text-white">Dataset:</label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="dataset_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({dataset: this.value})">
-                                        <option value="Boston[standardized=True]">Boston[standardized=True]</option>
-                                        <option value="Simulated[n_samples=1000,n_features=50,use_sparse=False]">Simulated[n_samples=1000,n_features=50,use_sparse=False]</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="px-8">
-                                <label for="objective_selector" class="block text-sm font-medium text-white">Objective:</label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="objective_selector" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective: this.value})">
-                                        <option value="Ridge regression with postivity constraints[reg=1]">Ridge regression with postivity constraints[reg=1]</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="objective-column-form-group" class="px-8">
-                                <label for="objective_column" class="block text-sm font-medium text-white">Objective column</label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_column: this.value})">
-                                        <option value="objective_value">objective_value</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="px-8">
                                 <label for="plot_kind" class="block text-sm font-medium text-white">Chart type</label>
                                 <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value})">
+                                    <select id="plot_kind" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({plot_kind: this.value, scale: (this.value === 'boxplot' || this.value  === 'bar_chart' ? 'linear' : state().scale)})">
                                         <option value="objective_curve">objective_curve</option>
-                                        <option value="suboptimality_curve">suboptimality_curve</option>
-                                        <option value="relative_suboptimality_curve">relative_suboptimality_curve</option>
                                         <option value="bar_chart">bar_chart</option>
                                         <option value="boxplot">boxplot</option>
                                     </select>
                                 </div>
                             </div>
                             <div id="scale-form-group" class="px-8">
-                                <label for="change_scaling" class="block text-sm font-medium text-white">Scale</label>
+                                <label for="change_scale" class="block text-sm font-medium text-white">Scale</label>
                                 <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="change_scaling" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
+                                    <select id="change_scale" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({scale: this.value})">
                                         <option value="linear">linear</option>
                                         <!-- Options for other plots -->
                                         <option class="other_plot_option" value="semilog-y">semilog-y</option>
@@ -2208,25 +2260,6 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                     </select>
                                 </div>
                             </div>
-                            <div id="xaxis-type-form-group" class="mt-8 px-8">
-                                <label for="change_xaxis_type_mobile" class="block text-sm font-medium text-white">X-axis</label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="change_xaxis_type_mobile" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({xaxis_type: this.value})">
-                                        <option value="Time" class="hidden">Time</option>
-                                        <option value="Iteration" class="hidden">Iteration</option>
-                                        <option value="Solver" class="hidden">Solver</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="yaxis-type-form-group" class="mt-8 px-8">
-                                <label for="change_yaxis_type_mobile" class="block text-sm font-medium text-white">Y-axis</label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="change_yaxis_type_mobile" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({yaxis_type: this.value})">
-                                        <option value="objective_column">Objective metric</option>
-                                        <option value="time">Time</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div id="change-shades-form-group" class="flex items-center justify-between mt-8 px-8">
                                 <div class="block text-sm font-medium text-white">Quantiles</div>
                                 <label class="block switch">
@@ -2234,7 +2267,131 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                     <span class="slider round"></span>
                                 </label>
                             </div>
-
+                            <div id="change-relative-suboptimal-form-group" class="flex items-center justify-between mt-8 px-8">
+                                <div class="block text-sm font-medium text-white">Suboptimal Curve</div>
+                                <label class="block switch">
+                                    <input id="change_suboptimal" type="checkbox" onchange="setState({suboptimal_curve: this.checked})">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div id="change-relative-suboptimal-form-group" class="flex items-center justify-between mt-8 px-8">
+                                <div class="block text-sm font-medium text-white">Relative Curve</div>
+                                <label class="block switch">
+                                    <input id="change_relative" type="checkbox" onchange="setState({relative_curve: this.checked})">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div>
+                            <div>
+                                <div id="objective_curve-custom-params-container">
+                                    <div id="objective_curve_dataset_form_group" class="mt-8 px-8">
+                                        <label for="change_objective_curve_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_objective_curve_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_dataset: this.value})">
+                                                    <option value="Boston[standardized=True]">Boston[standardized=True]</option>
+                                                    <option value="Simulated[n_samples=1000,n_features=50,use_sparse=False]">Simulated[n_samples=1000,n_features=50,use_sparse=False]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="objective_curve_objective_form_group" class="mt-8 px-8">
+                                        <label for="change_objective_curve_objective" class="block text-sm font-medium text-white">objective</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_objective_curve_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_objective: this.value})">
+                                                    <option value="Ridge regression with postivity constraints[reg=1]">Ridge regression with postivity constraints[reg=1]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="objective_curve_objective_column_form_group" class="mt-8 px-8">
+                                        <label for="change_objective_curve_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_objective_curve_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_objective_column: this.value})">
+                                                    <option value="objective_value">objective_value</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="objective_curve_X_axis_form_group" class="mt-8 px-8">
+                                        <label for="change_objective_curve_X_axis" class="block text-sm font-medium text-white">X_axis</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_objective_curve_X_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({objective_curve_X_axis: this.value})">
+                                                    <option value="Time">Time</option>
+                                                    <option value="Iteration">Iteration</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="bar_chart-custom-params-container">
+                                    <div id="bar_chart_dataset_form_group" class="mt-8 px-8">
+                                        <label for="change_bar_chart_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_bar_chart_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_dataset: this.value})">
+                                                    <option value="Boston[standardized=True]">Boston[standardized=True]</option>
+                                                    <option value="Simulated[n_samples=1000,n_features=50,use_sparse=False]">Simulated[n_samples=1000,n_features=50,use_sparse=False]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="bar_chart_objective_form_group" class="mt-8 px-8">
+                                        <label for="change_bar_chart_objective" class="block text-sm font-medium text-white">objective</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_bar_chart_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_objective: this.value})">
+                                                    <option value="Ridge regression with postivity constraints[reg=1]">Ridge regression with postivity constraints[reg=1]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="bar_chart_objective_column_form_group" class="mt-8 px-8">
+                                        <label for="change_bar_chart_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_bar_chart_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_objective_column: this.value})">
+                                                    <option value="objective_value">objective_value</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="boxplot-custom-params-container">
+                                    <div id="boxplot_dataset_form_group" class="mt-8 px-8">
+                                        <label for="change_boxplot_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_boxplot_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_dataset: this.value})">
+                                                    <option value="Boston[standardized=True]">Boston[standardized=True]</option>
+                                                    <option value="Simulated[n_samples=1000,n_features=50,use_sparse=False]">Simulated[n_samples=1000,n_features=50,use_sparse=False]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="boxplot_objective_form_group" class="mt-8 px-8">
+                                        <label for="change_boxplot_objective" class="block text-sm font-medium text-white">objective</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_boxplot_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_objective: this.value})">
+                                                    <option value="Ridge regression with postivity constraints[reg=1]">Ridge regression with postivity constraints[reg=1]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="boxplot_objective_column_form_group" class="mt-8 px-8">
+                                        <label for="change_boxplot_objective_column" class="block text-sm font-medium text-white">objective_column</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_boxplot_objective_column" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_objective_column: this.value})">
+                                                    <option value="objective_value">objective_value</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="boxplot_X_axis_form_group" class="mt-8 px-8">
+                                        <label for="change_boxplot_X_axis" class="block text-sm font-medium text-white">X_axis</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_boxplot_X_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_X_axis: this.value})">
+                                                    <option value="Solver">Solver</option>
+                                                    <option value="Iteration">Iteration</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="boxplot_Y_axis_form_group" class="mt-8 px-8">
+                                        <label for="change_boxplot_Y_axis" class="block text-sm font-medium text-white">Y_axis</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_boxplot_Y_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_Y_axis: this.value})">
+                                                    <option value="Time">Time</option>
+                                                    <option value="Objective Metric">Objective Metric</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="flex items-center justify-between mt-8 px-8">
                                 <a href="#"
                                    class="w-full inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -2324,12 +2481,15 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                 </div>
 
                 <!-- Plot -->
-                <div id="unique_plot"></div>
-                <div id="legend_container" class="pb-10 bg-slate-200">
-                    <div class="px-10 mb-4 mt-4 text-base font-medium text-gray-700">
-                        Solvers <span class="text-sm font-medium text-gray-400">(Click on a solver to hide it or double click to hide all the others)</span>
+                <div id="plot_container" class="flex flex-col flex-1">
+                    <div id="scatter_plot_container" class="flex-1"></div>
+                    <div id="legend_container" class="pb-10 bg-slate-200">
+                        <div class="px-10 mb-4 mt-4 text-base font-medium text-gray-700">
+                            Solvers
+                            <span class="text-sm font-medium text-gray-400">(Click on a solver to hide it or double click to hide all the others)</span>
+                        </div>
+                        <div id="plot_legend" class="px-10 space-r-2"></div>
                     </div>
-                    <div id="plot_legend" class="px-10 space-r-2"></div>
                 </div>
             </div>
         </div>
@@ -2420,21 +2580,30 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
         </script>
         <!-- Manage plot -->
         <script>
-            window._data = {"Boston[standardized=True]": {"Ridge regression with postivity constraints[reg=1]": {"objective_value": {"solvers": {"cd": {"scatter": {"x": [0.0002307835966348, 0.0001646149903535, 0.0002069305628538, 0.0002159755676984, 0.0002222210168838, 0.000245239585638, 0.0002545714378356, 0.0002956017851829, 0.0003244932740926], "y": [149813.16999999998, 138686.95227745865, 137656.73237732702, 137644.2714040046, 137644.1721237026, 137644.17159543672, 137644.17159543576, 137644.1715954358, 137644.17159543582], "stop_val": [0, 1, 2, 3, 4, 6, 9, 13, 19], "q1": [0.0002307835966348, 0.0001646149903535, 0.0002069305628538, 0.0002159755676984, 0.0002222210168838, 0.000245239585638, 0.0002545714378356, 0.0002956017851829, 0.0003244932740926], "q9": [0.0002307835966348, 0.0001646149903535, 0.0002069305628538, 0.0002159755676984, 0.0002222210168838, 0.000245239585638, 0.0002545714378356, 0.0002956017851829, 0.0003244932740926]}, "bar": {"y": 0.000245239585638, "times": [0.000245239585638], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.0003244932740926], "final_objective_value": [137644.17159543576]}, "by_iteration": {"times": [[0.0002307835966348], [0.0001646149903535], [0.0002069305628538], [0.0002159755676984], [0.0002222210168838], [0.000245239585638], [0.0002545714378356], [0.0002956017851829], [0.0003244932740926]], "objective": [[149813.16999999998], [138686.95227745865], [137656.73237732702], [137644.2714040046], [137644.1721237026], [137644.17159543672], [137644.17159543576], [137644.1715954358], [137644.17159543582]]}}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 0, "sampling_strategy": "Time"}, "PGD[use_acceleration=False]": {"scatter": {"x": [0.0338123347610235, 0.0339165106415748, 0.0339761581271886, 0.0340290628373622, 0.0340788774192333, 0.0341675840318203, 0.0342888720333576, 0.0344458688050508, 0.0346725117415189, 0.0350090358406305, 0.0355251003056764, 0.0363207180052995, 0.0373460985720157, 0.0388929303735494, 0.0411940775811672, 0.0446510389447212], "y": [149813.17, 144869.92295135077, 142146.4197395832, 140572.32990760438, 139617.23404336168, 138610.54475058307, 138011.78082706415, 137751.40353665518, 137657.5234397498, 137645.49273119372, 137644.22516431857, 137644.17205217964, 137644.17159584074, 137644.17159543582, 137644.1715954358, 137644.17159543576], "stop_val": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316], "q1": [0.0338123347610235, 0.0339165106415748, 0.0339761581271886, 0.0340290628373622, 0.0340788774192333, 0.0341675840318203, 0.0342888720333576, 0.0344458688050508, 0.0346725117415189, 0.0350090358406305, 0.0355251003056764, 0.0363207180052995, 0.0373460985720157, 0.0388929303735494, 0.0411940775811672, 0.0446510389447212], "q9": [0.0338123347610235, 0.0339165106415748, 0.0339761581271886, 0.0340290628373622, 0.0340788774192333, 0.0341675840318203, 0.0342888720333576, 0.0344458688050508, 0.0346725117415189, 0.0350090358406305, 0.0355251003056764, 0.0363207180052995, 0.0373460985720157, 0.0388929303735494, 0.0411940775811672, 0.0446510389447212]}, "bar": {"y": 0.0373460985720157, "times": [0.0373460985720157], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.0446510389447212], "final_objective_value": [137644.17159543576]}, "by_iteration": {"times": [[0.0338123347610235], [0.0339165106415748], [0.0339761581271886], [0.0340290628373622], [0.0340788774192333], [0.0341675840318203], [0.0342888720333576], [0.0344458688050508], [0.0346725117415189], [0.0350090358406305], [0.0355251003056764], [0.0363207180052995], [0.0373460985720157], [0.0388929303735494], [0.0411940775811672], [0.0446510389447212]], "objective": [[149813.17], [144869.92295135077], [142146.4197395832], [140572.32990760438], [139617.23404336168], [138610.54475058307], [138011.78082706415], [137751.40353665518], [137657.5234397498], [137645.49273119372], [137644.22516431857], [137644.17205217964], [137644.17159584074], [137644.17159543582], [137644.1715954358], [137644.17159543576]]}}, "color": "rgba(255.0, 127.0, 14.0, 1.0)", "marker": 1, "sampling_strategy": "Time"}, "PGD[use_acceleration=True]": {"scatter": {"x": [0.0002957060933113, 0.0003800354897975, 0.0004227384924888, 0.0004584658890962, 0.000494061037898, 0.0005569737404584, 0.0006464701145887, 0.0007584318518638, 0.0009192842990159, 0.0011560805141925, 0.0015204735100269, 0.0020705163478851, 0.0028658639639616, 0.0040739960968494, 0.0058701038360595, 0.0085515771061182], "y": [149813.17, 144869.92295135077, 142146.4197395832, 140202.60229453165, 138990.55850941315, 137933.2009863615, 137652.08207512586, 137651.97040635208, 137644.4231046256, 137644.18495414444, 137644.1809774321, 137644.17182291168, 137644.1715955447, 137644.171595436, 137644.17159543582, 137644.1715954358], "stop_val": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316], "q1": [0.0002957060933113, 0.0003800354897975, 0.0004227384924888, 0.0004584658890962, 0.000494061037898, 0.0005569737404584, 0.0006464701145887, 0.0007584318518638, 0.0009192842990159, 0.0011560805141925, 0.0015204735100269, 0.0020705163478851, 0.0028658639639616, 0.0040739960968494, 0.0058701038360595, 0.0085515771061182], "q9": [0.0002957060933113, 0.0003800354897975, 0.0004227384924888, 0.0004584658890962, 0.000494061037898, 0.0005569737404584, 0.0006464701145887, 0.0007584318518638, 0.0009192842990159, 0.0011560805141925, 0.0015204735100269, 0.0020705163478851, 0.0028658639639616, 0.0040739960968494, 0.0058701038360595, 0.0085515771061182]}, "bar": {"y": 0.0028658639639616, "times": [0.0028658639639616], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.0085515771061182], "final_objective_value": [137644.1715954358]}, "by_iteration": {"times": [[0.0002957060933113], [0.0003800354897975], [0.0004227384924888], [0.0004584658890962], [0.000494061037898], [0.0005569737404584], [0.0006464701145887], [0.0007584318518638], [0.0009192842990159], [0.0011560805141925], [0.0015204735100269], [0.0020705163478851], [0.0028658639639616], [0.0040739960968494], [0.0058701038360595], [0.0085515771061182]], "objective": [[149813.17], [144869.92295135077], [142146.4197395832], [140202.60229453165], [138990.55850941315], [137933.2009863615], [137652.08207512586], [137651.97040635208], [137644.4231046256], [137644.18495414444], [137644.1809774321], [137644.17182291168], [137644.1715955447], [137644.171595436], [137644.17159543582], [137644.1715954358]]}}, "color": "rgba(44.0, 160.0, 44.0, 1.0)", "marker": 2, "sampling_strategy": "Time"}, "scipy L-BFGS": {"scatter": {"x": [0.0014552697539329, 0.0012376271188259, 0.0014226511120796, 0.0050275959074497, 0.0019292719662189, 0.0025591552257537, 0.0047285184264183, 0.0047494601458311, 0.0047691948711872], "y": [146020.52223299787, 146020.52223299787, 138457.13541024152, 138070.02254311935, 137644.81331553918, 137644.17159549936, 137644.17159543576, 137644.17159543576, 137644.17159543576], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 60], "q1": [0.0014552697539329, 0.0012376271188259, 0.0014226511120796, 0.0050275959074497, 0.0019292719662189, 0.0025591552257537, 0.0047285184264183, 0.0047494601458311, 0.0047691948711872], "q9": [0.0014552697539329, 0.0012376271188259, 0.0014226511120796, 0.0050275959074497, 0.0019292719662189, 0.0025591552257537, 0.0047285184264183, 0.0047494601458311, 0.0047691948711872]}, "bar": {"y": 0.0025591552257537, "times": [0.0025591552257537], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.0050275959074497], "final_objective_value": [137644.17159543576]}, "by_iteration": {"times": [[0.0014552697539329], [0.0012376271188259], [0.0014226511120796], [0.0050275959074497], [0.0019292719662189], [0.0025591552257537], [0.0047285184264183], [0.0047494601458311], [0.0047691948711872]], "objective": [[146020.52223299787], [146020.52223299787], [138457.13541024152], [138070.02254311935], [137644.81331553918], [137644.17159549936], [137644.17159543576], [137644.17159543576], [137644.17159543576]]}}, "color": "rgba(214.0, 39.0, 40.0, 1.0)", "marker": 3, "sampling_strategy": "Time"}, "scipy TRF[lsq_solver=lsmr]": {"scatter": {"x": [0.0093174278736114, 0.0124490428715944, 0.0166292134672403, 0.018403373658657, 0.0236519966274499, 0.0248304568231105, 0.0330263189971447, 0.0426430236548185, 0.041571183130145, 0.0498386602848768], "y": [148585.83815390788, 140532.4061327125, 138246.35270031067, 137741.72472826453, 137647.49448311946, 137644.17162142537, 137644.1715954358, 137644.17159543582, 137644.1715954358, 137644.1715954358], "stop_val": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28], "q1": [0.0093174278736114, 0.0124490428715944, 0.0166292134672403, 0.018403373658657, 0.0236519966274499, 0.0248304568231105, 0.0330263189971447, 0.0426430236548185, 0.041571183130145, 0.0498386602848768], "q9": [0.0093174278736114, 0.0124490428715944, 0.0166292134672403, 0.018403373658657, 0.0236519966274499, 0.0248304568231105, 0.0330263189971447, 0.0426430236548185, 0.041571183130145, 0.0498386602848768]}, "bar": {"y": 0.0330263189971447, "times": [0.0330263189971447], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.0498386602848768], "final_objective_value": [137644.1715954358]}, "by_iteration": {"times": [[0.0093174278736114], [0.0124490428715944], [0.0166292134672403], [0.018403373658657], [0.0236519966274499], [0.0248304568231105], [0.0330263189971447], [0.0426430236548185], [0.041571183130145], [0.0498386602848768]], "objective": [[148585.83815390788], [140532.4061327125], [138246.35270031067], [137741.72472826453], [137647.49448311946], [137644.17162142537], [137644.1715954358], [137644.17159543582], [137644.1715954358], [137644.1715954358]]}}, "color": "rgba(148.0, 103.0, 189.0, 1.0)", "marker": 4, "sampling_strategy": "Time"}}, "transformers": {"c_star": 137644.17159543568, "max_f_0": 146020.52223299787}}}}, "Simulated[n_samples=1000,n_features=50,use_sparse=False]": {"Ridge regression with postivity constraints[reg=1]": {"objective_value": {"solvers": {"cd": {"scatter": {"x": [0.0010388549417257, 0.0020147245377302, 0.0021899919956922, 0.0023543443530797, 0.0025827921926975, 0.002974335104227, 0.0034942384809255, 0.0043010674417018, 0.0055272113531827, 0.0085610318928956, 0.0099692847579717, 0.0127415340393781, 0.0125784166157245, 0.020398112013936, 0.0241812523454427, 0.0307849794626235, 0.0404303260147571, 0.0534725859761238], "y": [11360.591878620118, 4374.638546317453, 1695.2075327623952, 993.756534667367, 645.9938768713889, 343.1089809587069, 179.4169631804943, 76.9492946734779, 36.86456888010821, 27.920457754085348, 25.875170022602745, 25.69241935955405, 25.684084841313528, 25.68399696061564, 25.683996863794064, 25.68399686379012, 25.68399686379012, 25.68399686379012], "stop_val": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316, 474, 853], "q1": [0.0010388549417257, 0.0020147245377302, 0.0021899919956922, 0.0023543443530797, 0.0025827921926975, 0.002974335104227, 0.0034942384809255, 0.0043010674417018, 0.0055272113531827, 0.0085610318928956, 0.0099692847579717, 0.0127415340393781, 0.0125784166157245, 0.020398112013936, 0.0241812523454427, 0.0307849794626235, 0.0404303260147571, 0.0534725859761238], "q9": [0.0010388549417257, 0.0020147245377302, 0.0021899919956922, 0.0023543443530797, 0.0025827921926975, 0.002974335104227, 0.0034942384809255, 0.0043010674417018, 0.0055272113531827, 0.0085610318928956, 0.0099692847579717, 0.0127415340393781, 0.0125784166157245, 0.020398112013936, 0.0241812523454427, 0.0307849794626235, 0.0404303260147571, 0.0534725859761238]}, "bar": {"y": 0.020398112013936, "times": [0.020398112013936], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.0534725859761238], "final_objective_value": [25.68399686379012]}, "by_iteration": {"times": [[0.0010388549417257], [0.0020147245377302], [0.0021899919956922], [0.0023543443530797], [0.0025827921926975], [0.002974335104227], [0.0034942384809255], [0.0043010674417018], [0.0055272113531827], [0.0085610318928956], [0.0099692847579717], [0.0127415340393781], [0.0125784166157245], [0.020398112013936], [0.0241812523454427], [0.0307849794626235], [0.0404303260147571], [0.0534725859761238]], "objective": [[11360.591878620118], [4374.638546317453], [1695.2075327623952], [993.756534667367], [645.9938768713889], [343.1089809587069], [179.4169631804943], [76.9492946734779], [36.86456888010821], [27.920457754085348], [25.875170022602745], [25.69241935955405], [25.684084841313528], [25.68399696061564], [25.683996863794064], [25.68399686379012], [25.68399686379012], [25.68399686379012]]}}, "color": "rgba(31.0, 119.0, 180.0, 1.0)", "marker": 0, "sampling_strategy": "Time"}, "PGD[use_acceleration=False]": {"scatter": {"x": [0.0052903722971677, 0.0056159924715757, 0.0058837160468101, 0.006160968914628, 0.0064174607396125, 0.0067003481090068, 0.0070960130542516, 0.0075576044619083, 0.0082369223237037, 0.0092383045703172, 0.0109361559152603, 0.0130950771272182, 0.0162420496344566, 0.0214312076568603, 0.0291153863072395, 0.0405658483505249, 0.0578231252729892, 0.0844116583466529, 0.122791588306427, 0.1802850738167762], "y": [11360.591878620118, 722.262470747786, 661.0875367625752, 605.4712084332507, 554.8916748511168, 467.0031404102765, 362.5491805133796, 261.6800024216853, 165.27768895949916, 90.3588387795274, 46.01279234333447, 29.48399453512331, 26.02304523677337, 25.6947944445674, 25.68408646495496, 25.683996952729764, 25.683996863793578, 25.68399686379012, 25.683996863790124, 25.68399686379012], "stop_val": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316, 474, 711, 1066, 1599], "q1": [0.0052903722971677, 0.0056159924715757, 0.0058837160468101, 0.006160968914628, 0.0064174607396125, 0.0067003481090068, 0.0070960130542516, 0.0075576044619083, 0.0082369223237037, 0.0092383045703172, 0.0109361559152603, 0.0130950771272182, 0.0162420496344566, 0.0214312076568603, 0.0291153863072395, 0.0405658483505249, 0.0578231252729892, 0.0844116583466529, 0.122791588306427, 0.1802850738167762], "q9": [0.0052903722971677, 0.0056159924715757, 0.0058837160468101, 0.006160968914628, 0.0064174607396125, 0.0067003481090068, 0.0070960130542516, 0.0075576044619083, 0.0082369223237037, 0.0092383045703172, 0.0109361559152603, 0.0130950771272182, 0.0162420496344566, 0.0214312076568603, 0.0291153863072395, 0.0405658483505249, 0.0578231252729892, 0.0844116583466529, 0.122791588306427, 0.1802850738167762]}, "bar": {"y": 0.0405658483505249, "times": [0.0405658483505249], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.1802850738167762], "final_objective_value": [25.68399686379012]}, "by_iteration": {"times": [[0.0052903722971677], [0.0056159924715757], [0.0058837160468101], [0.006160968914628], [0.0064174607396125], [0.0067003481090068], [0.0070960130542516], [0.0075576044619083], [0.0082369223237037], [0.0092383045703172], [0.0109361559152603], [0.0130950771272182], [0.0162420496344566], [0.0214312076568603], [0.0291153863072395], [0.0405658483505249], [0.0578231252729892], [0.0844116583466529], [0.122791588306427], [0.1802850738167762]], "objective": [[11360.591878620118], [722.262470747786], [661.0875367625752], [605.4712084332507], [554.8916748511168], [467.0031404102765], [362.5491805133796], [261.6800024216853], [165.27768895949916], [90.3588387795274], [46.01279234333447], [29.48399453512331], [26.02304523677337], [25.6947944445674], [25.68408646495496], [25.683996952729764], [25.683996863793578], [25.68399686379012], [25.683996863790124], [25.68399686379012]]}}, "color": "rgba(255.0, 127.0, 14.0, 1.0)", "marker": 1, "sampling_strategy": "Time"}, "PGD[use_acceleration=True]": {"scatter": {"x": [0.0053343959152698, 0.0056409444659948, 0.0057889204472303, 0.005930608138442, 0.0060705970972776, 0.0063342750072479, 0.006718460470438, 0.0072221830487251, 0.0079772192984819, 0.0090806297957897, 0.0108523294329643, 0.0134982820600271, 0.0169028788805007, 0.0219433829188346, 0.0293176025152206, 0.0404520370066165, 0.0569528359919786, 0.0828691069036722, 0.1215748656541109, 0.1784550063312053], "y": [11360.591878620118, 722.2624707477862, 661.0875367625752, 590.2785130976622, 514.3470634080953, 362.9718756402589, 179.2643268559691, 55.26216810778162, 27.463933716943085, 26.723256562137024, 25.86817629716555, 25.701358446430493, 25.6853617405284, 25.684039751314995, 25.68399795911989, 25.683996873307382, 25.68399686380161, 25.68399686379012, 25.683996863790117, 25.68399686379012], "stop_val": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316, 474, 711, 1066, 1599], "q1": [0.0053343959152698, 0.0056409444659948, 0.0057889204472303, 0.005930608138442, 0.0060705970972776, 0.0063342750072479, 0.006718460470438, 0.0072221830487251, 0.0079772192984819, 0.0090806297957897, 0.0108523294329643, 0.0134982820600271, 0.0169028788805007, 0.0219433829188346, 0.0293176025152206, 0.0404520370066165, 0.0569528359919786, 0.0828691069036722, 0.1215748656541109, 0.1784550063312053], "q9": [0.0053343959152698, 0.0056409444659948, 0.0057889204472303, 0.005930608138442, 0.0060705970972776, 0.0063342750072479, 0.006718460470438, 0.0072221830487251, 0.0079772192984819, 0.0090806297957897, 0.0108523294329643, 0.0134982820600271, 0.0169028788805007, 0.0219433829188346, 0.0293176025152206, 0.0404520370066165, 0.0569528359919786, 0.0828691069036722, 0.1215748656541109, 0.1784550063312053]}, "bar": {"y": 0.0404520370066165, "times": [0.0404520370066165], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.1784550063312053], "final_objective_value": [25.683996863790117]}, "by_iteration": {"times": [[0.0053343959152698], [0.0056409444659948], [0.0057889204472303], [0.005930608138442], [0.0060705970972776], [0.0063342750072479], [0.006718460470438], [0.0072221830487251], [0.0079772192984819], [0.0090806297957897], [0.0108523294329643], [0.0134982820600271], [0.0169028788805007], [0.0219433829188346], [0.0293176025152206], [0.0404520370066165], [0.0569528359919786], [0.0828691069036722], [0.1215748656541109], [0.1784550063312053]], "objective": [[11360.591878620118], [722.2624707477862], [661.0875367625752], [590.2785130976622], [514.3470634080953], [362.9718756402589], [179.2643268559691], [55.26216810778162], [27.463933716943085], [26.723256562137024], [25.86817629716555], [25.701358446430493], [25.6853617405284], [25.684039751314995], [25.68399795911989], [25.683996873307382], [25.68399686380161], [25.68399686379012], [25.683996863790117], [25.68399686379012]]}}, "color": "rgba(44.0, 160.0, 44.0, 1.0)", "marker": 2, "sampling_strategy": "Time"}, "scipy L-BFGS": {"scatter": {"x": [0.0033128075301647, 0.0019521005451679, 0.002458618953824, 0.003402903676033, 0.0044200401753187, 0.0064738728106021, 0.009367499500513, 0.0154917016625404, 0.0148568544536829, 0.0126423463225364, 0.01283835247159], "y": [5758.940076345515, 5758.940076345515, 660.8005876313723, 409.8602490992392, 26.21868363660184, 25.68793243618419, 25.683997950052728, 25.683996863790128, 25.683996863790128, 25.683996863790128, 25.683996863790128], "stop_val": [0, 1, 2, 3, 5, 9, 16, 28, 50, 107, 277], "q1": [0.0033128075301647, 0.0019521005451679, 0.002458618953824, 0.003402903676033, 0.0044200401753187, 0.0064738728106021, 0.009367499500513, 0.0154917016625404, 0.0148568544536829, 0.0126423463225364, 0.01283835247159], "q9": [0.0033128075301647, 0.0019521005451679, 0.002458618953824, 0.003402903676033, 0.0044200401753187, 0.0064738728106021, 0.009367499500513, 0.0154917016625404, 0.0148568544536829, 0.0126423463225364, 0.01283835247159]}, "bar": {"y": 0.0154917016625404, "times": [0.0154917016625404], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.0154917016625404], "final_objective_value": [25.683996863790128]}, "by_iteration": {"times": [[0.0033128075301647], [0.0019521005451679], [0.002458618953824], [0.003402903676033], [0.0044200401753187], [0.0064738728106021], [0.009367499500513], [0.0154917016625404], [0.0148568544536829], [0.0126423463225364], [0.01283835247159]], "objective": [[5758.940076345515], [5758.940076345515], [660.8005876313723], [409.8602490992392], [26.21868363660184], [25.68793243618419], [25.683997950052728], [25.683996863790128], [25.683996863790128], [25.683996863790128], [25.683996863790128]]}}, "color": "rgba(214.0, 39.0, 40.0, 1.0)", "marker": 3, "sampling_strategy": "Time"}, "scipy TRF[lsq_solver=lsmr]": {"scatter": {"x": [0.0184272192418575, 0.0245202500373125, 0.0462611205875873, 0.0390650816261768, 0.0466565322130918, 0.0609319303184747, 0.1002797298133373, 0.1232174877077341, 0.161620968952775, 0.2468055989593267, 0.2646507769823074], "y": [35.76817995482386, 28.758848378159897, 26.3801908834758, 25.846162974502043, 25.72133574102671, 25.68509184969213, 25.684000940396476, 25.68399686379012, 25.683996863790124, 25.68399686379012, 25.68399686379012], "stop_val": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42], "q1": [0.0184272192418575, 0.0245202500373125, 0.0462611205875873, 0.0390650816261768, 0.0466565322130918, 0.0609319303184747, 0.1002797298133373, 0.1232174877077341, 0.161620968952775, 0.2468055989593267, 0.2646507769823074], "q9": [0.0184272192418575, 0.0245202500373125, 0.0462611205875873, 0.0390650816261768, 0.0466565322130918, 0.0609319303184747, 0.1002797298133373, 0.1232174877077341, 0.161620968952775, 0.2468055989593267, 0.2646507769823074]}, "bar": {"y": 0.1232174877077341, "times": [0.1232174877077341], "text": ""}, "boxplot": {"by_solver": {"final_times": [0.2646507769823074], "final_objective_value": [25.68399686379012]}, "by_iteration": {"times": [[0.0184272192418575], [0.0245202500373125], [0.0462611205875873], [0.0390650816261768], [0.0466565322130918], [0.0609319303184747], [0.1002797298133373], [0.1232174877077341], [0.161620968952775], [0.2468055989593267], [0.2646507769823074]], "objective": [[35.76817995482386], [28.758848378159897], [26.3801908834758], [25.846162974502043], [25.72133574102671], [25.68509184969213], [25.684000940396476], [25.68399686379012], [25.683996863790124], [25.68399686379012], [25.68399686379012]]}}, "color": "rgba(148.0, 103.0, 189.0, 1.0)", "marker": 4, "sampling_strategy": "Time"}}, "transformers": {"c_star": 25.68399686369012, "max_f_0": 5758.940076345515}}}}};
+            window._custom_plots = {"objective_curve": {"objective_curve_Boston[standardized=True]_Ridge regression with postivity constraints[reg=1]_objective_value_Time": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Boston[standardized=True] ", "xlabel": "Time", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0.0002307835966348, 0.0001646149903535, 0.0002069305628538, 0.0002159755676984, 0.0002222210168838, 0.000245239585638, 0.0002545714378356, 0.0002956017851829, 0.0003244932740926], "y": [149813.16999999998, 138686.95227745865, 137656.73237732702, 137644.2714040046, 137644.1721237026, 137644.17159543672, 137644.17159543576, 137644.1715954358, 137644.17159543582], "label": "cd", "color": "rgba(247, 182, 210, 1.0)", "marker": 56, "q1": [0.0002307835966348, 0.0001646149903535, 0.0002069305628538, 0.0002159755676984, 0.0002222210168838, 0.000245239585638, 0.0002545714378356, 0.0002956017851829, 0.0003244932740926], "q9": [0.0002307835966348, 0.0001646149903535, 0.0002069305628538, 0.0002159755676984, 0.0002222210168838, 0.000245239585638, 0.0002545714378356, 0.0002956017851829, 0.0003244932740926]}, {"x": [0.0338123347610235, 0.0339165106415748, 0.0339761581271886, 0.0340290628373622, 0.0340788774192333, 0.0341675840318203, 0.0342888720333576, 0.0344458688050508, 0.0346725117415189, 0.0350090358406305, 0.0355251003056764, 0.0363207180052995, 0.0373460985720157, 0.0388929303735494, 0.0411940775811672, 0.0446510389447212], "y": [149813.17, 144869.92295135077, 142146.4197395832, 140572.32990760438, 139617.23404336168, 138610.54475058307, 138011.78082706415, 137751.40353665518, 137657.5234397498, 137645.49273119372, 137644.22516431857, 137644.17205217964, 137644.17159584074, 137644.17159543582, 137644.1715954358, 137644.17159543576], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)", "marker": 80, "q1": [0.0338123347610235, 0.0339165106415748, 0.0339761581271886, 0.0340290628373622, 0.0340788774192333, 0.0341675840318203, 0.0342888720333576, 0.0344458688050508, 0.0346725117415189, 0.0350090358406305, 0.0355251003056764, 0.0363207180052995, 0.0373460985720157, 0.0388929303735494, 0.0411940775811672, 0.0446510389447212], "q9": [0.0338123347610235, 0.0339165106415748, 0.0339761581271886, 0.0340290628373622, 0.0340788774192333, 0.0341675840318203, 0.0342888720333576, 0.0344458688050508, 0.0346725117415189, 0.0350090358406305, 0.0355251003056764, 0.0363207180052995, 0.0373460985720157, 0.0388929303735494, 0.0411940775811672, 0.0446510389447212]}, {"x": [0.0002957060933113, 0.0003800354897975, 0.0004227384924888, 0.0004584658890962, 0.000494061037898, 0.0005569737404584, 0.0006464701145887, 0.0007584318518638, 0.0009192842990159, 0.0011560805141925, 0.0015204735100269, 0.0020705163478851, 0.0028658639639616, 0.0040739960968494, 0.0058701038360595, 0.0085515771061182], "y": [149813.17, 144869.92295135077, 142146.4197395832, 140202.60229453165, 138990.55850941315, 137933.2009863615, 137652.08207512586, 137651.97040635208, 137644.4231046256, 137644.18495414444, 137644.1809774321, 137644.17182291168, 137644.1715955447, 137644.171595436, 137644.17159543582, 137644.1715954358], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)", "marker": 81, "q1": [0.0002957060933113, 0.0003800354897975, 0.0004227384924888, 0.0004584658890962, 0.000494061037898, 0.0005569737404584, 0.0006464701145887, 0.0007584318518638, 0.0009192842990159, 0.0011560805141925, 0.0015204735100269, 0.0020705163478851, 0.0028658639639616, 0.0040739960968494, 0.0058701038360595, 0.0085515771061182], "q9": [0.0002957060933113, 0.0003800354897975, 0.0004227384924888, 0.0004584658890962, 0.000494061037898, 0.0005569737404584, 0.0006464701145887, 0.0007584318518638, 0.0009192842990159, 0.0011560805141925, 0.0015204735100269, 0.0020705163478851, 0.0028658639639616, 0.0040739960968494, 0.0058701038360595, 0.0085515771061182]}, {"x": [0.0014552697539329, 0.0012376271188259, 0.0014226511120796, 0.0050275959074497, 0.0019292719662189, 0.0025591552257537, 0.0047285184264183, 0.0047494601458311, 0.0047691948711872], "y": [146020.52223299787, 146020.52223299787, 138457.13541024152, 138070.02254311935, 137644.81331553918, 137644.17159549936, 137644.17159543576, 137644.17159543576, 137644.17159543576], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)", "marker": 155, "q1": [0.0014552697539329, 0.0012376271188259, 0.0014226511120796, 0.0050275959074497, 0.0019292719662189, 0.0025591552257537, 0.0047285184264183, 0.0047494601458311, 0.0047691948711872], "q9": [0.0014552697539329, 0.0012376271188259, 0.0014226511120796, 0.0050275959074497, 0.0019292719662189, 0.0025591552257537, 0.0047285184264183, 0.0047494601458311, 0.0047691948711872]}, {"x": [0.0093174278736114, 0.0124490428715944, 0.0166292134672403, 0.018403373658657, 0.0236519966274499, 0.0248304568231105, 0.0330263189971447, 0.0426430236548185, 0.041571183130145, 0.0498386602848768], "y": [148585.83815390788, 140532.4061327125, 138246.35270031067, 137741.72472826453, 137647.49448311946, 137644.17162142537, 137644.1715954358, 137644.17159543582, 137644.1715954358, 137644.1715954358], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)", "marker": 156, "q1": [0.0093174278736114, 0.0124490428715944, 0.0166292134672403, 0.018403373658657, 0.0236519966274499, 0.0248304568231105, 0.0330263189971447, 0.0426430236548185, 0.041571183130145, 0.0498386602848768], "q9": [0.0093174278736114, 0.0124490428715944, 0.0166292134672403, 0.018403373658657, 0.0236519966274499, 0.0248304568231105, 0.0330263189971447, 0.0426430236548185, 0.041571183130145, 0.0498386602848768]}]}, "objective_curve_Boston[standardized=True]_Ridge regression with postivity constraints[reg=1]_objective_value_Iteration": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Boston[standardized=True] ", "xlabel": "Iteration", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0, 1, 2, 3, 4, 6, 9, 13, 19], "y": [149813.16999999998, 138686.95227745865, 137656.73237732702, 137644.2714040046, 137644.1721237026, 137644.17159543672, 137644.17159543576, 137644.1715954358, 137644.17159543582], "label": "cd", "color": "rgba(247, 182, 210, 1.0)", "marker": 56}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316], "y": [149813.17, 144869.92295135077, 142146.4197395832, 140572.32990760438, 139617.23404336168, 138610.54475058307, 138011.78082706415, 137751.40353665518, 137657.5234397498, 137645.49273119372, 137644.22516431857, 137644.17205217964, 137644.17159584074, 137644.17159543582, 137644.1715954358, 137644.17159543576], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)", "marker": 80}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316], "y": [149813.17, 144869.92295135077, 142146.4197395832, 140202.60229453165, 138990.55850941315, 137933.2009863615, 137652.08207512586, 137651.97040635208, 137644.4231046256, 137644.18495414444, 137644.1809774321, 137644.17182291168, 137644.1715955447, 137644.171595436, 137644.17159543582, 137644.1715954358], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)", "marker": 81}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 60], "y": [146020.52223299787, 146020.52223299787, 138457.13541024152, 138070.02254311935, 137644.81331553918, 137644.17159549936, 137644.17159543576, 137644.17159543576, 137644.17159543576], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)", "marker": 155}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28], "y": [148585.83815390788, 140532.4061327125, 138246.35270031067, 137741.72472826453, 137647.49448311946, 137644.17162142537, 137644.1715954358, 137644.17159543582, 137644.1715954358, 137644.1715954358], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)", "marker": 156}]}, "objective_curve_Simulated[n_samples=1000,n_features=50,use_sparse=False]_Ridge regression with postivity constraints[reg=1]_objective_value_Time": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Simulated[n_samples=1000,n_features=50,use_sparse=False] ", "xlabel": "Time", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0.0010388549417257, 0.0020147245377302, 0.0021899919956922, 0.0023543443530797, 0.0025827921926975, 0.002974335104227, 0.0034942384809255, 0.0043010674417018, 0.0055272113531827, 0.0085610318928956, 0.0099692847579717, 0.0127415340393781, 0.0125784166157245, 0.020398112013936, 0.0241812523454427, 0.0307849794626235, 0.0404303260147571, 0.0534725859761238], "y": [11360.591878620118, 4374.638546317453, 1695.2075327623952, 993.756534667367, 645.9938768713889, 343.1089809587069, 179.4169631804943, 76.9492946734779, 36.86456888010821, 27.920457754085348, 25.875170022602745, 25.69241935955405, 25.684084841313528, 25.68399696061564, 25.683996863794064, 25.68399686379012, 25.68399686379012, 25.68399686379012], "label": "cd", "color": "rgba(247, 182, 210, 1.0)", "marker": 56, "q1": [0.0010388549417257, 0.0020147245377302, 0.0021899919956922, 0.0023543443530797, 0.0025827921926975, 0.002974335104227, 0.0034942384809255, 0.0043010674417018, 0.0055272113531827, 0.0085610318928956, 0.0099692847579717, 0.0127415340393781, 0.0125784166157245, 0.020398112013936, 0.0241812523454427, 0.0307849794626235, 0.0404303260147571, 0.0534725859761238], "q9": [0.0010388549417257, 0.0020147245377302, 0.0021899919956922, 0.0023543443530797, 0.0025827921926975, 0.002974335104227, 0.0034942384809255, 0.0043010674417018, 0.0055272113531827, 0.0085610318928956, 0.0099692847579717, 0.0127415340393781, 0.0125784166157245, 0.020398112013936, 0.0241812523454427, 0.0307849794626235, 0.0404303260147571, 0.0534725859761238]}, {"x": [0.0052903722971677, 0.0056159924715757, 0.0058837160468101, 0.006160968914628, 0.0064174607396125, 0.0067003481090068, 0.0070960130542516, 0.0075576044619083, 0.0082369223237037, 0.0092383045703172, 0.0109361559152603, 0.0130950771272182, 0.0162420496344566, 0.0214312076568603, 0.0291153863072395, 0.0405658483505249, 0.0578231252729892, 0.0844116583466529, 0.122791588306427, 0.1802850738167762], "y": [11360.591878620118, 722.262470747786, 661.0875367625752, 605.4712084332507, 554.8916748511168, 467.0031404102765, 362.5491805133796, 261.6800024216853, 165.27768895949916, 90.3588387795274, 46.01279234333447, 29.48399453512331, 26.02304523677337, 25.6947944445674, 25.68408646495496, 25.683996952729764, 25.683996863793578, 25.68399686379012, 25.683996863790124, 25.68399686379012], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)", "marker": 80, "q1": [0.0052903722971677, 0.0056159924715757, 0.0058837160468101, 0.006160968914628, 0.0064174607396125, 0.0067003481090068, 0.0070960130542516, 0.0075576044619083, 0.0082369223237037, 0.0092383045703172, 0.0109361559152603, 0.0130950771272182, 0.0162420496344566, 0.0214312076568603, 0.0291153863072395, 0.0405658483505249, 0.0578231252729892, 0.0844116583466529, 0.122791588306427, 0.1802850738167762], "q9": [0.0052903722971677, 0.0056159924715757, 0.0058837160468101, 0.006160968914628, 0.0064174607396125, 0.0067003481090068, 0.0070960130542516, 0.0075576044619083, 0.0082369223237037, 0.0092383045703172, 0.0109361559152603, 0.0130950771272182, 0.0162420496344566, 0.0214312076568603, 0.0291153863072395, 0.0405658483505249, 0.0578231252729892, 0.0844116583466529, 0.122791588306427, 0.1802850738167762]}, {"x": [0.0053343959152698, 0.0056409444659948, 0.0057889204472303, 0.005930608138442, 0.0060705970972776, 0.0063342750072479, 0.006718460470438, 0.0072221830487251, 0.0079772192984819, 0.0090806297957897, 0.0108523294329643, 0.0134982820600271, 0.0169028788805007, 0.0219433829188346, 0.0293176025152206, 0.0404520370066165, 0.0569528359919786, 0.0828691069036722, 0.1215748656541109, 0.1784550063312053], "y": [11360.591878620118, 722.2624707477862, 661.0875367625752, 590.2785130976622, 514.3470634080953, 362.9718756402589, 179.2643268559691, 55.26216810778162, 27.463933716943085, 26.723256562137024, 25.86817629716555, 25.701358446430493, 25.6853617405284, 25.684039751314995, 25.68399795911989, 25.683996873307382, 25.68399686380161, 25.68399686379012, 25.683996863790117, 25.68399686379012], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)", "marker": 81, "q1": [0.0053343959152698, 0.0056409444659948, 0.0057889204472303, 0.005930608138442, 0.0060705970972776, 0.0063342750072479, 0.006718460470438, 0.0072221830487251, 0.0079772192984819, 0.0090806297957897, 0.0108523294329643, 0.0134982820600271, 0.0169028788805007, 0.0219433829188346, 0.0293176025152206, 0.0404520370066165, 0.0569528359919786, 0.0828691069036722, 0.1215748656541109, 0.1784550063312053], "q9": [0.0053343959152698, 0.0056409444659948, 0.0057889204472303, 0.005930608138442, 0.0060705970972776, 0.0063342750072479, 0.006718460470438, 0.0072221830487251, 0.0079772192984819, 0.0090806297957897, 0.0108523294329643, 0.0134982820600271, 0.0169028788805007, 0.0219433829188346, 0.0293176025152206, 0.0404520370066165, 0.0569528359919786, 0.0828691069036722, 0.1215748656541109, 0.1784550063312053]}, {"x": [0.0033128075301647, 0.0019521005451679, 0.002458618953824, 0.003402903676033, 0.0044200401753187, 0.0064738728106021, 0.009367499500513, 0.0154917016625404, 0.0148568544536829, 0.0126423463225364, 0.01283835247159], "y": [5758.940076345515, 5758.940076345515, 660.8005876313723, 409.8602490992392, 26.21868363660184, 25.68793243618419, 25.683997950052728, 25.683996863790128, 25.683996863790128, 25.683996863790128, 25.683996863790128], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)", "marker": 155, "q1": [0.0033128075301647, 0.0019521005451679, 0.002458618953824, 0.003402903676033, 0.0044200401753187, 0.0064738728106021, 0.009367499500513, 0.0154917016625404, 0.0148568544536829, 0.0126423463225364, 0.01283835247159], "q9": [0.0033128075301647, 0.0019521005451679, 0.002458618953824, 0.003402903676033, 0.0044200401753187, 0.0064738728106021, 0.009367499500513, 0.0154917016625404, 0.0148568544536829, 0.0126423463225364, 0.01283835247159]}, {"x": [0.0184272192418575, 0.0245202500373125, 0.0462611205875873, 0.0390650816261768, 0.0466565322130918, 0.0609319303184747, 0.1002797298133373, 0.1232174877077341, 0.161620968952775, 0.2468055989593267, 0.2646507769823074], "y": [35.76817995482386, 28.758848378159897, 26.3801908834758, 25.846162974502043, 25.72133574102671, 25.68509184969213, 25.684000940396476, 25.68399686379012, 25.683996863790124, 25.68399686379012, 25.68399686379012], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)", "marker": 156, "q1": [0.0184272192418575, 0.0245202500373125, 0.0462611205875873, 0.0390650816261768, 0.0466565322130918, 0.0609319303184747, 0.1002797298133373, 0.1232174877077341, 0.161620968952775, 0.2468055989593267, 0.2646507769823074], "q9": [0.0184272192418575, 0.0245202500373125, 0.0462611205875873, 0.0390650816261768, 0.0466565322130918, 0.0609319303184747, 0.1002797298133373, 0.1232174877077341, 0.161620968952775, 0.2468055989593267, 0.2646507769823074]}]}, "objective_curve_Simulated[n_samples=1000,n_features=50,use_sparse=False]_Ridge regression with postivity constraints[reg=1]_objective_value_Iteration": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Simulated[n_samples=1000,n_features=50,use_sparse=False] ", "xlabel": "Iteration", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316, 474, 853], "y": [11360.591878620118, 4374.638546317453, 1695.2075327623952, 993.756534667367, 645.9938768713889, 343.1089809587069, 179.4169631804943, 76.9492946734779, 36.86456888010821, 27.920457754085348, 25.875170022602745, 25.69241935955405, 25.684084841313528, 25.68399696061564, 25.683996863794064, 25.68399686379012, 25.68399686379012, 25.68399686379012], "label": "cd", "color": "rgba(247, 182, 210, 1.0)", "marker": 56}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316, 474, 711, 1066, 1599], "y": [11360.591878620118, 722.262470747786, 661.0875367625752, 605.4712084332507, 554.8916748511168, 467.0031404102765, 362.5491805133796, 261.6800024216853, 165.27768895949916, 90.3588387795274, 46.01279234333447, 29.48399453512331, 26.02304523677337, 25.6947944445674, 25.68408646495496, 25.683996952729764, 25.683996863793578, 25.68399686379012, 25.683996863790124, 25.68399686379012], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)", "marker": 80}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316, 474, 711, 1066, 1599], "y": [11360.591878620118, 722.2624707477862, 661.0875367625752, 590.2785130976622, 514.3470634080953, 362.9718756402589, 179.2643268559691, 55.26216810778162, 27.463933716943085, 26.723256562137024, 25.86817629716555, 25.701358446430493, 25.6853617405284, 25.684039751314995, 25.68399795911989, 25.683996873307382, 25.68399686380161, 25.68399686379012, 25.683996863790117, 25.68399686379012], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)", "marker": 81}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 107, 277], "y": [5758.940076345515, 5758.940076345515, 660.8005876313723, 409.8602490992392, 26.21868363660184, 25.68793243618419, 25.683997950052728, 25.683996863790128, 25.683996863790128, 25.683996863790128, 25.683996863790128], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)", "marker": 155}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42], "y": [35.76817995482386, 28.758848378159897, 26.3801908834758, 25.846162974502043, 25.72133574102671, 25.68509184969213, 25.684000940396476, 25.68399686379012, 25.683996863790124, 25.68399686379012, 25.68399686379012], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)", "marker": 156}]}}, "bar_chart": {"bar_chart_Boston[standardized=True]_Ridge regression with postivity constraints[reg=1]_objective_value": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Boston[standardized=True]", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": 0.000245239585638, "times": [0.000245239585638], "text": "", "label": "cd", "color": "rgba(247, 182, 210, 1.0)"}, {"y": 0.0388929303735494, "times": [0.0388929303735494], "text": "", "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)"}, {"y": 0.0040739960968494, "times": [0.0040739960968494], "text": "", "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)"}, {"y": 0.0047285184264183, "times": [0.0047285184264183], "text": "", "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)"}, {"y": 0.0330263189971447, "times": [0.0330263189971447], "text": "", "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)"}]}, "bar_chart_Simulated[n_samples=1000,n_features=50,use_sparse=False]_Ridge regression with postivity constraints[reg=1]_objective_value": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Simulated[n_samples=1000,n_features=50,use_sparse=False]", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": 0.0241812523454427, "times": [0.0241812523454427], "text": "", "label": "cd", "color": "rgba(247, 182, 210, 1.0)"}, {"y": 0.0578231252729892, "times": [0.0578231252729892], "text": "", "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)"}, {"y": 0.0404520370066165, "times": [0.0404520370066165], "text": "", "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)"}, {"y": 0.0154917016625404, "times": [0.0154917016625404], "text": "", "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)"}, {"y": 0.1232174877077341, "times": [0.1232174877077341], "text": "", "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)"}]}}, "boxplot": {"boxplot_Boston[standardized=True]_Ridge regression with postivity constraints[reg=1]_objective_value_Solver_Time": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Boston[standardized=True]", "xlabel": "Solver", "ylabel": "Time", "type": "boxplot", "data": [{"x": ["cd"], "y": [[0.0003244932740926]], "label": "cd", "color": "rgba(247, 182, 210, 1.0)"}, {"x": ["PGD[use_acceleration=False]"], "y": [[0.0446510389447212]], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": ["PGD[use_acceleration=True]"], "y": [[0.0085515771061182]], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)"}, {"x": ["scipy L-BFGS"], "y": [[0.0047691948711872]], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)"}, {"x": ["scipy TRF[lsq_solver=lsmr]"], "y": [[0.0498386602848768]], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)"}]}, "boxplot_Boston[standardized=True]_Ridge regression with postivity constraints[reg=1]_objective_value_Solver_Objective Metric": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Boston[standardized=True]", "xlabel": "Solver", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": ["cd"], "y": [[137644.17159543582]], "label": "cd", "color": "rgba(247, 182, 210, 1.0)"}, {"x": ["PGD[use_acceleration=False]"], "y": [[137644.17159543576]], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": ["PGD[use_acceleration=True]"], "y": [[137644.1715954358]], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)"}, {"x": ["scipy L-BFGS"], "y": [[137644.17159543576]], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)"}, {"x": ["scipy TRF[lsq_solver=lsmr]"], "y": [[137644.1715954358]], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)"}]}, "boxplot_Boston[standardized=True]_Ridge regression with postivity constraints[reg=1]_objective_value_Iteration_Time": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Boston[standardized=True]", "xlabel": "Iteration", "ylabel": "Time", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8], "y": [[0.0002307835966348], [0.0001646149903535], [0.0002069305628538], [0.0002159755676984], [0.0002222210168838], [0.000245239585638], [0.0002545714378356], [0.0002956017851829], [0.0003244932740926]], "label": "cd", "color": "rgba(247, 182, 210, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "y": [[0.0338123347610235], [0.0339165106415748], [0.0339761581271886], [0.0340290628373622], [0.0340788774192333], [0.0341675840318203], [0.0342888720333576], [0.0344458688050508], [0.0346725117415189], [0.0350090358406305], [0.0355251003056764], [0.0363207180052995], [0.0373460985720157], [0.0388929303735494], [0.0411940775811672], [0.0446510389447212]], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "y": [[0.0002957060933113], [0.0003800354897975], [0.0004227384924888], [0.0004584658890962], [0.000494061037898], [0.0005569737404584], [0.0006464701145887], [0.0007584318518638], [0.0009192842990159], [0.0011560805141925], [0.0015204735100269], [0.0020705163478851], [0.0028658639639616], [0.0040739960968494], [0.0058701038360595], [0.0085515771061182]], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8], "y": [[0.0014552697539329], [0.0012376271188259], [0.0014226511120796], [0.0050275959074497], [0.0019292719662189], [0.0025591552257537], [0.0047285184264183], [0.0047494601458311], [0.0047691948711872]], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "y": [[0.0093174278736114], [0.0124490428715944], [0.0166292134672403], [0.018403373658657], [0.0236519966274499], [0.0248304568231105], [0.0330263189971447], [0.0426430236548185], [0.041571183130145], [0.0498386602848768]], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)"}]}, "boxplot_Boston[standardized=True]_Ridge regression with postivity constraints[reg=1]_objective_value_Iteration_Objective Metric": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Boston[standardized=True]", "xlabel": "Iteration", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8], "y": [[149813.16999999998], [138686.95227745865], [137656.73237732702], [137644.2714040046], [137644.1721237026], [137644.17159543672], [137644.17159543576], [137644.1715954358], [137644.17159543582]], "label": "cd", "color": "rgba(247, 182, 210, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "y": [[149813.17], [144869.92295135077], [142146.4197395832], [140572.32990760438], [139617.23404336168], [138610.54475058307], [138011.78082706415], [137751.40353665518], [137657.5234397498], [137645.49273119372], [137644.22516431857], [137644.17205217964], [137644.17159584074], [137644.17159543582], [137644.1715954358], [137644.17159543576]], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "y": [[149813.17], [144869.92295135077], [142146.4197395832], [140202.60229453165], [138990.55850941315], [137933.2009863615], [137652.08207512586], [137651.97040635208], [137644.4231046256], [137644.18495414444], [137644.1809774321], [137644.17182291168], [137644.1715955447], [137644.171595436], [137644.17159543582], [137644.1715954358]], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8], "y": [[146020.52223299787], [146020.52223299787], [138457.13541024152], [138070.02254311935], [137644.81331553918], [137644.17159549936], [137644.17159543576], [137644.17159543576], [137644.17159543576]], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "y": [[148585.83815390788], [140532.4061327125], [138246.35270031067], [137741.72472826453], [137647.49448311946], [137644.17162142537], [137644.1715954358], [137644.17159543582], [137644.1715954358], [137644.1715954358]], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)"}]}, "boxplot_Simulated[n_samples=1000,n_features=50,use_sparse=False]_Ridge regression with postivity constraints[reg=1]_objective_value_Solver_Time": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Simulated[n_samples=1000,n_features=50,use_sparse=False]", "xlabel": "Solver", "ylabel": "Time", "type": "boxplot", "data": [{"x": ["cd"], "y": [[0.0534725859761238]], "label": "cd", "color": "rgba(247, 182, 210, 1.0)"}, {"x": ["PGD[use_acceleration=False]"], "y": [[0.1802850738167762]], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": ["PGD[use_acceleration=True]"], "y": [[0.1784550063312053]], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)"}, {"x": ["scipy L-BFGS"], "y": [[0.01283835247159]], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)"}, {"x": ["scipy TRF[lsq_solver=lsmr]"], "y": [[0.2646507769823074]], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)"}]}, "boxplot_Simulated[n_samples=1000,n_features=50,use_sparse=False]_Ridge regression with postivity constraints[reg=1]_objective_value_Solver_Objective Metric": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Simulated[n_samples=1000,n_features=50,use_sparse=False]", "xlabel": "Solver", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": ["cd"], "y": [[25.68399686379012]], "label": "cd", "color": "rgba(247, 182, 210, 1.0)"}, {"x": ["PGD[use_acceleration=False]"], "y": [[25.68399686379012]], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": ["PGD[use_acceleration=True]"], "y": [[25.68399686379012]], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)"}, {"x": ["scipy L-BFGS"], "y": [[25.683996863790128]], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)"}, {"x": ["scipy TRF[lsq_solver=lsmr]"], "y": [[25.68399686379012]], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)"}]}, "boxplot_Simulated[n_samples=1000,n_features=50,use_sparse=False]_Ridge regression with postivity constraints[reg=1]_objective_value_Iteration_Time": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Simulated[n_samples=1000,n_features=50,use_sparse=False]", "xlabel": "Iteration", "ylabel": "Time", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "y": [[0.0010388549417257], [0.0020147245377302], [0.0021899919956922], [0.0023543443530797], [0.0025827921926975], [0.002974335104227], [0.0034942384809255], [0.0043010674417018], [0.0055272113531827], [0.0085610318928956], [0.0099692847579717], [0.0127415340393781], [0.0125784166157245], [0.020398112013936], [0.0241812523454427], [0.0307849794626235], [0.0404303260147571], [0.0534725859761238]], "label": "cd", "color": "rgba(247, 182, 210, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], "y": [[0.0052903722971677], [0.0056159924715757], [0.0058837160468101], [0.006160968914628], [0.0064174607396125], [0.0067003481090068], [0.0070960130542516], [0.0075576044619083], [0.0082369223237037], [0.0092383045703172], [0.0109361559152603], [0.0130950771272182], [0.0162420496344566], [0.0214312076568603], [0.0291153863072395], [0.0405658483505249], [0.0578231252729892], [0.0844116583466529], [0.122791588306427], [0.1802850738167762]], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], "y": [[0.0053343959152698], [0.0056409444659948], [0.0057889204472303], [0.005930608138442], [0.0060705970972776], [0.0063342750072479], [0.006718460470438], [0.0072221830487251], [0.0079772192984819], [0.0090806297957897], [0.0108523294329643], [0.0134982820600271], [0.0169028788805007], [0.0219433829188346], [0.0293176025152206], [0.0404520370066165], [0.0569528359919786], [0.0828691069036722], [0.1215748656541109], [0.1784550063312053]], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[0.0033128075301647], [0.0019521005451679], [0.002458618953824], [0.003402903676033], [0.0044200401753187], [0.0064738728106021], [0.009367499500513], [0.0154917016625404], [0.0148568544536829], [0.0126423463225364], [0.01283835247159]], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[0.0184272192418575], [0.0245202500373125], [0.0462611205875873], [0.0390650816261768], [0.0466565322130918], [0.0609319303184747], [0.1002797298133373], [0.1232174877077341], [0.161620968952775], [0.2468055989593267], [0.2646507769823074]], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)"}]}, "boxplot_Simulated[n_samples=1000,n_features=50,use_sparse=False]_Ridge regression with postivity constraints[reg=1]_objective_value_Iteration_Objective Metric": {"title": "Ridge regression with postivity constraints[reg=1]<br />Data: Simulated[n_samples=1000,n_features=50,use_sparse=False]", "xlabel": "Iteration", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "y": [[11360.591878620118], [4374.638546317453], [1695.2075327623952], [993.756534667367], [645.9938768713889], [343.1089809587069], [179.4169631804943], [76.9492946734779], [36.86456888010821], [27.920457754085348], [25.875170022602745], [25.69241935955405], [25.684084841313528], [25.68399696061564], [25.683996863794064], [25.68399686379012], [25.68399686379012], [25.68399686379012]], "label": "cd", "color": "rgba(247, 182, 210, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], "y": [[11360.591878620118], [722.262470747786], [661.0875367625752], [605.4712084332507], [554.8916748511168], [467.0031404102765], [362.5491805133796], [261.6800024216853], [165.27768895949916], [90.3588387795274], [46.01279234333447], [29.48399453512331], [26.02304523677337], [25.6947944445674], [25.68408646495496], [25.683996952729764], [25.683996863793578], [25.68399686379012], [25.683996863790124], [25.68399686379012]], "label": "PGD[use_acceleration=False]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], "y": [[11360.591878620118], [722.2624707477862], [661.0875367625752], [590.2785130976622], [514.3470634080953], [362.9718756402589], [179.2643268559691], [55.26216810778162], [27.463933716943085], [26.723256562137024], [25.86817629716555], [25.701358446430493], [25.6853617405284], [25.684039751314995], [25.68399795911989], [25.683996873307382], [25.68399686380161], [25.68399686379012], [25.683996863790117], [25.68399686379012]], "label": "PGD[use_acceleration=True]", "color": "rgba(255, 127, 14, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[5758.940076345515], [5758.940076345515], [660.8005876313723], [409.8602490992392], [26.21868363660184], [25.68793243618419], [25.683997950052728], [25.683996863790128], [25.683996863790128], [25.683996863790128], [25.683996863790128]], "label": "scipy L-BFGS", "color": "rgba(196, 156, 148, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[35.76817995482386], [28.758848378159897], [26.3801908834758], [25.846162974502043], [25.72133574102671], [25.68509184969213], [25.684000940396476], [25.68399686379012], [25.683996863790124], [25.68399686379012], [25.68399686379012]], "label": "scipy TRF[lsq_solver=lsmr]", "color": "rgba(247, 182, 210, 1.0)"}]}}};
             window.metadata = {"plot_configs": {}, "solvers_description": {}, "obj_description": ""};
 
             window.addEventListener("load", () => {
                 // Initialize plot state
                 setState({
-                    'dataset': document.getElementById('dataset_selector').value,
-                    'objective': document.getElementById('objective_selector').value,
-                    'objective_column': document.getElementById('objective_column').value,
                     'plot_kind': document.getElementById('plot_kind').value,
-                    'scale': document.getElementById('change_scaling').value,
+                    'scale': document.getElementById('change_scale').value,
                     'with_quantiles': document.getElementById('change_shades').checked,
-                    'xaxis_type':  document.getElementById('change_xaxis_type').value || "Time",
-                    'yaxis_type':  document.getElementById('change_xaxis_type').value || "Time",
-                    'hidden_solvers': []
+                    'suboptimal_curve': document.getElementById('change_suboptimal').checked,
+                    'relative_curve': document.getElementById('change_relative').checked,
+                    'hidden_curves': [],
+                            'objective_curve_dataset': document.getElementById('change_objective_curve_dataset').value,
+                            'objective_curve_objective': document.getElementById('change_objective_curve_objective').value,
+                            'objective_curve_objective_column': document.getElementById('change_objective_curve_objective_column').value,
+                            'objective_curve_X_axis': document.getElementById('change_objective_curve_X_axis').value,
+                            'bar_chart_dataset': document.getElementById('change_bar_chart_dataset').value,
+                            'bar_chart_objective': document.getElementById('change_bar_chart_objective').value,
+                            'bar_chart_objective_column': document.getElementById('change_bar_chart_objective_column').value,
+                            'boxplot_dataset': document.getElementById('change_boxplot_dataset').value,
+                            'boxplot_objective': document.getElementById('change_boxplot_objective').value,
+                            'boxplot_objective_column': document.getElementById('change_boxplot_objective_column').value,
+                            'boxplot_X_axis': document.getElementById('change_boxplot_X_axis').value,
+                            'boxplot_Y_axis': document.getElementById('change_boxplot_Y_axis').value,
                 });
                 const plot_configs = document.getElementsByClassName('view');
                 if (plot_configs.length > 0 ){
@@ -3084,9 +3253,7 @@ function createPathString(symbolNumber, r) {
  *   - plot_kind (string),
  *   - scale (string)
  *   - with_quantiles (boolean)
- *   - xaxis_type (string)
- *   - yaxis_type (string)
- *   - hidden_solvers (array)
+ *   - hidden_curves (array)
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
@@ -3124,11 +3291,12 @@ const config_mapping = {
   'dataset': 'dataset_selector',
   'objective': 'objective_selector',
   'objective_column': 'objective_column',
-  'kind': 'plot_kind',
-  'scale': 'change_scaling',
+  'plot_kind': 'plot_kind',
+  'scale': 'change_scale',
   'with_quantiles': 'change_shades',
-  'xaxis_type':'change_xaxis_type',
-  'yaxis_type':'change_yaxis_type',
+  'suboptimal_curve': 'change_suboptimal',
+  'relative_curve': 'change_relative',
+  'hidden_curves': '',
 };
 
 /*
@@ -3144,10 +3312,17 @@ const config_mapping = {
  * Create/Update the plot.
  */
 const renderPlot = () => {
-  const div = document.getElementById('unique_plot');
+  let div;
+  if (isChart('scatter')) {
+    div = document.getElementById('scatter_plot_container');
+  } else {
+    div = document.getElementById('plot_container');
+  }
   const data = getChartData();
   const layout = getLayout();
 
+  Plotly.purge(document.getElementById('scatter_plot_container'));
+  Plotly.purge(document.getElementById('plot_container'));
   Plotly.react(div, data, layout);
 };
 
@@ -3157,15 +3332,14 @@ const renderPlot = () => {
  * @returns {Array|*[]}
  */
 const getChartData = () => {
-  if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve'])) {
-    return getScatterCurves();
+  if (isChart('scatter')) {
+    return getScatterData();
   } else if (isChart('bar_chart')) {
     return getBarData();
   } else if (isChart('boxplot')) {
     return getBoxplotData();
   }
-
-  throw new Error('Unknown plot kind.');
+  throw new Error("Unknown plot kind : " + state().plot_kind);
 }
 
 /**
@@ -3174,15 +3348,14 @@ const getChartData = () => {
  * @returns Object
  */
 const getLayout = () => {
-  if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve'])) {
+  if (isChart('scatter')) {
     return getScatterChartLayout();
   } else if (isChart('bar_chart')) {
     return getBarChartLayout();
   } else if (isChart('boxplot')) {
     return getBoxplotChartLayout();
   }
-
-  throw new Error('Unknown plot kind.');
+  throw new Error("Unknown plot kind : " + state().plot_kind);
 }
 
 /**
@@ -3209,16 +3382,16 @@ const getBarData = () => {
     textangle: '-90',
   }];
 
-  x.forEach(solver => {
-    // Add times for each convergent solver
+  getPlotData().data.forEach(curveData => {
+    // Add times for each convergent bar
     // Check if text is not 'Did not converge'
-    if (data(solver).bar.text === '') {
-      let nbTimes = data(solver).bar.times.length
+    if (curveData.text === '') {
+      let nbTimes = curveData.times.length
 
       barData.push({
         type: 'scatter',
-        x: new Array(nbTimes).fill(solver),
-        y: data(solver).bar.times,
+        x: new Array(nbTimes).fill(curveData.label),
+        y: curveData.times,
         marker: {
           color: 'black',
           symbol: 'line-ew-open'
@@ -3233,120 +3406,105 @@ const getBarData = () => {
   return barData;
 };
 
+
 const getBoxplotData = () => {
-  return state('xaxis_type') === 'Solver' ? getSolverBoxplotData() : getIterationBoxplotData();
-}
-
-const getSolverBoxplotData = () => {
   const boxplotData = [];
 
-  getSolvers().forEach(solver => {
-    boxplotData.push({
-      y: state("yaxis_type") === 'time' ? data(solver).boxplot.by_solver.final_times : data(solver).boxplot.by_solver.final_objective_value,
-      type: 'box',
-      name: solver,
+  getPlotData().data.forEach(plotData => {
+    plotData.x.forEach((label, i) => {
+      boxplotData.push({
+        y: plotData.y[i],
+        name: label,
+        type: 'box',
+        line: {color: plotData.color},
+        fillcolor: plotData.color,
+        boxpoints: false
+      });
     });
   });
 
-  return boxplotData
+  return boxplotData;
+};
+
+
+const getPlotData = () => {
+  let dropdowns = getPlotDropdowns();
+  let dropdown_values = dropdowns.map(dropdown => state()[dropdown]);
+  let data_key = [state().plot_kind, ...dropdown_values].join('_');
+  return window._custom_plots[state().plot_kind][data_key];
 }
 
-const getIterationBoxplotData = () => {
-  const boxplotData = [];
-
-  getSolvers().forEach(solver => {
-
-    // Build x
-    let x = [];
-    const iterations = data().solvers[solver].boxplot.by_iteration.times;
-
-    for (let iteration = 0; iteration < iterations.length; iteration++) {
-      for (let repetition = 0; repetition < iterations[iteration].length; repetition++) {
-        x.push(iteration)
-      }
-    }
-
-    let y = [];
-    let values = state("yaxis_type") === 'time' ? data(solver).boxplot.by_iteration.times : data(solver).boxplot.by_iteration.objective;
-    for (let iteration = 0; iteration < iterations.length; iteration++) {
-      for (let repetition = 0; repetition < iterations[iteration].length; repetition++) {
-        y.push(values[iteration][repetition])
-      }
-    }
-
-    boxplotData.push({
-      y: y,
-      x: x,
-      type: 'box',
-    });
-  });
-
-  return boxplotData
-}
 
 /**
  * Gives the data formatted for plotlyJS scatter chart.
  *
  * @returns {array}
  */
-const getScatterCurves = () => {
+const getScatterData = () => {
   // create a list of object to plot in plotly
   const curves = [];
 
-  // For each solver, add the median curve with proper style and visibility.
-  let xaxisType = state().xaxis_type;
+  // get the minimum y value over all curves
+  let min_y = Infinity;
+  getPlotData().data.forEach(curveData => {
+    min_y = Math.min(min_y, ...curveData.y);
+  });
+  min_y -=  1e-10; // to avoid zeros in log scale
 
-  getSolvers().forEach(solver => {
-    const solverSamplingStrategy = data(solver)['sampling_strategy'];
-
-    // plot only solvers that were stopped using xaxis type
-    // plot all solver if xaxis type is `time`
-    if(xaxisType !== "Time" && solverSamplingStrategy !== xaxisType) {
-      return
+  getPlotData().data.forEach(curveData => {
+    label = curveData.label;
+    y = curveData.y;
+    if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
+      q1 = curveData.q1;
+      q9 = curveData.q9;
     }
-
-    const ScatterXaxisProperty = xaxisType === "Time" ? 'x' : 'stop_val';
-
+    if (state().suboptimal_curve) {
+      y = y.map(value => value - min_y);
+      if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
+        q1 = q1.map(value => value - min_y);
+        q9 = q9.map(value => value - min_y);
+      }
+    }
+    if (state().relative_curve) {
+      y = y.map(value => value / (y[0] - min_y));
+      if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
+        q1 = q1.map(value => value / (y[0] - min_y));
+        q9 = q9.map(value => value / (y[0] - min_y));
+      }
+    }
     curves.push({
       type: 'scatter',
-      name: solver,
+      name: label,
       mode: 'lines+markers',
       line: {
-        color: data(solver).color,
+        color: curveData.color,
       },
       marker: {
-        symbol: data(solver).marker,
+        symbol: curveData.marker,
         size: 10,
+        color: curveData.color,
       },
-      legendgroup: solver,
-      hovertemplate: solver + ' <br> (%{x:.1e},%{y:.1e}) <extra></extra>',
-      visible: isVisible(solver) ? true : 'legendonly',
-      x: data(solver).scatter[ScatterXaxisProperty],
-      y: useTransformer(data(solver).scatter.y, 'y', data().transformers),
+      legendgroup: label,
+      hovertemplate: label + ' <br> (%{x:.1e},%{y:.1e}) <extra></extra>',
+      visible: isVisible(label) ? true : 'legendonly',
+      x: curveData.x,
+      y: y,
     });
 
-    // skip plotting quantiles if xaxis is not time
-    // as stop_val are predefined and hence deterministic
-    if(xaxisType !== "Time") {
-      return
-    }
-
-    if (state().with_quantiles) {
-      // Add shaded area for each solver, with proper style and visibility.
-
+    if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
       curves.push({
         type: 'scatter',
         mode: 'lines',
         showlegend: false,
         line: {
           width: 0,
-          color: data(solver).color,
+          color: curveData.color,
         },
-        legendgroup: solver,
+        legendgroup: label,
         hovertemplate: '(%{x:.1e},%{y:.1e}) <extra></extra>',
-        visible: isVisible(solver) ? true : 'legendonly',
-        x: data(solver).scatter['q1'],
-        y: useTransformer(data(solver).scatter.y, 'y', data().transformers),
+        visible: isVisible(label) ? true : 'legendonly',
+        x: q1,
+        y: y,
       }, {
         type: 'scatter',
         mode: 'lines',
@@ -3354,20 +3512,19 @@ const getScatterCurves = () => {
         fill: 'tonextx',
         line: {
           width: 0,
-          color: data(solver).color,
+          color: curveData.color,
         },
-        legendgroup: solver,
+        legendgroup: label,
         hovertemplate: '(%{x:.1e},%{y:.1e}) <extra></extra>',
-        visible: isVisible(solver) ? true : 'legendonly',
-        x: data(solver).scatter['q9'],
-        y: useTransformer(data(solver).scatter.y, 'y', data().transformers),
+        visible: isVisible(label) ? true : 'legendonly',
+        x: q9,
+        y: y,
       });
     }
   });
 
   return curves;
 };
-
 
 
 /*
@@ -3379,19 +3536,14 @@ const getScatterCurves = () => {
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-const get_lim_plotly = (lim, ax) =>{
-  if(getScale()[ax + 'axis'] == 'log'){
-    lim = [Math.log10(parseFloat(lim[0])), Math.log10(parseFloat(lim[1]))]
-  };
-  return lim;
-};
-
-const get_lim_config = (lim, ax) => {
-  if(getScale()[ax + 'axis'] == 'log'){
-    lim = [Math.pow(10, lim[0]), Math.pow(10, lim[1])]
-  };
-  return lim;
-};
+const DEFAULT_CONFIG_OPTIONS = [
+  "plot_kind",
+  "hidden_curves",
+  "scale",
+  "with_quantiles",
+  "suboptimal_curve",
+  "relative_curve",
+];
 
 const setConfig = (config_item) => {
   if (!config_item) {
@@ -3417,31 +3569,24 @@ const setConfig = (config_item) => {
     // Get the updated state
     let config = window.metadata.plot_configs[config_name];
     let update = {};
-    const lims = ['xlim', 'ylim', 'hidden_solvers']
-    for(let key in config_mapping){
-      if (key in config){
-        const value = config[key];
-        document.getElementById(config_mapping[key]).value = value;
-        if (key === "kind"){
-          key = "plot_kind";
+    // const lims = ['xlim', 'ylim', 'hidden_curves']
+    const lims = ['hidden_curves']
+    for(let key in config){
+      const value = config[key];
+      if (key in config_mapping) {
+        if (config_mapping[key] !== '') {
+          div_key = config_mapping[key];
+          document.getElementById(div_key).value = value;
         }
-        update[key] = value;
       }
-      else if (!lims.includes(key)) {
-        document.getElementById(config_mapping[key]).selectedIndex = 0;
-        update[key] = document.getElementById(config_mapping[key]).value;
+      else {
+        div_key = "change_" + key;
+        document.getElementById(div_key).value = value;
       }
+      update[key] = value;
     }
 
     setState(update);
-
-    let layout = {};
-    for(const ax of ['x', 'y']){
-      let lim = ax + 'lim';
-      if (config.hasOwnProperty(lim) & (config[lim] != null)) {
-        layout[ax +'axis.range'] = get_lim_plotly(config[lim], ax);
-      }
-    }
 
     // update the plot
     renderPlot();
@@ -3458,14 +3603,13 @@ const saveView = () => {
 
   // Retrieve the dropdown menu selected values
   let config = {};
-  for(let key in config_mapping) {
-    config[key] = document.getElementById(config_mapping[key]).value;
+  dropdowns = getPlotDropdowns();
+  for(let key of dropdowns) {
+    config[key] = state()[key];
   }
-
-  // Retrieve the range of the plots.
-  const fig = document.getElementById('unique_plot');
-  config['xlim'] = get_lim_config(fig.layout.xaxis.range, 'x');
-  config['ylim'] = get_lim_config(fig.layout.yaxis.range, 'y');
+  for (let option of DEFAULT_CONFIG_OPTIONS) {
+    config[option] = state()[option];
+  }
 
   let noViewAvailableElement = document.getElementById('no_view_available');
 
@@ -3547,78 +3691,6 @@ const exportHTML = () => {
 
 /*
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * DATA TRANSFORMERS
- *
- * Transformers are used to modify data
- * on the fly.
- *
- * WARNING : If you add a new transformer function,
- * don't forget to register it in the object : window.transformers,
- * at the end of this section.
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- */
-
-/**
- * Select the right transformer according to the state.
- * If the requested transformer does not exists,
- * it returns raw data.
- *
- * @param {Object} data
- * @param {String} solver
- * @param {String} axis it could be x, y, q1, q9
- * @returns {array}
- */
-const useTransformer = (data, axis, options) => {
-  try {
-    let transformer = 'transformer_' + axis + '_' + state().plot_kind;
-    return window.transformers[transformer](data, options);
-  } catch(error) {
-    return data;
-  }
-};
-
-/**
- * Transform data on the y axis for subotimality curve.
- *
- * @param {Object} data
- * @param {String} solver
- * @returns {array}
- */
-const transformer_y_suboptimality_curve = (y, options) => {
-  // Retrieve c_star value
-  const c_star = options.c_star;
-
-  // Compute suboptimality for each data
-  return y.map(value => value - c_star);
-};
-
-/**
- * Transform data ont the y axis for relative suboptimality curve.
- *
- * @param {Object} data
- * @param {String} solver
- * @returns {array}
- */
-const transformer_y_relative_suboptimality_curve = (y, options) => {
-  // Retrieve transformer values
-  const c_star = options.c_star;
-  const max_f_0 = options.max_f_0;
-
-  // Compute relative suboptimality for each data
-  return y.map(value => (value - c_star) / (max_f_0 - c_star));
-};
-
-/**
- * Store all the transformer functions to be callable
- * by the useTransformer function.
- */
-window.transformers = {
-  transformer_y_suboptimality_curve,
-  transformer_y_relative_suboptimality_curve,
-};
-
-/*
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * LEFT SIDEBAR MANAGEMENT
  *
  * Functions that control the left sidebar.
@@ -3629,33 +3701,21 @@ window.transformers = {
  * Render sidebar
  */
 const renderSidebar = () => {
-  renderObjectiveColumnSelector();
   renderScaleSelector();
-  renderXAxisTypeSelector();
-  renderYAxisTypeSelector();
   renderWithQuantilesToggle();
+  renderSuboptimalRelativeToggle();
   mapSelectorsToState();
+  renderPlotDropdowns();
 }
-
-/**
- * Render Objective Column selector
- */
-const renderObjectiveColumnSelector = () => {
-  if (isChart('boxplot') && state('yaxis_type') === 'time') {
-    hide(document.querySelectorAll("#objective-column-form-group"));
-  } else {
-    show(document.querySelectorAll("#objective-column-form-group"), 'block');
-  }
-};
 
 /**
  * Render Scale selector
  */
 const renderScaleSelector = () => {
-  if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve', 'boxplot'])) {
-    show(document.querySelectorAll("#scale-form-group"), 'block');
-  } else {
+  if (isChart('bar_chart')) {
     hide(document.querySelectorAll("#scale-form-group"));
+  } else {
+    show(document.querySelectorAll("#scale-form-group"), 'block');
   }
 
   if (isChart('boxplot')) {
@@ -3671,79 +3731,34 @@ const renderScaleSelector = () => {
  * Render WithQuantile toggle
  */
 const renderWithQuantilesToggle = () => {
-  if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve'])) {
+  if (isChart('scatter')) {
     show(document.querySelectorAll("#change-shades-form-group"), 'flex');
   } else {
     hide(document.querySelectorAll("#change-shades-form-group"));
   }
 };
 
-/**
- * Render xaxis type selector
- */
-const renderXAxisTypeSelector = () => {
-  if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve', 'boxplot'])) {
-    show(document.querySelectorAll("#xaxis-type-form-group"), 'block');
+const renderSuboptimalRelativeToggle = () => {
+  if (isChart('scatter')) {
+    show(document.querySelectorAll("#change-relative-suboptimal-form-group"), 'flex');
   } else {
-    hide(document.querySelectorAll("#xaxis-type-form-group"));
-    return;
-  }
-
-  // One for desktop and one for mobile
-  xAxisTypeSelectors().forEach(selector => {
-    const optionToHide = isChart('boxplot') ? "Time" : "Solver";
-    hide(xAxisTypeOption(optionToHide));
-
-    const optionToShow = isChart('boxplot') ? "Solver" : "Time";
-    show(xAxisTypeOption(optionToShow));
-
-    if (isChart('boxplot') || isIterationSamplingStrategy()) {
-      show(xAxisTypeOption('Iteration'));
-    }
-  });
-
-  // X axis type 'Time' does not exist for boxplot,
-  // it only can be one of : 'Solver', 'Iteration',
-  // so we have to change its value with an allowed value.
-  // It's the same thing if we change to curve plot.
-  if (isChart('boxplot') && state().xaxis_type === 'Time') {
-    setState({xaxis_type: 'Solver'});
-  } else if (isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve']) && state().xaxis_type === 'Solver') {
-    setState({xaxis_type: 'Time'});
+    hide(document.querySelectorAll("#change-relative-suboptimal-form-group"));
   }
 };
 
-/**
- * Render yaxis type selector
- */
-const renderYAxisTypeSelector = () => {
-  if (isChart('boxplot')) {
-    show(document.querySelectorAll("#yaxis-type-form-group"), 'block');
-  } else {
-    hide(document.querySelectorAll("#yaxis-type-form-group"));
-  }
-};
+const renderPlotDropdowns = () => {
+  hide(document.querySelectorAll(`[id$='-custom-params-container']`));
+  show(document.querySelectorAll(`#${state().plot_kind}-custom-params-container`), 'block');
 
-const xAxisTypeSelectors = () => {
-  return document.querySelectorAll("#change_xaxis_type, #change_xaxis_type_mobile");
-};
-
-const xAxisTypeOption = (type) => {
-  return document.querySelectorAll(
-      `#change_xaxis_type [value="${type}"], #change_xaxis_type_mobile [value="${type}"]`
-  );
-};
+}
 
 const mapSelectorsToState = () => {
   const currentState = state();
-
-  document.getElementById('dataset_selector').value = currentState.dataset;
-  document.getElementById('objective_selector').value = currentState.objective;
-  document.getElementById('objective_column').value = currentState.objective_column;
   document.getElementById('plot_kind').value = currentState.plot_kind;
-  document.getElementById('change_scaling').value = currentState.scale;
-  document.getElementById('change_xaxis_type').value = currentState.xaxis_type;
+  document.getElementById('change_scale').value = currentState.scale;
   document.getElementById('change_shades').checked = currentState.with_quantiles;
+  document.getElementById('change_suboptimal').checked = currentState.suboptimal_curve;
+  document.getElementById('change_relative').checked = currentState.relative_curve;
 };
 
 /*
@@ -3754,25 +3769,43 @@ const mapSelectorsToState = () => {
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-const data = (solver = null) => {
-  return solver ?
-    window._data[state().dataset][state().objective][state().objective_column].solvers[solver]:
-    window._data[state().dataset][state().objective][state().objective_column]
+// Get the data for a given plot state, indexed by curve names.
+const data = (curve = null) => {
+  let curves = getPlotData().data.reduce(
+    (map, obj) => {map[obj.label] = obj; return map}, {}
+  );
+  return curve ? curves[curve]: curves;
 }
 
-const getSolvers = () => Object.keys(data().solvers);
+const getPlotDropdowns = () => {
+  let kind = state().plot_kind;
+  let params = [];
+  Object.keys(state()).forEach(key => {
+    if (key.includes(kind)) {
+      params.push(key);
+    }
+  });
+  return params;
+}
+
+const getCurves = () => Object.keys(data());
 
 const isChart = chart => {
   if (typeof chart === 'string' || chart instanceof String) {
     chart = [chart]
   }
 
-  return chart.includes(state().plot_kind);
+  let plot_kind = state().plot_kind;
+  if (!["bar_chart", "boxplot"].includes(plot_kind)) {
+    let custom_data = getPlotData();
+    plot_kind = custom_data.type;
+  }
+  return chart.includes(plot_kind);
 }
 
-const isVisible = solver => !state().hidden_solvers.includes(solver);
+const isVisible = curve => !state().hidden_curves.includes(curve);
 
-const isSolverAvailable = solver => data(solver).scatter.y.filter(value => !isNaN(value)).length > 0;
+const isSolverAvailable = solver => data(solver) !== null;
 
 const isSmallScreen = () => window.screen.availHeight < 900;
 
@@ -3785,7 +3818,7 @@ const isSmallScreen = () => window.screen.availHeight < 900;
 const isAvailable = () => {
   let isNotAvailable = true;
 
-  getSolvers().forEach(solver => {
+  getCurves().forEach(solver => {
     if (isSolverAvailable(solver)) {
       isNotAvailable = false;
     }
@@ -3797,11 +3830,11 @@ const isAvailable = () => {
 const barDataToArrays = () => {
   const colors = [], texts = [], x = [], y = [];
 
-  getSolvers().forEach(solver => {
-    x.push(solver);
-    y.push(data(solver).bar.y);
-    colors.push(data(solver).bar.text === '' ? data(solver).color : NON_CONVERGENT_COLOR);
-    texts.push(data(solver).bar.text);
+  getPlotData().data.forEach(plotData => {
+    x.push(plotData.label);
+    y.push(plotData.y);
+    colors.push(plotData.text === '' ? plotData.color : NON_CONVERGENT_COLOR);
+    texts.push(plotData.text);
   });
 
   return {x, y, colors, texts}
@@ -3843,8 +3876,86 @@ const _getScale = (scale) => {
   }
 }
 
+const getBarChartLayout = () => {
+  let data = getPlotData();
+  const layout = {
+    autosize: !isSmallScreen(),
+    modebar: {
+      orientation: 'v',
+    },
+    yaxis: {
+      type: 'log',
+      title: data["ylabel"],
+      tickformat: '.1e',
+      gridcolor: '#ffffff',
+    },
+    xaxis: {
+      tickangle: -60,
+      ticktext: Array(data.data.map(d => d.label)),
+    },
+    showlegend: false,
+    title: data["title"],
+    plot_bgcolor: '#e5ecf6',
+  };
+
+  if (isSmallScreen()) {
+    layout.width = 900;
+    layout.height = window.screen.availHeight - 200;
+    layout.dragmode = false;
+  }
+
+  // TODO what does this do ??
+  if (!isAvailable()) {
+    layout.annotations = [{
+      xref: 'paper',
+      yref: 'paper',
+      x: 0.5,
+      y: 0.5,
+      text: 'Not available',
+      showlegend: false,
+      showarrow: false,
+      font: {
+        color: 'black',
+        size: 32,
+      }
+    }];
+  }
+  return layout;
+};
+
+const getBoxplotChartLayout = () => {
+  plot_info = getPlotData()
+  const layout = {
+    autosize: !isSmallScreen(),
+    modebar: {
+      orientation: 'v',
+    },
+    yaxis: {
+      type: getScale().yaxis,
+      title: plot_info["ylabel"],
+      tickformat: '.1e',
+      gridcolor: '#ffffff',
+    },
+    xaxis: {
+      tickangle: (typeof plot_info.data[0].x[0] === "string") ? -60 : 0,
+    },
+    showlegend: false,
+    title: plot_info["title"],
+    plot_bgcolor: '#e5ecf6',
+  };
+
+  if (isSmallScreen()) {
+    layout.width = 900;
+    layout.height = window.screen.availHeight - 200;
+    layout.dragmode = false;
+  }
+
+  return layout;
+};
+
+
 const getScatterChartLayout = () => {
-  let xaxisType = state().xaxis_type;
+  let customData = getPlotData();
 
   const layout = {
     autosize: !isSmallScreen(),
@@ -3865,20 +3976,20 @@ const getScatterChartLayout = () => {
     },
     xaxis: {
       type: getScale().xaxis,
-      title: xaxisType === "Time" ? "Time [sec]": xaxisType,
-      tickformat:  ["Time", "Tolerance"].includes(xaxisType) ? '.1e': '',
+      title: customData.xlabel,
+      tickformat: '.1e', // TODO adapt if xaxis is not numeric
       tickangle: -45,
       gridcolor: '#ffffff',
       zeroline : false,
     },
     yaxis: {
       type: getScale().yaxis,
-      title: getYLabel(),
+      title: customData.ylabel,
       tickformat: '.1e',
       gridcolor: '#ffffff',
       zeroline : false,
     },
-    title: `${state().objective}<br />Data: ${state().dataset}`,
+    title: `${customData.title}`,
     plot_bgcolor: '#e5ecf6',
   };
 
@@ -3906,112 +4017,6 @@ const getScatterChartLayout = () => {
   return layout;
 };
 
-const getBarChartLayout = () => {
-  const layout = {
-    autosize: !isSmallScreen(),
-    modebar: {
-      orientation: 'v',
-    },
-    yaxis: {
-      type: 'log',
-      title: 'Time [sec]',
-      tickformat: '.1e',
-      gridcolor: '#ffffff',
-    },
-    xaxis: {
-      tickangle: -60,
-      ticktext: getSolvers(),
-    },
-    showlegend: false,
-    title: `${state().objective}<br />Data: ${state().dataset}`,
-    plot_bgcolor: '#e5ecf6',
-  };
-
-  if (isSmallScreen()) {
-    layout.width = 900;
-    layout.height = window.screen.availHeight - 200;
-    layout.dragmode = false;
-  }
-
-  if (!isAvailable()) {
-    layout.annotations = [{
-      xref: 'paper',
-      yref: 'paper',
-      x: 0.5,
-      y: 0.5,
-      text: 'Not available',
-      showarrow: false,
-      font: {
-        color: 'black',
-        size: 32,
-      }
-    }];
-  }
-
-  return layout;
-};
-
-const getBoxplotChartLayout = () => {
-  const layout = {
-    autosize: !isSmallScreen(),
-    modebar: {
-      orientation: 'v',
-    },
-    yaxis: {
-      type: getScale().yaxis,
-      title: getYLabel(),
-      tickformat: '.1e',
-      gridcolor: '#ffffff',
-    },
-    xaxis: {
-      tickangle: -60,
-    },
-    showlegend: false,
-    title: `${state().objective}<br />Data: ${state().dataset}`,
-    plot_bgcolor: '#e5ecf6',
-  };
-
-  if (isSmallScreen()) {
-    layout.width = 900;
-    layout.height = window.screen.availHeight - 200;
-    layout.dragmode = false;
-  }
-
-  return layout;
-};
-
-const getYLabel = () => {
-  switch(state('plot_kind')) {
-    case 'objective_curve':
-      return 'F(x)';
-    case 'suboptimality_curve':
-      return 'F(x) - F(x*)';
-    case 'relative_suboptimality_curve':
-      return 'F(x) - F(x*) / F(x0) - F(x*)'
-    case 'bar_chart':
-      return 'Time [sec]';
-    case 'boxplot':
-      return state('yaxis_type') === 'time' ?
-          'Time [sec]'
-          : (state('xaxis_type') === "Solver" ? "Final " : "") + state('objective_column');
-    default:
-      return 'unknown';
-  }
-};
-
-/**
- * Returns true if sampling strategy 'Iteration' value is in data
- *
- * @returns {boolean}
- */
-const isIterationSamplingStrategy = () => {
-  let options = new Set(['Time']);
-  // get solvers run for selected (dataset, objective, objective colum)
-  // and select their unique sampling strategies
-  getSolvers().forEach(solver => options.add(data().solvers[solver].sampling_strategy));
-
-  return options.has('Iteration')
-};
 
 /**
  * Hide an HTML element by applying a none value to its display style property.
@@ -4041,18 +4046,18 @@ const show = (HTMLElements, style = 'initial') => {
 };
 
 /*
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * MANAGE HIDDEN SOLVERS
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * MANAGE HIDDEN CURVES
  *
- * Functions to hide/display and memorize solvers which were clicked
- * by user on the legend of the plot.
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Functions to hide/display and memorize curves which
+ * were clicked by user on the legend of the plot.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
-const getSolverFromEvent = event => {
+const getCurveFromEvent = event => {
   const target = event.currentTarget;
 
   for (let i = 0; i < target.children.length; i++) {
-    if (target.children[i].className === 'solver') {
+    if (target.children[i].className === 'curve') {
       return target.children[i].firstChild.nodeValue;
     }
   }
@@ -4060,39 +4065,39 @@ const getSolverFromEvent = event => {
   return null;
 };
 
-const purgeHiddenSolvers = () => setState({hidden_solvers: []});
+const purgeHiddenCurves = () => setState({hidden_curves: []});
 
-const hideAllSolversExcept = solver => {setState({hidden_solvers: getSolvers().filter(elmt => elmt !== solver)})};
+const hideAllCurvesExcept = curve => {setState({hidden_curves: getCurves().filter(elmt => elmt !== curve)})};
 
-const hideSolver = solver => isVisible(solver) ? setState({hidden_solvers: [...state().hidden_solvers, solver]}) : null;
+const hideCurve = curve => isVisible(curve) ? setState({hidden_curves: [...state().hidden_curves, curve]}) : null;
 
-const showSolver = solver => setState({hidden_solvers: state().hidden_solvers.filter(hidden => hidden !== solver)});
+const showCurve = curve => setState({hidden_curves: state().hidden_curves.filter(hidden => hidden !== curve)});
 
 /**
- * Add or remove solver name from the list of hidden solvers.
+ * Add or remove curve name from the list of hidden curves.
  *
- * @param {String} solver
+ * @param {String} curve
  * @returns {void}
  */
-const handleSolverClick = solver => {
-  if (!isVisible(solver)) {
-    showSolver(solver);
+const handleCurveClick = curve => {
+  if (!isVisible(curve)) {
+    showCurve(curve);
 
     return;
   }
 
-  hideSolver(solver);
+  hideCurve(curve);
 };
 
-const handleSolverDoubleClick = solver => {
-  // If all solvers except one are hidden, so double click should show all solvers
-  if (state().hidden_solvers.length === getSolvers().length - 1) {
-    purgeHiddenSolvers();
+const handleCurveDoubleClick = curve => {
+  // If all curves except one are hidden, so double click should show all curves
+  if (state().hidden_curves.length === getCurves().length - 1) {
+    purgeHiddenCurves();
 
     return;
   }
 
-  hideAllSolversExcept(solver);
+  hideAllCurvesExcept(curve);
 };
 
 /*
@@ -4109,8 +4114,7 @@ const handleSolverDoubleClick = solver => {
  */
 const renderLegend = () => {
   const legendContainer = document.getElementById('legend_container')
-
-  if (!isChart(['objective_curve', 'suboptimality_curve', 'relative_suboptimality_curve'])) {
+  if (!isChart('scatter')) {
     hide(legendContainer);
     return;
   } else {
@@ -4120,41 +4124,43 @@ const renderLegend = () => {
   const legend = document.getElementById('plot_legend');
 
   legend.innerHTML = '';
-  const solversDescription = window.metadata["solvers_description"];
+  const curvesDescription = window.metadata["solvers_description"];
 
-  getSolvers().forEach(solver => {
-    const color = data().solvers[solver].color;
-    const symbolNumber = data().solvers[solver].marker;
+  getCurves().forEach(curve => {
+    const curve_data = data(curve);
+    const color = curve_data.color;
+    const symbolNumber = curve_data.marker;
 
-    let legendItem = createLegendItem(solver, color, symbolNumber);
+    let legendItem = createLegendItem(curve, color, symbolNumber);
 
     // preserve compatibility with prev version
-    if(solversDescription === null || solversDescription === undefined) {
+    if(curvesDescription === null || curvesDescription === undefined) {
       legend.appendChild(legendItem);
       return;
     }
 
-    let payload = {
-      description: solversDescription[solver],
-    }
-
-    legend.appendChild(
-      createSolverDescription(legendItem, payload)
+    let payload = createSolverDescription(
+      legendItem, {
+        description: curvesDescription[curve],
+      }
     );
+    if (payload !== undefined) {
+      legend.appendChild(payload);
+    }
   });
 }
 
 /**
- * Creates a legend item which contains the solver name,
- * the solver marker as an SVG and an horizontal bar with
- * the solver color.
+ * Creates a legend item which contains the curve name,
+ * the curve marker as an SVG and an horizontal bar with
+ * the curve color.
  *
- * @param {String} solver
+ * @param {String} curve
  * @param {String} color
  * @param {int} symbolNumber
- * @retuns {HTMLElement}
+ * @returns {HTMLElement}
  */
-const createLegendItem = (solver, color, symbolNumber) => {
+const createLegendItem = (curve, color, symbolNumber) => {
   // Create item container
   const item = document.createElement('div');
   item.style.display = 'flex';
@@ -4164,46 +4170,46 @@ const createLegendItem = (solver, color, symbolNumber) => {
   item.style.cursor = 'pointer';
   item.className = 'bg-white py-1 px-4 shadow-sm mt-2 rounded'
 
-  if (!isVisible(solver)) {
+  if (!isVisible(curve)) {
     item.style.opacity = 0.5;
   }
 
-  // Click on a solver in the legend
+  // Click on a curve in the legend
   item.addEventListener('click', event => {
-    solver = getSolverFromEvent(event);
+    curve = getCurveFromEvent(event);
 
-    if (!getSolvers().includes(solver)) {
-      console.error('An invalid solver has been handled during the click event.');
+    if (!getCurves().includes(curve)) {
+      console.error('An invalid curve has been handled during the click event.');
 
       return;
     }
 
     // In javascript we must simulate double click.
-    // So first click is handled and kept in memory (window.clickedSolver)
+    // So first click is handled and kept in memory (window.clickedCurve)
     // during 500ms, if nothing else happen timeout will execute
     // single click function. However, if an other click happen during this
     // 500ms, it clears the timeout and execute the double click function.
-    if (!window.clickedSolver) {
-      window.clickedSolver = solver;
+    if (!window.clickedCurve) {
+      window.clickedCurve = curve;
 
       // Timeout will execute single click function after 500ms
       window.clickedTimeout = setTimeout(() => {
-        window.clickedSolver = null;
+        window.clickedCurve = null;
 
-        handleSolverClick(solver);
+        handleCurveClick(curve);
       }, 500);
-    } else if (window.clickedSolver === solver) {
+    } else if (window.clickedCurve === curve) {
       clearTimeout(window.clickedTimeout);
-      window.clickedSolver = null;
-      handleSolverDoubleClick(solver);
+      window.clickedCurve = null;
+      handleCurveDoubleClick(curve);
     }
   });
 
-  // Create the HTML text node for the solver name in the legend
+  // Create the HTML text node for the curve name in the legend
   const textContainer = document.createElement('div');
   textContainer.style.marginLeft = '0.5rem';
-  textContainer.className = 'solver';
-  textContainer.appendChild(document.createTextNode(solver));
+  textContainer.className = 'curve';
+  textContainer.appendChild(document.createTextNode(curve));
 
   // Create the horizontal bar in the legend to represent the curve
   const hBar = document.createElement('div');
@@ -4225,14 +4231,14 @@ const createLegendItem = (solver, color, symbolNumber) => {
 
 function createSolverDescription(legendItem, { description }) {
   if (description === null || description === undefined || description === "")
-    description = "No description provided";
+    return legendItem;
 
   let descriptionContainer = document.createElement("div");
-  descriptionContainer.setAttribute("class", "solver-description-container")
+  descriptionContainer.setAttribute("class", "curve-description-container")
 
   descriptionContainer.innerHTML = `
-  <div class="solver-description-content text-sm">
-    <span class="solver-description-body">${description}</span>
+  <div class="curve-description-content text-sm">
+    <span class="curve-description-body">${description}</span>
   </div>
   `;
 

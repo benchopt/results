@@ -875,14 +875,14 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
   <a id="top"></a>
 <h1>
   <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
-  Benchopt results: 2206-13424
-  <a href="https://arxiv.org/pdf/2206.13424">
-      <i class="fa-solid fa-globe"></i>
+  Benchopt results: nanogpt
+  <a href="https://github.com/tomMoral/benchmark_nanogpt">
+      <i class="fab fa-github-square"></i>
   </a>
 </h1>
 
-<p><em>Last updated: 2025-12-09 06:40</em>
-  with <strong>6</strong> result files in total. <br>
+<p><em>Last updated: 2025-12-09 06:10</em>
+  with <strong>1</strong> result files in total. <br>
 </p>
 
 <div class="menu" style="padding-left: 0px;">
@@ -893,8 +893,6 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
       <option value=""> Any </option>
         
           <option value="<b>cpu</b>: 10"> 10 </option>
-        
-          <option value="<b>cpu</b>: 80"> 80 </option>
     </select>
     <label for=select_ram(GB) style="padding-left: 20px; color: #333">
        RAM (GB)
@@ -902,9 +900,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
     <select id=select_ram(GB) onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
         
-          <option value="<b>ram (GB)</b>: 187"> 187 </option>
-        
-          <option value="<b>ram (GB)</b>: 188"> 188 </option>
+          <option value="<b>ram (GB)</b>: 502"> 502 </option>
     </select>
     <label for=select_cuda style="padding-left: 20px; color: #333">
        CUDA
@@ -912,7 +908,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
     <select id=select_cuda onchange="change(['cpu', 'ram (GB)', 'cuda'])">
       <option value=""> Any </option>
         
-          <option value="<b>cuda</b>: Tesla V100-SXM2-16GB: cuda_11.4"> Tesla V100-SXM2-16GB: cuda_11.4 </option>
+          <option value="<b>cuda</b>: NVIDIA H100 80GB HBM3: cuda_12.8"> NVIDIA H100 80GB HBM3: cuda_12.8 </option>
     </select>
   </div>
 
@@ -928,33 +924,18 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
 <tbody>
   <tr>
     <td class="fname">
-      <a href="2206-13424_2206-13424_lasso.html">
+      <a href="benchmark_nanogpt_benchmark_nanogpt_benchopt_run_2025-10-31_13h48m48.html">
         
-        2206-13424 2206-13424 lasso
+        nanogpt 2025-10-31 13h48m48
       </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_lasso.csv" data-html="2206-13424_2206-13424_lasso.html" style="display:none;">
+      <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_nanogpt_benchopt_run_2025-10-31_13h48m48.parquet" data-html="benchmark_nanogpt_benchmark_nanogpt_benchopt_run_2025-10-31_13h48m48.html" style="display:none;">
     </td>
     <td class="datasets">
     <ul style="list-style-type: none; margin-top: 0;">
       <div class=dataset>
         
-          Libsvm
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=rcv1.binary </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=news20.binary </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=YearPredictionMSD </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          Meg
+          Fine-web
+          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">debug=False,n_chunks=4 </span> </li>
         
       </div>
     </ul>
@@ -971,432 +952,29 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
               
           </li>
           <li>
-            <b>RAM (GB)</b>: 187
+            <b>RAM (GB)</b>: 502
           </li>
           <li>
-            <b>CUDA</b>: Tesla V100-SXM2-16GB: cuda_11.4
+            <b>CUDA</b>: NVIDIA H100 80GB HBM3: cuda_12.8
           </li>
 
         <!--Case where sub infos are available but somehow main infos are not-->
         <div id=subinfo0 style="display:none;">
               <li>
-                <b>platform</b>: Linux4.18.0-305.40.2.el8_4.x86_64-x86_64
+                <b>platform</b>: Linux5.14.0-427.76.1.el9_4.x86_64-x86_64
               </li>
               <li>
-                <b>processor</b>: Intel(R) Xeon(R) Gold 6248 CPU @ 2.50GHz
+                <b>processor</b>: Intel(R) Xeon(R) Platinum 8468
               </li>
         </div>
       </ul>
 
     </td>
     <td class="buttons" style='text-align: center'>
-      <a href="2206-13424_2206-13424_lasso.html">
+      <a href="benchmark_nanogpt_benchmark_nanogpt_benchopt_run_2025-10-31_13h48m48.html">
         <button class="btn"><i class="fas fa-chart-line"></i></button>
       </a>
-      <a href="outputs/2206-13424_lasso.csv">
-        <button class="btn"><i class="fa fa-download"></i></button>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td class="fname">
-      <a href="2206-13424_2206-13424_logreg_l1.html">
-        
-        2206-13424 logreg l1
-      </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_logreg_l1.csv" data-html="2206-13424_2206-13424_logreg_l1.html" style="display:none;">
-    </td>
-    <td class="datasets">
-    <ul style="list-style-type: none; margin-top: 0;">
-      <div class=dataset>
-        
-          Libsvm
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=rcv1.binary </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=news20.binary </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=gisette </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=colon-cancer </span> </li>
-        
-      </div>
-    </ul>
-
-    </td>
-    
-    <td class="sysinfo">
-      <ul style="list-style-type: none; margin-top: 0;">
-          <li>
-            <b>CPU</b>: 10
-              <button data-idx=1 id=btn_subinfo1 class="button buttoncent" style="float:right;">
-                <i class='fas fa-plus-circle'></i>
-              </button>
-              
-          </li>
-          <li>
-            <b>RAM (GB)</b>: 187
-          </li>
-          <li>
-            <b>CUDA</b>: Tesla V100-SXM2-16GB: cuda_11.4
-          </li>
-
-        <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo1 style="display:none;">
-              <li>
-                <b>platform</b>: Linux4.18.0-305.40.2.el8_4.x86_64-x86_64
-              </li>
-              <li>
-                <b>processor</b>: Intel(R) Xeon(R) Gold 6248 CPU @ 2.50GHz
-              </li>
-        </div>
-      </ul>
-
-    </td>
-    <td class="buttons" style='text-align: center'>
-      <a href="2206-13424_2206-13424_logreg_l1.html">
-        <button class="btn"><i class="fas fa-chart-line"></i></button>
-      </a>
-      <a href="outputs/2206-13424_logreg_l1.csv">
-        <button class="btn"><i class="fa fa-download"></i></button>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td class="fname">
-      <a href="2206-13424_2206-13424_logreg_l2.html">
-        
-        2206-13424 logreg l2
-      </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_logreg_l2.csv" data-html="2206-13424_2206-13424_logreg_l2.html" style="display:none;">
-    </td>
-    <td class="datasets">
-    <ul style="list-style-type: none; margin-top: 0;">
-      <div class=dataset>
-        
-          Adult
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">scaled=True </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">scaled=False </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          Ijcnn1
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">scaled=True </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">scaled=False </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          Madelon
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">scaled=True </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">scaled=False </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          News20
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">scaled=True </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">scaled=False </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          Rcv1
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">scaled=True </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">scaled=False </span> </li>
-        
-      </div>
-    </ul>
-
-    </td>
-    
-    <td class="sysinfo">
-      <ul style="list-style-type: none; margin-top: 0;">
-          <li>
-            <b>CPU</b>: 10
-              <button data-idx=2 id=btn_subinfo2 class="button buttoncent" style="float:right;">
-                <i class='fas fa-plus-circle'></i>
-              </button>
-              
-          </li>
-          <li>
-            <b>RAM (GB)</b>: 187
-          </li>
-          <li>
-            <b>CUDA</b>: Tesla V100-SXM2-16GB: cuda_11.4
-          </li>
-
-        <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo2 style="display:none;">
-              <li>
-                <b>platform</b>: Linux4.18.0-305.40.2.el8_4.x86_64-x86_64
-              </li>
-              <li>
-                <b>processor</b>: Intel(R) Xeon(R) Gold 6248 CPU @ 2.50GHz
-              </li>
-        </div>
-      </ul>
-
-    </td>
-    <td class="buttons" style='text-align: center'>
-      <a href="2206-13424_2206-13424_logreg_l2.html">
-        <button class="btn"><i class="fas fa-chart-line"></i></button>
-      </a>
-      <a href="outputs/2206-13424_logreg_l2.csv">
-        <button class="btn"><i class="fa fa-download"></i></button>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td class="fname">
-      <a href="2206-13424_2206-13424_mcp.html">
-        
-        2206-13424 2206-13424 mcp
-      </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_mcp.csv" data-html="2206-13424_2206-13424_mcp.html" style="display:none;">
-    </td>
-    <td class="datasets">
-    <ul style="list-style-type: none; margin-top: 0;">
-      <div class=dataset>
-        
-          Libsvm
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=colon-cancer </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          Simulated
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=2000,n_samples=500,scale=True </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=2000,n_samples=500,scale=False </span> </li>
-        
-      </div>
-    </ul>
-
-    </td>
-    
-    <td class="sysinfo">
-      <ul style="list-style-type: none; margin-top: 0;">
-          <li>
-            <b>CPU</b>: 10
-              <button data-idx=3 id=btn_subinfo3 class="button buttoncent" style="float:right;">
-                <i class='fas fa-plus-circle'></i>
-              </button>
-              
-          </li>
-          <li>
-            <b>RAM (GB)</b>: 187
-          </li>
-          <li>
-            <b>CUDA</b>: Tesla V100-SXM2-16GB: cuda_11.4
-          </li>
-
-        <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo3 style="display:none;">
-              <li>
-                <b>platform</b>: Linux4.18.0-305.40.2.el8_4.x86_64-x86_64
-              </li>
-              <li>
-                <b>processor</b>: Intel(R) Xeon(R) Gold 6248 CPU @ 2.50GHz
-              </li>
-        </div>
-      </ul>
-
-    </td>
-    <td class="buttons" style='text-align: center'>
-      <a href="2206-13424_2206-13424_mcp.html">
-        <button class="btn"><i class="fas fa-chart-line"></i></button>
-      </a>
-      <a href="outputs/2206-13424_mcp.csv">
-        <button class="btn"><i class="fa fa-download"></i></button>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td class="fname">
-      <a href="2206-13424_2206-13424_ridge.html">
-        
-        2206-13424 2206-13424 ridge
-      </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_ridge.csv" data-html="2206-13424_2206-13424_ridge.html" style="display:none;">
-    </td>
-    <td class="datasets">
-    <ul style="list-style-type: none; margin-top: 0;">
-      <div class=dataset>
-        
-          Libsvm
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=bodyfat </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=leukemia </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">dataset=gisette </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          Simulated
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=5000,n_samples=100,rho=0 </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=5000,n_samples=100,rho=0.6 </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=1000,n_samples=500,rho=0 </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">n_features=1000,n_samples=500,rho=0.6 </span> </li>
-        
-      </div>
-    </ul>
-
-    </td>
-    
-    <td class="sysinfo">
-      <ul style="list-style-type: none; margin-top: 0;">
-          <li>
-            <b>CPU</b>: 80
-              <button data-idx=4 id=btn_subinfo4 class="button buttoncent" style="float:right;">
-                <i class='fas fa-plus-circle'></i>
-              </button>
-              
-          </li>
-          <li>
-            <b>RAM (GB)</b>: 188
-          </li>
-
-        <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo4 style="display:none;">
-              <li>
-                <b>platform</b>: Linux4.18.0-305.40.2.el8_4.x86_64-x86_64
-              </li>
-              <li>
-                <b>processor</b>: Intel(R) Xeon(R) Gold 6248 CPU @ 2.50GHz
-              </li>
-        </div>
-      </ul>
-
-    </td>
-    <td class="buttons" style='text-align: center'>
-      <a href="2206-13424_2206-13424_ridge.html">
-        <button class="btn"><i class="fas fa-chart-line"></i></button>
-      </a>
-      <a href="outputs/2206-13424_ridge.csv">
-        <button class="btn"><i class="fa fa-download"></i></button>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td class="fname">
-      <a href="2206-13424_2206-13424_tv_1d.html">
-        
-        2206-13424 tv 1d
-      </a>
-      <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_tv_1d.csv" data-html="2206-13424_2206-13424_tv_1d.html" style="display:none;">
-    </td>
-    <td class="datasets">
-    <ul style="list-style-type: none; margin-top: 0;">
-      <div class=dataset>
-        
-          Simulated blocked
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">mu=0,n_features=500,n_samples=400,num_block=10,sigma=0.1,type_A=random </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">mu=0,n_features=500,n_samples=400,num_block=50,sigma=0.1,type_A=random </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">mu=0,n_features=500,n_samples=750,num_block=10,sigma=0.1,type_A=random </span> </li>
-        
-      </div>
-      <div class=dataset>
-        
-          <li><span style="font-size: 80%;padding-left:15px;padding-bottom:5px;">mu=0,n_features=500,n_samples=750,num_block=50,sigma=0.1,type_A=random </span> </li>
-        
-      </div>
-    </ul>
-
-    </td>
-    
-    <td class="sysinfo">
-      <ul style="list-style-type: none; margin-top: 0;">
-          <li>
-            <b>CPU</b>: 10
-              <button data-idx=5 id=btn_subinfo5 class="button buttoncent" style="float:right;">
-                <i class='fas fa-plus-circle'></i>
-              </button>
-              
-          </li>
-          <li>
-            <b>RAM (GB)</b>: 187
-          </li>
-          <li>
-            <b>CUDA</b>: Tesla V100-SXM2-16GB: cuda_11.4
-          </li>
-
-        <!--Case where sub infos are available but somehow main infos are not-->
-        <div id=subinfo5 style="display:none;">
-              <li>
-                <b>platform</b>: Linux4.18.0-305.40.2.el8_4.x86_64-x86_64
-              </li>
-              <li>
-                <b>processor</b>: Intel(R) Xeon(R) Gold 6248 CPU @ 2.50GHz
-              </li>
-        </div>
-      </ul>
-
-    </td>
-    <td class="buttons" style='text-align: center'>
-      <a href="2206-13424_2206-13424_tv_1d.html">
-        <button class="btn"><i class="fas fa-chart-line"></i></button>
-      </a>
-      <a href="outputs/2206-13424_tv_1d.csv">
+      <a href="outputs/benchmark_nanogpt_benchopt_run_2025-10-31_13h48m48.parquet">
         <button class="btn"><i class="fa fa-download"></i></button>
       </a>
     </td>

@@ -717,12 +717,12 @@ input:checked+.slider:before {
 }
 
 /* Description solver when hovered */
-.solver-description-container {
+.curve-description-container {
   position: relative;
   display: inline-flex;
 }
 
-.solver-description-content {
+.curve-description-content {
   display: flex;
   flex-direction: column;
   visibility: hidden;
@@ -747,12 +747,12 @@ input:checked+.slider:before {
 }
 
 /* Show description when hovered */
-.solver-description-container:hover .solver-description-content {
+.curve-description-container:hover .curve-description-content {
   visibility: visible;
 }
 
 /*Arrow at the bottom of the description*/
-.solver-description-container .solver-description-content::after {
+.curve-description-container .curve-description-content::after {
   content: " ";
   position: absolute;
   top: 100%;
@@ -763,12 +763,12 @@ input:checked+.slider:before {
   border-color: rgb(55 65 81) transparent transparent transparent;
 }
 
-.solver-description-title {
+.curve-description-title {
   margin-bottom: 1em;
   font-weight: bolder;
 }
 
-.solver-description-body {
+.curve-description-body {
   max-height: 450px;
   overflow-y: auto;
 }
@@ -870,9 +870,9 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
 <a id="top"></a>
 <h1><a href="https://benchopt.github.io/">Benchopt</a> benchmark results</h1>
 
-<p><em>Last updated: 2025-04-03 08:58</em></p>
+<p><em>Last updated: 2025-12-09 07:00</em></p>
 <p>
-    <strong>18</strong> benchmarks in total.
+    <strong>19</strong> benchmarks in total.
 </p>
 
 <h2>Available Benchmarks</h2>
@@ -890,6 +890,13 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
         <h2>ConvNet classification fitting</h2>
         <p>3 files available</p>
         <a href="benchmark_resnet_classif.html">View more</a>
+      </figcaption>
+    </figure>
+    <figure class="effect-ruby">
+      <figcaption>
+        <h2>Deep Learning Optimization with NanoGPT</h2>
+        <p>1 files available</p>
+        <a href="benchmark_nanogpt.html">View more</a>
       </figcaption>
     </figure>
     <figure class="effect-ruby">
