@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="utf-8"/>
@@ -851,6 +853,54 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
 {
     display: none;
 }
+
+/* Fixed aspect ratio for plot containers on mobile devices for better readability */
+/* plot_with_legend_container is used for scatter plots and is always present */
+
+/* Mobile portrait: Use taller aspect ratio to fill vertical space */
+@media (max-width: 767px) and (orientation: portrait) {
+  #plot_with_legend_container {
+    aspect-ratio: 3 / 4; /* Taller aspect ratio for portrait */
+    min-height: 400px;
+    max-height: 70vh;
+  }
+
+  #plot_container.js-plotly-plot {
+    aspect-ratio: 3 / 4;
+    min-height: 400px;
+    max-height: 70vh;
+  }
+}
+
+/* Mobile landscape: Use wider aspect ratio */
+@media (max-width: 767px) and (orientation: landscape) {
+  #plot_with_legend_container {
+    aspect-ratio: 4 / 3;
+    min-height: 300px;
+    max-height: 80vh; /* Use most of screen height in landscape */
+  }
+
+  #plot_container.js-plotly-plot {
+    aspect-ratio: 4 / 3;
+    min-height: 300px;
+    max-height: 80vh;
+  }
+}
+
+/* Desktop: Remove aspect ratio constraints for flexibility */
+@media (min-width: 768px) {
+  #plot_with_legend_container {
+    aspect-ratio: auto;
+    min-height: 600px;
+    max-height: none;
+  }
+
+  #plot_container.js-plotly-plot {
+    aspect-ratio: auto;
+    min-height: 0;
+    max-height: none;
+  }
+}
 </style>
 
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
@@ -875,13 +925,13 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
   <a id="top"></a>
 <h1>
   <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
-  Benchopt results: 2206-13424
+  Benchopt results: NeurIPS 22 Benchopt results
   <a href="https://arxiv.org/pdf/2206.13424">
       <i class="fa-solid fa-globe"></i>
   </a>
 </h1>
 
-<p><em>Last updated: 2025-12-12 22:04</em>
+<p><em>Last updated: 2026-05-05 16:48</em>
   with <strong>6</strong> result files in total. <br>
 </p>
 
@@ -930,7 +980,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
     <td class="fname">
       <a href="2206-13424_2206-13424_lasso.html">
         
-        2206-13424 2206-13424 lasso
+        2206-13424 lasso
       </a>
       <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_lasso.csv" data-html="2206-13424_2206-13424_lasso.html" style="display:none;">
     </td>
@@ -1002,7 +1052,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
     <td class="fname">
       <a href="2206-13424_2206-13424_logreg_l1.html">
         
-        2206-13424 logreg l1
+        logreg l1
       </a>
       <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_logreg_l1.csv" data-html="2206-13424_2206-13424_logreg_l1.html" style="display:none;">
     </td>
@@ -1074,7 +1124,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
     <td class="fname">
       <a href="2206-13424_2206-13424_logreg_l2.html">
         
-        2206-13424 logreg l2
+        logreg l2
       </a>
       <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_logreg_l2.csv" data-html="2206-13424_2206-13424_logreg_l2.html" style="display:none;">
     </td>
@@ -1180,7 +1230,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
     <td class="fname">
       <a href="2206-13424_2206-13424_mcp.html">
         
-        2206-13424 2206-13424 mcp
+        2206-13424 mcp
       </a>
       <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_mcp.csv" data-html="2206-13424_2206-13424_mcp.html" style="display:none;">
     </td>
@@ -1248,7 +1298,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
     <td class="fname">
       <a href="2206-13424_2206-13424_ridge.html">
         
-        2206-13424 2206-13424 ridge
+        2206-13424 ridge
       </a>
       <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_ridge.csv" data-html="2206-13424_2206-13424_ridge.html" style="display:none;">
     </td>
@@ -1333,7 +1383,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
     <td class="fname">
       <a href="2206-13424_2206-13424_tv_1d.html">
         
-        2206-13424 tv 1d
+        tv 1d
       </a>
       <input type="checkbox" name="checkfiles" data-result="outputs/2206-13424_tv_1d.csv" data-html="2206-13424_2206-13424_tv_1d.html" style="display:none;">
     </td>

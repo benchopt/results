@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="utf-8"/>
@@ -851,6 +853,54 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
 {
     display: none;
 }
+
+/* Fixed aspect ratio for plot containers on mobile devices for better readability */
+/* plot_with_legend_container is used for scatter plots and is always present */
+
+/* Mobile portrait: Use taller aspect ratio to fill vertical space */
+@media (max-width: 767px) and (orientation: portrait) {
+  #plot_with_legend_container {
+    aspect-ratio: 3 / 4; /* Taller aspect ratio for portrait */
+    min-height: 400px;
+    max-height: 70vh;
+  }
+
+  #plot_container.js-plotly-plot {
+    aspect-ratio: 3 / 4;
+    min-height: 400px;
+    max-height: 70vh;
+  }
+}
+
+/* Mobile landscape: Use wider aspect ratio */
+@media (max-width: 767px) and (orientation: landscape) {
+  #plot_with_legend_container {
+    aspect-ratio: 4 / 3;
+    min-height: 300px;
+    max-height: 80vh; /* Use most of screen height in landscape */
+  }
+
+  #plot_container.js-plotly-plot {
+    aspect-ratio: 4 / 3;
+    min-height: 300px;
+    max-height: 80vh;
+  }
+}
+
+/* Desktop: Remove aspect ratio constraints for flexibility */
+@media (min-width: 768px) {
+  #plot_with_legend_container {
+    aspect-ratio: auto;
+    min-height: 600px;
+    max-height: none;
+  }
+
+  #plot_container.js-plotly-plot {
+    aspect-ratio: auto;
+    min-height: 0;
+    max-height: none;
+  }
+}
 </style>
 
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
@@ -875,13 +925,13 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
   <a id="top"></a>
 <h1>
   <a href="index.html"><button class="btn"><i class="fa fa-home"></i></button></a>
-  Benchopt results: linear svm binary classif no intercept
+  Benchopt results: SVM Binary Classification (no intercept)
   <a href="https://github.com/benchopt/benchmark_linear_svm_binary_classif_no_intercept">
       <i class="fab fa-github-square"></i>
   </a>
 </h1>
 
-<p><em>Last updated: 2025-12-12 21:55</em>
+<p><em>Last updated: 2026-05-05 16:42</em>
   with <strong>1</strong> result files in total. <br>
 </p>
 
@@ -926,7 +976,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
     <td class="fname">
       <a href="benchmark_linear_svm_binary_classif_no_intercept_benchmark_linear_svm_binary_classif_no_intercept_benchopt_run_2021-09-14_19h14m42.html">
         
-        linear svm binary classif no intercept 2021-09-14 19h14m42
+        2021-09-14 19h14m42
       </a>
       <input type="checkbox" name="checkfiles" data-result="outputs/benchmark_linear_svm_binary_classif_no_intercept_benchopt_run_2021-09-14_19h14m42.csv" data-html="benchmark_linear_svm_binary_classif_no_intercept_benchmark_linear_svm_binary_classif_no_intercept_benchopt_run_2021-09-14_19h14m42.html" style="display:none;">
     </td>

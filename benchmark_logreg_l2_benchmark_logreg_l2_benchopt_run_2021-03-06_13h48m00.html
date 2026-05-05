@@ -10,7 +10,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
 
-        <title>Result on logreg l2 benchmark</title>
+        <title>Result on L2 Logistic Regression</title>
 
         <style>
             /*
@@ -922,6 +922,10 @@ video {
 
 .p-4 {
   padding: 1rem;
+}
+
+.p-10 {
+  padding: 2.5rem;
 }
 
 .px-8 {
@@ -1977,6 +1981,54 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
 {
     display: none;
 }
+
+/* Fixed aspect ratio for plot containers on mobile devices for better readability */
+/* plot_with_legend_container is used for scatter plots and is always present */
+
+/* Mobile portrait: Use taller aspect ratio to fill vertical space */
+@media (max-width: 767px) and (orientation: portrait) {
+  #plot_with_legend_container {
+    aspect-ratio: 3 / 4; /* Taller aspect ratio for portrait */
+    min-height: 400px;
+    max-height: 70vh;
+  }
+
+  #plot_container.js-plotly-plot {
+    aspect-ratio: 3 / 4;
+    min-height: 400px;
+    max-height: 70vh;
+  }
+}
+
+/* Mobile landscape: Use wider aspect ratio */
+@media (max-width: 767px) and (orientation: landscape) {
+  #plot_with_legend_container {
+    aspect-ratio: 4 / 3;
+    min-height: 300px;
+    max-height: 80vh; /* Use most of screen height in landscape */
+  }
+
+  #plot_container.js-plotly-plot {
+    aspect-ratio: 4 / 3;
+    min-height: 300px;
+    max-height: 80vh;
+  }
+}
+
+/* Desktop: Remove aspect ratio constraints for flexibility */
+@media (min-width: 768px) {
+  #plot_with_legend_container {
+    aspect-ratio: auto;
+    min-height: 600px;
+    max-height: none;
+  }
+
+  #plot_container.js-plotly-plot {
+    aspect-ratio: auto;
+    min-height: 0;
+    max-height: none;
+  }
+}
         </style>
     </head>
     <body>
@@ -2005,6 +2057,9 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                 </option>
                                 <option value="boxplot">
                                     Boxplot
+                                </option>
+                                <option value="table">
+                                    Table
                                 </option>
                             </select>
                         </div>
@@ -2107,6 +2162,15 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                         </select>
                                     </div>
                                 </div>
+                                <div id="bar_chart_minimize_form_group" class="mt-8 px-8">
+                                    <label for="change_bar_chart_minimize" class="block text-sm font-medium text-white">minimize</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_bar_chart_minimize" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_minimize: this.value})">
+                                                <option value="True">True</option>
+                                                <option value="False">False</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div id="boxplot-custom-params-container">
                                 <div id="boxplot_dataset_form_group" class="mt-8 px-8">
@@ -2149,6 +2213,25 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                         <select id="change_boxplot_Y_axis" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({boxplot_Y_axis: this.value})">
                                                 <option value="Time">Time</option>
                                                 <option value="Objective Metric">Objective Metric</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="table-custom-params-container">
+                                <div id="table_dataset_form_group" class="mt-8 px-8">
+                                    <label for="change_table_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_table_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({table_dataset: this.value})">
+                                                <option value="rcv1">rcv1</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="table_objective_form_group" class="mt-8 px-8">
+                                    <label for="change_table_objective" class="block text-sm font-medium text-white">objective</label>
+                                    <div class="mt-1 rounded-md shadow-sm">
+                                        <select id="change_table_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({table_objective: this.value})">
+                                                <option value="L2 Logistic Regression[fit_intercept=False,lmbd=1.0]">L2 Logistic Regression[fit_intercept=False,lmbd=1.0]</option>
+                                                <option value="L2 Logistic Regression[fit_intercept=False,lmbd=0.01]">L2 Logistic Regression[fit_intercept=False,lmbd=0.01]</option>
                                         </select>
                                     </div>
                                 </div>
@@ -2244,6 +2327,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                         <option value="objective_curve">objective_curve</option>
                                         <option value="bar_chart">bar_chart</option>
                                         <option value="boxplot">boxplot</option>
+                                        <option value="table">table</option>
                                     </select>
                                 </div>
                             </div>
@@ -2346,6 +2430,15 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                             </select>
                                         </div>
                                     </div>
+                                    <div id="bar_chart_minimize_form_group" class="mt-8 px-8">
+                                        <label for="change_bar_chart_minimize" class="block text-sm font-medium text-white">minimize</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_bar_chart_minimize" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({bar_chart_minimize: this.value})">
+                                                    <option value="True">True</option>
+                                                    <option value="False">False</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="boxplot-custom-params-container">
                                     <div id="boxplot_dataset_form_group" class="mt-8 px-8">
@@ -2392,6 +2485,25 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                                         </div>
                                     </div>
                                 </div>
+                                <div id="table-custom-params-container">
+                                    <div id="table_dataset_form_group" class="mt-8 px-8">
+                                        <label for="change_table_dataset" class="block text-sm font-medium text-white">dataset</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_table_dataset" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({table_dataset: this.value})">
+                                                    <option value="rcv1">rcv1</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="table_objective_form_group" class="mt-8 px-8">
+                                        <label for="change_table_objective" class="block text-sm font-medium text-white">objective</label>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <select id="change_table_objective" class="focus:ring-blue-500 focus:border-blue-500 block w-full h-8 px-4 sm:text-sm border-gray-300 rounded-md" onchange="setState({table_objective: this.value})">
+                                                    <option value="L2 Logistic Regression[fit_intercept=False,lmbd=1.0]">L2 Logistic Regression[fit_intercept=False,lmbd=1.0]</option>
+                                                    <option value="L2 Logistic Regression[fit_intercept=False,lmbd=0.01]">L2 Logistic Regression[fit_intercept=False,lmbd=0.01]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="flex items-center justify-between mt-8 px-8">
                                 <a href="#"
@@ -2410,7 +2522,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                 <!-- Page heading -->
                 <div class="px-4 pt-4 pb-1 md:py-4 lg:flex lg:items-center lg:justify-between">
                     <div class="flex-1 min-w-0">
-                        <h2 class="w-full text-center lg:text-left text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Result on logreg l2 benchmark</h2>
+                        <h2 class="w-full text-center lg:text-left text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Result on L2 Logistic Regression</h2>
                         <div class="mt-1 flex flex-wrap justify-center lg:justify-start sm:mt-0">
                             <div class="mt-2 sm:mr-6 hidden md:flex items-center text-sm text-gray-500">
                                 <span class="font-bold"></span>CPU : 16
@@ -2482,8 +2594,12 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                 </div>
 
                 <!-- Plot -->
+                <div id="table_container" class="flex flex-col flex-1 gap-4 p-10">
+                </div>
+                <div id="image_container" class="flex flex-col flex-1 p-10">
+                </div>
                 <div id="plot_container" class="flex flex-col flex-1">
-                    <div id="scatter_plot_container" class="flex-1"></div>
+                    <div id="plot_with_legend_container" class="flex-1"></div>
                     <div id="legend_container" class="pb-10 bg-slate-200">
                         <div class="px-10 mb-4 mt-4 text-base font-medium text-gray-700">
                             Solvers
@@ -2580,7 +2696,7 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
         </script>
         <!-- Manage plot -->
         <script>
-            window._custom_plots = {"objective_curve": {"objective_curve_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1 ", "xlabel": "Time", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [3.562600000006633e-05, 0.2265147679999999, 0.3453135979999999, 0.4296883890000003, 0.5379637769999999, 0.74391535, 1.0666492639999996, 1.4783130710000003, 2.122262517, 2.9958993560000007, 4.6166071980000005, 6.865518301000002, 10.205826685999998, 15.256551805, 23.555126322000007, 36.591378593, 52.529951992, 84.131797292], "y": [9558.08513461421, 9558.085134614212, 8546.212498123754, 7834.32609884987, 7303.457589631526, 6562.346965220361, 5880.918156952608, 5352.945716714797, 4919.174162714339, 4596.179150252831, 4375.2108637753645, 4247.865209733858, 4184.682759196329, 4157.911083188013, 4149.567664179916, 4147.887337046197, 4147.715453271052, 4147.708963583843], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)", "marker": 32, "q1": [3.562600000006633e-05, 0.2265147679999999, 0.3453135979999999, 0.4296883890000003, 0.5379637769999999, 0.74391535, 1.0666492639999996, 1.4783130710000003, 2.122262517, 2.9958993560000007, 4.6166071980000005, 6.865518301000002, 10.205826685999998, 15.256551805, 23.555126322000007, 36.591378593, 52.529951992, 84.131797292], "q9": [3.562600000006633e-05, 0.2265147679999999, 0.3453135979999999, 0.4296883890000003, 0.5379637769999999, 0.74391535, 1.0666492639999996, 1.4783130710000003, 2.122262517, 2.9958993560000007, 4.6166071980000005, 6.865518301000002, 10.205826685999998, 15.256551805, 23.555126322000007, 36.591378593, 52.529951992, 84.131797292]}, {"x": [4.290000000040095e-05, 1.857385006, 2.4705843509999994, 3.192677806999999, 4.365755565999999, 5.400215383999999, 7.969023621000002, 10.624087952000004, 15.470778442000004, 23.304151087, 33.475050266], "y": [4382.979655809351, 4378.117479046834, 4155.555658709409, 4147.991999666088, 4147.72337257827, 4147.708938616195, 4147.7089053519685, 4147.708905345791, 4147.708905345792, 4147.708905345793, 4147.708905345793], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)", "marker": 33, "q1": [4.290000000040095e-05, 1.857385006, 2.4705843509999994, 3.192677806999999, 4.365755565999999, 5.400215383999999, 7.969023621000002, 10.624087952000004, 15.470778442000004, 23.304151087, 33.475050266], "q9": [4.290000000040095e-05, 1.857385006, 2.4705843509999994, 3.192677806999999, 4.365755565999999, 5.400215383999999, 7.969023621000002, 10.624087952000004, 15.470778442000004, 23.304151087, 33.475050266]}, {"x": [1.854799999989609e-05, 1.1848926689999928, 1.412041666999997, 1.6364116929999994, 1.9875058269999928, 2.449975058000007, 3.485309688000001, 4.388194416999994, 6.619891354000004, 9.038471369000009, 13.37272768599999, 19.064550994, 34.78184416300002, 73.095573], "y": [4800.587643514304, 4786.997503860613, 4193.3219401350125, 4152.881443981638, 4148.226311727887, 4147.715307806475, 4147.708924321047, 4147.70890535422, 4147.708905345791, 4147.708905345792, 4147.708905345793, 4147.708905345793, 4147.708905345793, 4147.708905345793], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)", "marker": 34, "q1": [1.854799999989609e-05, 1.1848926689999928, 1.412041666999997, 1.6364116929999994, 1.9875058269999928, 2.449975058000007, 3.485309688000001, 4.388194416999994, 6.619891354000004, 9.038471369000009, 13.37272768599999, 19.064550994, 34.78184416300002, 73.095573], "q9": [1.854799999989609e-05, 1.1848926689999928, 1.412041666999997, 1.6364116929999994, 1.9875058269999928, 2.449975058000007, 3.485309688000001, 4.388194416999994, 6.619891354000004, 9.038471369000009, 13.37272768599999, 19.064550994, 34.78184416300002, 73.095573]}, {"x": [2.546499999311891e-05, 0.0499170719999995, 0.055081659999999, 0.0604603849999989, 0.0707248289999995, 0.1095673239999968, 0.1724036589999968, 0.2605688189999995, 0.3407568110000056, 0.5683719620000005, 0.9559559190000044, 1.975753147000006, 3.3165528819999963, 6.641951849999998, 16.93520628799999, 50.272386357000016, 184.190941748], "y": [5796.853372074147, 5796.853372074147, 5255.781388314997, 4921.5120841949465, 4558.817275813866, 4319.242398687373, 4187.42408840555, 4153.007939580868, 4147.895572724647, 4147.709659775735, 4147.708905412424, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)", "marker": 35, "q1": [2.546499999311891e-05, 0.0499170719999995, 0.055081659999999, 0.0604603849999989, 0.0707248289999995, 0.1095673239999968, 0.1724036589999968, 0.2605688189999995, 0.3407568110000056, 0.5683719620000005, 0.9559559190000044, 1.975753147000006, 3.3165528819999963, 6.641951849999998, 16.93520628799999, 50.272386357000016, 184.190941748], "q9": [2.546499999311891e-05, 0.0499170719999995, 0.055081659999999, 0.0604603849999989, 0.0707248289999995, 0.1095673239999968, 0.1724036589999968, 0.2605688189999995, 0.3407568110000056, 0.5683719620000005, 0.9559559190000044, 1.975753147000006, 3.3165528819999963, 6.641951849999998, 16.93520628799999, 50.272386357000016, 184.190941748]}, {"x": [1.4614000008350558e-05, 0.2427404270000011, 0.3394601539999939, 0.4541435859999865, 0.6729320640000083, 1.1138764079999532, 1.9162894380000357, 3.2257922910000048, 5.849463737000008, 10.30620123, 18.41123095300003, 34.37856381700004, 63.95284476699993, 114.46134304999998], "y": [9558.085134614212, 9558.085134614212, 8287.541792302922, 7301.102636376684, 5972.407102910373, 4766.697452240703, 4259.095674401782, 4159.616705146109, 4150.056084509411, 4147.903462454167, 4147.719824470261, 4147.709344458664, 4147.708911379867, 4147.708905359279], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)", "marker": 36, "q1": [1.4614000008350558e-05, 0.2427404270000011, 0.3394601539999939, 0.4541435859999865, 0.6729320640000083, 1.1138764079999532, 1.9162894380000357, 3.2257922910000048, 5.849463737000008, 10.30620123, 18.41123095300003, 34.37856381700004, 63.95284476699993, 114.46134304999998], "q9": [1.4614000008350558e-05, 0.2427404270000011, 0.3394601539999939, 0.4541435859999865, 0.6729320640000083, 1.1138764079999532, 1.9162894380000357, 3.2257922910000048, 5.849463737000008, 10.30620123, 18.41123095300003, 34.37856381700004, 63.95284476699993, 114.46134304999998]}, {"x": [6.40350000367107e-05, 0.0826373050000484, 0.1200952819999656, 0.161344750000012, 0.2298427890000312, 0.3888013959999625, 0.6412742669999716, 1.0422138060000634, 1.7466813240000647, 3.114569798000048, 5.58937245900006, 9.957389368999998, 19.136565237000013, 35.251091213999985, 67.427955129, 122.391084137], "y": [4934.124218176248, 4934.124218176248, 4579.298059853, 4441.218222202277, 4277.410703625699, 4169.327881746225, 4148.820399507953, 4147.84704434722, 4147.720199499805, 4147.709043556642, 4147.708905926123, 4147.708905345924, 4147.708905345792, 4147.708905345791, 4147.708905345792, 4147.708905345792], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)", "marker": 37, "q1": [6.40350000367107e-05, 0.0826373050000484, 0.1200952819999656, 0.161344750000012, 0.2298427890000312, 0.3888013959999625, 0.6412742669999716, 1.0422138060000634, 1.7466813240000647, 3.114569798000048, 5.58937245900006, 9.957389368999998, 19.136565237000013, 35.251091213999985, 67.427955129, 122.391084137], "q9": [6.40350000367107e-05, 0.0826373050000484, 0.1200952819999656, 0.161344750000012, 0.2298427890000312, 0.3888013959999625, 0.6412742669999716, 1.0422138060000634, 1.7466813240000647, 3.114569798000048, 5.58937245900006, 9.957389368999998, 19.136565237000013, 35.251091213999985, 67.427955129, 122.391084137]}]}, "objective_curve_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Iteration": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1 ", "xlabel": "Iteration", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316, 474, 711], "y": [9558.08513461421, 9558.085134614212, 8546.212498123754, 7834.32609884987, 7303.457589631526, 6562.346965220361, 5880.918156952608, 5352.945716714797, 4919.174162714339, 4596.179150252831, 4375.2108637753645, 4247.865209733858, 4184.682759196329, 4157.911083188013, 4149.567664179916, 4147.887337046197, 4147.715453271052, 4147.708963583843], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)", "marker": 32}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42], "y": [4382.979655809351, 4378.117479046834, 4155.555658709409, 4147.991999666088, 4147.72337257827, 4147.708938616195, 4147.7089053519685, 4147.708905345791, 4147.708905345792, 4147.708905345793, 4147.708905345793], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)", "marker": 33}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 113, 244], "y": [4800.587643514304, 4786.997503860613, 4193.3219401350125, 4152.881443981638, 4148.226311727887, 4147.715307806475, 4147.708924321047, 4147.70890535422, 4147.708905345791, 4147.708905345792, 4147.708905345793, 4147.708905345793, 4147.708905345793, 4147.708905345793], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)", "marker": 34}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897, 9010, 33629], "y": [5796.853372074147, 5796.853372074147, 5255.781388314997, 4921.5120841949465, 4558.817275813866, 4319.242398687373, 4187.42408840555, 4153.007939580868, 4147.895572724647, 4147.709659775735, 4147.708905412424, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)", "marker": 35}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 932], "y": [9558.085134614212, 9558.085134614212, 8287.541792302922, 7301.102636376684, 5972.407102910373, 4766.697452240703, 4259.095674401782, 4159.616705146109, 4150.056084509411, 4147.903462454167, 4147.719824470261, 4147.709344458664, 4147.708911379867, 4147.708905359279], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)", "marker": 36}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 932, 1677, 3018], "y": [4934.124218176248, 4934.124218176248, 4579.298059853, 4441.218222202277, 4277.410703625699, 4169.327881746225, 4148.820399507953, 4147.84704434722, 4147.720199499805, 4147.709043556642, 4147.708905926123, 4147.708905345924, 4147.708905345792, 4147.708905345791, 4147.708905345792, 4147.708905345792], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)", "marker": 37}]}, "objective_curve_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1 ", "xlabel": "Time", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [1.2734999927488388e-05, 0.227890059999936, 0.334776206000015, 0.4394589879999557, 0.6684805720000213, 1.0908570549999013, 1.7886792139998988, 3.048002739000026, 5.497054534999961, 9.732811518000062, 17.411853371999996, 32.613099808000015, 59.876489511000045, 101.361731211], "y": [9471.648476232063, 9471.648476232063, 8406.889194557343, 7642.203174546468, 6597.740960832516, 5404.453079218471, 4361.80685167032, 3519.18878665665, 2817.339723150764, 2254.949509566952, 1781.655674414468, 1382.395148693308, 1053.41254177999, 802.2656456480988], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)", "marker": 32, "q1": [1.2734999927488388e-05, 0.227890059999936, 0.334776206000015, 0.4394589879999557, 0.6684805720000213, 1.0908570549999013, 1.7886792139998988, 3.048002739000026, 5.497054534999961, 9.732811518000062, 17.411853371999996, 32.613099808000015, 59.876489511000045, 101.361731211], "q9": [1.2734999927488388e-05, 0.227890059999936, 0.334776206000015, 0.4394589879999557, 0.6684805720000213, 1.0908570549999013, 1.7886792139998988, 3.048002739000026, 5.497054534999961, 9.732811518000062, 17.411853371999996, 32.613099808000015, 59.876489511000045, 101.361731211]}, {"x": [7.100099998069709e-05, 1.9452956499999916, 2.5186695969999846, 3.373080774000016, 4.138710065999987, 6.591180360999999, 8.952703001000032, 11.006528677000006, 15.328077864000022, 22.482428782, 35.983903596000005], "y": [1954.563248658216, 1883.853563319922, 1372.037210532473, 1131.209581721002, 986.7550637582434, 816.9258429791129, 689.4243331390162, 609.1826733178451, 557.6084867548767, 529.4234335067358, 516.9754129338442], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)", "marker": 33, "q1": [7.100099998069709e-05, 1.9452956499999916, 2.5186695969999846, 3.373080774000016, 4.138710065999987, 6.591180360999999, 8.952703001000032, 11.006528677000006, 15.328077864000022, 22.482428782, 35.983903596000005], "q9": [7.100099998069709e-05, 1.9452956499999916, 2.5186695969999846, 3.373080774000016, 4.138710065999987, 6.591180360999999, 8.952703001000032, 11.006528677000006, 15.328077864000022, 22.482428782, 35.983903596000005]}, {"x": [0.0008034609999754, 1.2121934250000097, 1.533822630999964, 1.7187603589999867, 1.938150525000026, 2.512671504000025, 3.2506427580000263, 4.411839353999994, 6.158570682000004, 9.227994021000027, 17.678806829999985, 21.955275966999977, 27.555583987000038, 40.78557788299997], "y": [1380.643942600313, 1399.0003962102712, 1336.3848325274598, 1084.728045820503, 964.5679198596072, 812.4942014764085, 689.9707455018273, 611.266675395649, 558.8751857829727, 530.1263049780891, 517.1865710143954, 512.881877979611, 511.6786076253197, 511.3629932579372], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)", "marker": 34, "q1": [0.0008034609999754, 1.2121934250000097, 1.533822630999964, 1.7187603589999867, 1.938150525000026, 2.512671504000025, 3.2506427580000263, 4.411839353999994, 6.158570682000004, 9.227994021000027, 17.678806829999985, 21.955275966999977, 27.555583987000038, 40.78557788299997], "q9": [0.0008034609999754, 1.2121934250000097, 1.533822630999964, 1.7187603589999867, 1.938150525000026, 2.512671504000025, 3.2506427580000263, 4.411839353999994, 6.158570682000004, 9.227994021000027, 17.678806829999985, 21.955275966999977, 27.555583987000038, 40.78557788299997]}, {"x": [0.0005471999999144, 0.0491029270000353, 0.053024884000024, 0.061086054000043, 0.0679365359999337, 0.088301122999951, 0.1320432900000696, 0.2037293749999662, 0.3278066389999594, 0.5537766659999761, 1.0178958810000722, 1.7121214649999956, 3.020960453000044, 5.338147366000044, 9.657033533000003, 17.373822493000034, 29.899411047000054, 66.755022241, 166.687488507], "y": [5343.836211784427, 5343.836211784427, 4614.1707195775125, 4107.767839341457, 3427.439177362672, 2644.096331853956, 2043.275911425266, 1492.5975332830549, 942.6542270808018, 657.8200454834508, 527.9938723195777, 512.3851659705911, 511.3386008146682, 511.29693775742805, 511.2965720449488, 511.2965718726153, 511.2965718726153, 511.2965718726153, 511.2965718726153], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)", "marker": 35, "q1": [0.0005471999999144, 0.0491029270000353, 0.053024884000024, 0.061086054000043, 0.0679365359999337, 0.088301122999951, 0.1320432900000696, 0.2037293749999662, 0.3278066389999594, 0.5537766659999761, 1.0178958810000722, 1.7121214649999956, 3.020960453000044, 5.338147366000044, 9.657033533000003, 17.373822493000034, 29.899411047000054, 66.755022241, 166.687488507], "q9": [0.0005471999999144, 0.0491029270000353, 0.053024884000024, 0.061086054000043, 0.0679365359999337, 0.088301122999951, 0.1320432900000696, 0.2037293749999662, 0.3278066389999594, 0.5537766659999761, 1.0178958810000722, 1.7121214649999956, 3.020960453000044, 5.338147366000044, 9.657033533000003, 17.373822493000034, 29.899411047000054, 66.755022241, 166.687488507]}, {"x": [5.685600001470448e-05, 0.2471310459999358, 0.3982173639999473, 0.4791359190001003, 0.6597078349999492, 2.364093726999954, 8.776677503000087, 9.633476452999956, 5.588995132000036, 10.272215604999928, 18.633523845000013, 33.158928468, 61.804394559], "y": [9471.648476232069, 9471.648476232069, 8132.480894959923, 7062.148176192207, 5533.484755732476, 3874.628481570405, 2652.844952909272, 1804.3399071076728, 1124.10141284186, 671.8341164035169, 523.3935080302358, 514.4606897986139, 511.6904196397521], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)", "marker": 36, "q1": [5.685600001470448e-05, 0.2471310459999358, 0.3982173639999473, 0.4791359190001003, 0.6597078349999492, 2.364093726999954, 8.776677503000087, 9.633476452999956, 5.588995132000036, 10.272215604999928, 18.633523845000013, 33.158928468, 61.804394559], "q9": [5.685600001470448e-05, 0.2471310459999358, 0.3982173639999473, 0.4791359190001003, 0.6597078349999492, 2.364093726999954, 8.776677503000087, 9.633476452999956, 5.588995132000036, 10.272215604999928, 18.633523845000013, 33.158928468, 61.804394559]}, {"x": [1.9668000049932743e-05, 0.0794913130000622, 0.1056523429999742, 0.1760790000000724, 0.2178304050000861, 0.482414929000015, 0.6300797359999706, 0.7348381890000155, 1.1449854070000356, 1.8380982809999296, 3.3005303310000045, 5.599767724999992, 9.801756197999907, 17.262745527999982, 32.94521315099996, 56.75495519000003, 99.211054052], "y": [4170.543456639538, 4170.543456639538, 3477.9257284529986, 3080.441710977292, 2567.016035441303, 1860.742026259728, 1136.5224437329264, 662.8850890428871, 522.8992947824776, 514.5021327969162, 511.6393816243369, 511.35224498980114, 511.3008585183876, 511.2968740446498, 511.2965858059177, 511.2965723157232, 511.2965718778597], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)", "marker": 37, "q1": [1.9668000049932743e-05, 0.0794913130000622, 0.1056523429999742, 0.1760790000000724, 0.2178304050000861, 0.482414929000015, 0.6300797359999706, 0.7348381890000155, 1.1449854070000356, 1.8380982809999296, 3.3005303310000045, 5.599767724999992, 9.801756197999907, 17.262745527999982, 32.94521315099996, 56.75495519000003, 99.211054052], "q9": [1.9668000049932743e-05, 0.0794913130000622, 0.1056523429999742, 0.1760790000000724, 0.2178304050000861, 0.482414929000015, 0.6300797359999706, 0.7348381890000155, 1.1449854070000356, 1.8380982809999296, 3.3005303310000045, 5.599767724999992, 9.801756197999907, 17.262745527999982, 32.94521315099996, 56.75495519000003, 99.211054052]}]}, "objective_curve_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Iteration": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1 ", "xlabel": "Iteration", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 932], "y": [9471.648476232063, 9471.648476232063, 8406.889194557343, 7642.203174546468, 6597.740960832516, 5404.453079218471, 4361.80685167032, 3519.18878665665, 2817.339723150764, 2254.949509566952, 1781.655674414468, 1382.395148693308, 1053.41254177999, 802.2656456480988], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)", "marker": 32}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42], "y": [1954.563248658216, 1883.853563319922, 1372.037210532473, 1131.209581721002, 986.7550637582434, 816.9258429791129, 689.4243331390162, 609.1826733178451, 557.6084867548767, 529.4234335067358, 516.9754129338442], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)", "marker": 33}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141], "y": [1380.643942600313, 1399.0003962102712, 1336.3848325274598, 1084.728045820503, 964.5679198596072, 812.4942014764085, 689.9707455018273, 611.266675395649, 558.8751857829727, 530.1263049780891, 517.1865710143954, 512.881877979611, 511.6786076253197, 511.3629932579372], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)", "marker": 34}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 932, 1677, 3018, 5432, 11733, 30411], "y": [5343.836211784427, 5343.836211784427, 4614.1707195775125, 4107.767839341457, 3427.439177362672, 2644.096331853956, 2043.275911425266, 1492.5975332830549, 942.6542270808018, 657.8200454834508, 527.9938723195777, 512.3851659705911, 511.3386008146682, 511.29693775742805, 511.2965720449488, 511.2965718726153, 511.2965718726153, 511.2965718726153, 511.2965718726153], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)", "marker": 35}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518], "y": [9471.648476232069, 9471.648476232069, 8132.480894959923, 7062.148176192207, 5533.484755732476, 3874.628481570405, 2652.844952909272, 1804.3399071076728, 1124.10141284186, 671.8341164035169, 523.3935080302358, 514.4606897986139, 511.6904196397521], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)", "marker": 36}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 932, 1677, 3018, 5432], "y": [4170.543456639538, 4170.543456639538, 3477.9257284529986, 3080.441710977292, 2567.016035441303, 1860.742026259728, 1136.5224437329264, 662.8850890428871, 522.8992947824776, 514.5021327969162, 511.6393816243369, 511.35224498980114, 511.3008585183876, 511.2968740446498, 511.2965858059177, 511.2965723157232, 511.2965718778597], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)", "marker": 37}]}}, "bar_chart": {"bar_chart_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": 84.131797292, "times": [84.131797292], "text": "", "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)"}, {"y": 7.969023621000002, "times": [7.969023621000002], "text": "", "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)"}, {"y": 4.388194416999994, "times": [4.388194416999994], "text": "", "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)"}, {"y": 1.975753147000006, "times": [1.975753147000006], "text": "", "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)"}, {"y": 114.46134304999998, "times": [114.46134304999998], "text": "", "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)"}, {"y": 9.957389368999998, "times": [9.957389368999998], "text": "", "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)"}]}, "bar_chart_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": 101.361731211, "times": [101.361731211], "text": "", "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)"}, {"y": 35.983903596000005, "times": [35.983903596000005], "text": "", "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)"}, {"y": 40.78557788299997, "times": [40.78557788299997], "text": "", "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)"}, {"y": 17.373822493000034, "times": [17.373822493000034], "text": "", "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)"}, {"y": 61.804394559, "times": [61.804394559], "text": "", "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)"}, {"y": 99.211054052, "times": [99.211054052], "text": "", "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)"}]}}, "boxplot": {"boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Solver_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "xlabel": "Solver", "ylabel": "Time", "type": "boxplot", "data": [{"x": ["copt[accelerated=False,line_search=False,solver=pgd]"], "y": [[84.131797292]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=svrg]"], "y": [[33.475050266]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=saga]"], "y": [[73.095573]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)"}, {"x": ["copt[accelerated=False,line_search=True,solver=pgd]"], "y": [[184.190941748]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)"}, {"x": ["copt[accelerated=True,line_search=False,solver=pgd]"], "y": [[114.46134304999998]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)"}, {"x": ["copt[accelerated=True,line_search=True,solver=pgd]"], "y": [[122.391084137]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Solver_Objective Metric": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "xlabel": "Solver", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": ["copt[accelerated=False,line_search=False,solver=pgd]"], "y": [[4147.708963583843]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=svrg]"], "y": [[4147.708905345793]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=saga]"], "y": [[4147.708905345793]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)"}, {"x": ["copt[accelerated=False,line_search=True,solver=pgd]"], "y": [[4147.708905345797]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)"}, {"x": ["copt[accelerated=True,line_search=False,solver=pgd]"], "y": [[4147.708905359279]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)"}, {"x": ["copt[accelerated=True,line_search=True,solver=pgd]"], "y": [[4147.708905345792]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Iteration_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "xlabel": "Iteration", "ylabel": "Time", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "y": [[3.562600000006633e-05], [0.2265147679999999], [0.3453135979999999], [0.4296883890000003], [0.5379637769999999], [0.74391535], [1.0666492639999996], [1.4783130710000003], [2.122262517], [2.9958993560000007], [4.6166071980000005], [6.865518301000002], [10.205826685999998], [15.256551805], [23.555126322000007], [36.591378593], [52.529951992], [84.131797292]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[4.290000000040095e-05], [1.857385006], [2.4705843509999994], [3.192677806999999], [4.365755565999999], [5.400215383999999], [7.969023621000002], [10.624087952000004], [15.470778442000004], [23.304151087], [33.475050266]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[1.854799999989609e-05], [1.1848926689999928], [1.412041666999997], [1.6364116929999994], [1.9875058269999928], [2.449975058000007], [3.485309688000001], [4.388194416999994], [6.619891354000004], [9.038471369000009], [13.37272768599999], [19.064550994], [34.78184416300002], [73.095573]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [[2.546499999311891e-05], [0.0499170719999995], [0.055081659999999], [0.0604603849999989], [0.0707248289999995], [0.1095673239999968], [0.1724036589999968], [0.2605688189999995], [0.3407568110000056], [0.5683719620000005], [0.9559559190000044], [1.975753147000006], [3.3165528819999963], [6.641951849999998], [16.93520628799999], [50.272386357000016], [184.190941748]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[1.4614000008350558e-05], [0.2427404270000011], [0.3394601539999939], [0.4541435859999865], [0.6729320640000083], [1.1138764079999532], [1.9162894380000357], [3.2257922910000048], [5.849463737000008], [10.30620123], [18.41123095300003], [34.37856381700004], [63.95284476699993], [114.46134304999998]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "y": [[6.40350000367107e-05], [0.0826373050000484], [0.1200952819999656], [0.161344750000012], [0.2298427890000312], [0.3888013959999625], [0.6412742669999716], [1.0422138060000634], [1.7466813240000647], [3.114569798000048], [5.58937245900006], [9.957389368999998], [19.136565237000013], [35.251091213999985], [67.427955129], [122.391084137]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Iteration_Objective Metric": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "xlabel": "Iteration", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "y": [[9558.08513461421], [9558.085134614212], [8546.212498123754], [7834.32609884987], [7303.457589631526], [6562.346965220361], [5880.918156952608], [5352.945716714797], [4919.174162714339], [4596.179150252831], [4375.2108637753645], [4247.865209733858], [4184.682759196329], [4157.911083188013], [4149.567664179916], [4147.887337046197], [4147.715453271052], [4147.708963583843]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[4382.979655809351], [4378.117479046834], [4155.555658709409], [4147.991999666088], [4147.72337257827], [4147.708938616195], [4147.7089053519685], [4147.708905345791], [4147.708905345792], [4147.708905345793], [4147.708905345793]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[4800.587643514304], [4786.997503860613], [4193.3219401350125], [4152.881443981638], [4148.226311727887], [4147.715307806475], [4147.708924321047], [4147.70890535422], [4147.708905345791], [4147.708905345792], [4147.708905345793], [4147.708905345793], [4147.708905345793], [4147.708905345793]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [[5796.853372074147], [5796.853372074147], [5255.781388314997], [4921.5120841949465], [4558.817275813866], [4319.242398687373], [4187.42408840555], [4153.007939580868], [4147.895572724647], [4147.709659775735], [4147.708905412424], [4147.708905345797], [4147.708905345797], [4147.708905345797], [4147.708905345797], [4147.708905345797], [4147.708905345797]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[9558.085134614212], [9558.085134614212], [8287.541792302922], [7301.102636376684], [5972.407102910373], [4766.697452240703], [4259.095674401782], [4159.616705146109], [4150.056084509411], [4147.903462454167], [4147.719824470261], [4147.709344458664], [4147.708911379867], [4147.708905359279]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "y": [[4934.124218176248], [4934.124218176248], [4579.298059853], [4441.218222202277], [4277.410703625699], [4169.327881746225], [4148.820399507953], [4147.84704434722], [4147.720199499805], [4147.709043556642], [4147.708905926123], [4147.708905345924], [4147.708905345792], [4147.708905345791], [4147.708905345792], [4147.708905345792]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Solver_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "xlabel": "Solver", "ylabel": "Time", "type": "boxplot", "data": [{"x": ["copt[accelerated=False,line_search=False,solver=pgd]"], "y": [[101.361731211]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=svrg]"], "y": [[35.983903596000005]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=saga]"], "y": [[40.78557788299997]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)"}, {"x": ["copt[accelerated=False,line_search=True,solver=pgd]"], "y": [[166.687488507]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)"}, {"x": ["copt[accelerated=True,line_search=False,solver=pgd]"], "y": [[61.804394559]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)"}, {"x": ["copt[accelerated=True,line_search=True,solver=pgd]"], "y": [[99.211054052]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Solver_Objective Metric": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "xlabel": "Solver", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": ["copt[accelerated=False,line_search=False,solver=pgd]"], "y": [[802.2656456480988]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=svrg]"], "y": [[516.9754129338442]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=saga]"], "y": [[511.3629932579372]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)"}, {"x": ["copt[accelerated=False,line_search=True,solver=pgd]"], "y": [[511.2965718726153]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)"}, {"x": ["copt[accelerated=True,line_search=False,solver=pgd]"], "y": [[511.6904196397521]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)"}, {"x": ["copt[accelerated=True,line_search=True,solver=pgd]"], "y": [[511.2965718778597]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Iteration_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "xlabel": "Iteration", "ylabel": "Time", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[1.2734999927488388e-05], [0.227890059999936], [0.334776206000015], [0.4394589879999557], [0.6684805720000213], [1.0908570549999013], [1.7886792139998988], [3.048002739000026], [5.497054534999961], [9.732811518000062], [17.411853371999996], [32.613099808000015], [59.876489511000045], [101.361731211]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[7.100099998069709e-05], [1.9452956499999916], [2.5186695969999846], [3.373080774000016], [4.138710065999987], [6.591180360999999], [8.952703001000032], [11.006528677000006], [15.328077864000022], [22.482428782], [35.983903596000005]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[0.0008034609999754], [1.2121934250000097], [1.533822630999964], [1.7187603589999867], [1.938150525000026], [2.512671504000025], [3.2506427580000263], [4.411839353999994], [6.158570682000004], [9.227994021000027], [17.678806829999985], [21.955275966999977], [27.555583987000038], [40.78557788299997]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], "y": [[0.0005471999999144], [0.0491029270000353], [0.053024884000024], [0.061086054000043], [0.0679365359999337], [0.088301122999951], [0.1320432900000696], [0.2037293749999662], [0.3278066389999594], [0.5537766659999761], [1.0178958810000722], [1.7121214649999956], [3.020960453000044], [5.338147366000044], [9.657033533000003], [17.373822493000034], [29.899411047000054], [66.755022241], [166.687488507]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "y": [[5.685600001470448e-05], [0.2471310459999358], [0.3982173639999473], [0.4791359190001003], [0.6597078349999492], [2.364093726999954], [8.776677503000087], [9.633476452999956], [5.588995132000036], [10.272215604999928], [18.633523845000013], [33.158928468], [61.804394559]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [[1.9668000049932743e-05], [0.0794913130000622], [0.1056523429999742], [0.1760790000000724], [0.2178304050000861], [0.482414929000015], [0.6300797359999706], [0.7348381890000155], [1.1449854070000356], [1.8380982809999296], [3.3005303310000045], [5.599767724999992], [9.801756197999907], [17.262745527999982], [32.94521315099996], [56.75495519000003], [99.211054052]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Iteration_Objective Metric": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "xlabel": "Iteration", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[9471.648476232063], [9471.648476232063], [8406.889194557343], [7642.203174546468], [6597.740960832516], [5404.453079218471], [4361.80685167032], [3519.18878665665], [2817.339723150764], [2254.949509566952], [1781.655674414468], [1382.395148693308], [1053.41254177999], [802.2656456480988]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(152, 223, 138, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[1954.563248658216], [1883.853563319922], [1372.037210532473], [1131.209581721002], [986.7550637582434], [816.9258429791129], [689.4243331390162], [609.1826733178451], [557.6084867548767], [529.4234335067358], [516.9754129338442]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(255, 152, 150, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[1380.643942600313], [1399.0003962102712], [1336.3848325274598], [1084.728045820503], [964.5679198596072], [812.4942014764085], [689.9707455018273], [611.266675395649], [558.8751857829727], [530.1263049780891], [517.1865710143954], [512.881877979611], [511.6786076253197], [511.3629932579372]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(197, 176, 213, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], "y": [[5343.836211784427], [5343.836211784427], [4614.1707195775125], [4107.767839341457], [3427.439177362672], [2644.096331853956], [2043.275911425266], [1492.5975332830549], [942.6542270808018], [657.8200454834508], [527.9938723195777], [512.3851659705911], [511.3386008146682], [511.29693775742805], [511.2965720449488], [511.2965718726153], [511.2965718726153], [511.2965718726153], [511.2965718726153]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(196, 156, 148, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "y": [[9471.648476232069], [9471.648476232069], [8132.480894959923], [7062.148176192207], [5533.484755732476], [3874.628481570405], [2652.844952909272], [1804.3399071076728], [1124.10141284186], [671.8341164035169], [523.3935080302358], [514.4606897986139], [511.6904196397521]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(247, 182, 210, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [[4170.543456639538], [4170.543456639538], [3477.9257284529986], [3080.441710977292], [2567.016035441303], [1860.742026259728], [1136.5224437329264], [662.8850890428871], [522.8992947824776], [514.5021327969162], [511.6393816243369], [511.35224498980114], [511.3008585183876], [511.2968740446498], [511.2965858059177], [511.2965723157232], [511.2965718778597]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(199, 199, 199, 1.0)"}]}}};
+            window._plots = {"objective_curve": {"objective_curve_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1 ", "xlabel": "Time", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [3.562600000006633e-05, 0.2265147679999999, 0.3453135979999999, 0.4296883890000003, 0.5379637769999999, 0.74391535, 1.0666492639999996, 1.4783130710000003, 2.122262517, 2.9958993560000007, 4.6166071980000005, 6.865518301000002, 10.205826685999998, 15.256551805, 23.555126322000007, 36.591378593, 52.529951992, 84.131797292], "y": [9558.08513461421, 9558.085134614212, 8546.212498123754, 7834.32609884987, 7303.457589631526, 6562.346965220361, 5880.918156952608, 5352.945716714797, 4919.174162714339, 4596.179150252831, 4375.2108637753645, 4247.865209733858, 4184.682759196329, 4157.911083188013, 4149.567664179916, 4147.887337046197, 4147.715453271052, 4147.708963583843], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)", "marker": 38, "x_low": [3.562600000006633e-05, 0.2265147679999999, 0.3453135979999999, 0.4296883890000003, 0.5379637769999999, 0.74391535, 1.0666492639999996, 1.4783130710000003, 2.122262517, 2.9958993560000007, 4.6166071980000005, 6.865518301000002, 10.205826685999998, 15.256551805, 23.555126322000007, 36.591378593, 52.529951992, 84.131797292], "x_high": [3.562600000006633e-05, 0.2265147679999999, 0.3453135979999999, 0.4296883890000003, 0.5379637769999999, 0.74391535, 1.0666492639999996, 1.4783130710000003, 2.122262517, 2.9958993560000007, 4.6166071980000005, 6.865518301000002, 10.205826685999998, 15.256551805, 23.555126322000007, 36.591378593, 52.529951992, 84.131797292]}, {"x": [1.854799999989609e-05, 1.1848926689999928, 1.412041666999997, 1.6364116929999994, 1.9875058269999928, 2.449975058000007, 3.485309688000001, 4.388194416999994, 6.619891354000004, 9.038471369000009, 13.37272768599999, 19.064550994, 34.78184416300002, 73.095573], "y": [4800.587643514304, 4786.997503860613, 4193.3219401350125, 4152.881443981638, 4148.226311727887, 4147.715307806475, 4147.708924321047, 4147.70890535422, 4147.708905345791, 4147.708905345792, 4147.708905345793, 4147.708905345793, 4147.708905345793, 4147.708905345793], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)", "marker": 44, "x_low": [1.854799999989609e-05, 1.1848926689999928, 1.412041666999997, 1.6364116929999994, 1.9875058269999928, 2.449975058000007, 3.485309688000001, 4.388194416999994, 6.619891354000004, 9.038471369000009, 13.37272768599999, 19.064550994, 34.78184416300002, 73.095573], "x_high": [1.854799999989609e-05, 1.1848926689999928, 1.412041666999997, 1.6364116929999994, 1.9875058269999928, 2.449975058000007, 3.485309688000001, 4.388194416999994, 6.619891354000004, 9.038471369000009, 13.37272768599999, 19.064550994, 34.78184416300002, 73.095573]}, {"x": [4.290000000040095e-05, 1.857385006, 2.4705843509999994, 3.192677806999999, 4.365755565999999, 5.400215383999999, 7.969023621000002, 10.624087952000004, 15.470778442000004, 23.304151087, 33.475050266], "y": [4382.979655809351, 4378.117479046834, 4155.555658709409, 4147.991999666088, 4147.72337257827, 4147.708938616195, 4147.7089053519685, 4147.708905345791, 4147.708905345792, 4147.708905345793, 4147.708905345793], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)", "marker": 45, "x_low": [4.290000000040095e-05, 1.857385006, 2.4705843509999994, 3.192677806999999, 4.365755565999999, 5.400215383999999, 7.969023621000002, 10.624087952000004, 15.470778442000004, 23.304151087, 33.475050266], "x_high": [4.290000000040095e-05, 1.857385006, 2.4705843509999994, 3.192677806999999, 4.365755565999999, 5.400215383999999, 7.969023621000002, 10.624087952000004, 15.470778442000004, 23.304151087, 33.475050266]}, {"x": [2.546499999311891e-05, 0.0499170719999995, 0.055081659999999, 0.0604603849999989, 0.0707248289999995, 0.1095673239999968, 0.1724036589999968, 0.2605688189999995, 0.3407568110000056, 0.5683719620000005, 0.9559559190000044, 1.975753147000006, 3.3165528819999963, 6.641951849999998, 16.93520628799999, 50.272386357000016, 184.190941748], "y": [5796.853372074147, 5796.853372074147, 5255.781388314997, 4921.5120841949465, 4558.817275813866, 4319.242398687373, 4187.42408840555, 4153.007939580868, 4147.895572724647, 4147.709659775735, 4147.708905412424, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)", "marker": 39, "x_low": [2.546499999311891e-05, 0.0499170719999995, 0.055081659999999, 0.0604603849999989, 0.0707248289999995, 0.1095673239999968, 0.1724036589999968, 0.2605688189999995, 0.3407568110000056, 0.5683719620000005, 0.9559559190000044, 1.975753147000006, 3.3165528819999963, 6.641951849999998, 16.93520628799999, 50.272386357000016, 184.190941748], "x_high": [2.546499999311891e-05, 0.0499170719999995, 0.055081659999999, 0.0604603849999989, 0.0707248289999995, 0.1095673239999968, 0.1724036589999968, 0.2605688189999995, 0.3407568110000056, 0.5683719620000005, 0.9559559190000044, 1.975753147000006, 3.3165528819999963, 6.641951849999998, 16.93520628799999, 50.272386357000016, 184.190941748]}, {"x": [1.4614000008350558e-05, 0.2427404270000011, 0.3394601539999939, 0.4541435859999865, 0.6729320640000083, 1.1138764079999532, 1.9162894380000357, 3.2257922910000048, 5.849463737000008, 10.30620123, 18.41123095300003, 34.37856381700004, 63.95284476699993, 114.46134304999998], "y": [9558.085134614212, 9558.085134614212, 8287.541792302922, 7301.102636376684, 5972.407102910373, 4766.697452240703, 4259.095674401782, 4159.616705146109, 4150.056084509411, 4147.903462454167, 4147.719824470261, 4147.709344458664, 4147.708911379867, 4147.708905359279], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)", "marker": 40, "x_low": [1.4614000008350558e-05, 0.2427404270000011, 0.3394601539999939, 0.4541435859999865, 0.6729320640000083, 1.1138764079999532, 1.9162894380000357, 3.2257922910000048, 5.849463737000008, 10.30620123, 18.41123095300003, 34.37856381700004, 63.95284476699993, 114.46134304999998], "x_high": [1.4614000008350558e-05, 0.2427404270000011, 0.3394601539999939, 0.4541435859999865, 0.6729320640000083, 1.1138764079999532, 1.9162894380000357, 3.2257922910000048, 5.849463737000008, 10.30620123, 18.41123095300003, 34.37856381700004, 63.95284476699993, 114.46134304999998]}, {"x": [6.40350000367107e-05, 0.0826373050000484, 0.1200952819999656, 0.161344750000012, 0.2298427890000312, 0.3888013959999625, 0.6412742669999716, 1.0422138060000634, 1.7466813240000647, 3.114569798000048, 5.58937245900006, 9.957389368999998, 19.136565237000013, 35.251091213999985, 67.427955129, 122.391084137], "y": [4934.124218176248, 4934.124218176248, 4579.298059853, 4441.218222202277, 4277.410703625699, 4169.327881746225, 4148.820399507953, 4147.84704434722, 4147.720199499805, 4147.709043556642, 4147.708905926123, 4147.708905345924, 4147.708905345792, 4147.708905345791, 4147.708905345792, 4147.708905345792], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)", "marker": 41, "x_low": [6.40350000367107e-05, 0.0826373050000484, 0.1200952819999656, 0.161344750000012, 0.2298427890000312, 0.3888013959999625, 0.6412742669999716, 1.0422138060000634, 1.7466813240000647, 3.114569798000048, 5.58937245900006, 9.957389368999998, 19.136565237000013, 35.251091213999985, 67.427955129, 122.391084137], "x_high": [6.40350000367107e-05, 0.0826373050000484, 0.1200952819999656, 0.161344750000012, 0.2298427890000312, 0.3888013959999625, 0.6412742669999716, 1.0422138060000634, 1.7466813240000647, 3.114569798000048, 5.58937245900006, 9.957389368999998, 19.136565237000013, 35.251091213999985, 67.427955129, 122.391084137]}]}, "objective_curve_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Iteration": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1 ", "xlabel": "Iteration", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141, 211, 316, 474, 711], "y": [9558.08513461421, 9558.085134614212, 8546.212498123754, 7834.32609884987, 7303.457589631526, 6562.346965220361, 5880.918156952608, 5352.945716714797, 4919.174162714339, 4596.179150252831, 4375.2108637753645, 4247.865209733858, 4184.682759196329, 4157.911083188013, 4149.567664179916, 4147.887337046197, 4147.715453271052, 4147.708963583843], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)", "marker": 38}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 113, 244], "y": [4800.587643514304, 4786.997503860613, 4193.3219401350125, 4152.881443981638, 4148.226311727887, 4147.715307806475, 4147.708924321047, 4147.70890535422, 4147.708905345791, 4147.708905345792, 4147.708905345793, 4147.708905345793, 4147.708905345793, 4147.708905345793], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)", "marker": 44}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42], "y": [4382.979655809351, 4378.117479046834, 4155.555658709409, 4147.991999666088, 4147.72337257827, 4147.708938616195, 4147.7089053519685, 4147.708905345791, 4147.708905345792, 4147.708905345793, 4147.708905345793], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)", "marker": 45}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 1118, 2897, 9010, 33629], "y": [5796.853372074147, 5796.853372074147, 5255.781388314997, 4921.5120841949465, 4558.817275813866, 4319.242398687373, 4187.42408840555, 4153.007939580868, 4147.895572724647, 4147.709659775735, 4147.708905412424, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797, 4147.708905345797], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)", "marker": 39}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 932], "y": [9558.085134614212, 9558.085134614212, 8287.541792302922, 7301.102636376684, 5972.407102910373, 4766.697452240703, 4259.095674401782, 4159.616705146109, 4150.056084509411, 4147.903462454167, 4147.719824470261, 4147.709344458664, 4147.708911379867, 4147.708905359279], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)", "marker": 40}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 932, 1677, 3018], "y": [4934.124218176248, 4934.124218176248, 4579.298059853, 4441.218222202277, 4277.410703625699, 4169.327881746225, 4148.820399507953, 4147.84704434722, 4147.720199499805, 4147.709043556642, 4147.708905926123, 4147.708905345924, 4147.708905345792, 4147.708905345791, 4147.708905345792, 4147.708905345792], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)", "marker": 41}]}, "objective_curve_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1 ", "xlabel": "Time", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [1.2734999927488388e-05, 0.227890059999936, 0.334776206000015, 0.4394589879999557, 0.6684805720000213, 1.0908570549999013, 1.7886792139998988, 3.048002739000026, 5.497054534999961, 9.732811518000062, 17.411853371999996, 32.613099808000015, 59.876489511000045, 101.361731211], "y": [9471.648476232063, 9471.648476232063, 8406.889194557343, 7642.203174546468, 6597.740960832516, 5404.453079218471, 4361.80685167032, 3519.18878665665, 2817.339723150764, 2254.949509566952, 1781.655674414468, 1382.395148693308, 1053.41254177999, 802.2656456480988], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)", "marker": 38, "x_low": [1.2734999927488388e-05, 0.227890059999936, 0.334776206000015, 0.4394589879999557, 0.6684805720000213, 1.0908570549999013, 1.7886792139998988, 3.048002739000026, 5.497054534999961, 9.732811518000062, 17.411853371999996, 32.613099808000015, 59.876489511000045, 101.361731211], "x_high": [1.2734999927488388e-05, 0.227890059999936, 0.334776206000015, 0.4394589879999557, 0.6684805720000213, 1.0908570549999013, 1.7886792139998988, 3.048002739000026, 5.497054534999961, 9.732811518000062, 17.411853371999996, 32.613099808000015, 59.876489511000045, 101.361731211]}, {"x": [0.0008034609999754, 1.2121934250000097, 1.533822630999964, 1.7187603589999867, 1.938150525000026, 2.512671504000025, 3.2506427580000263, 4.411839353999994, 6.158570682000004, 9.227994021000027, 17.678806829999985, 21.955275966999977, 27.555583987000038, 40.78557788299997], "y": [1380.643942600313, 1399.0003962102712, 1336.3848325274598, 1084.728045820503, 964.5679198596072, 812.4942014764085, 689.9707455018273, 611.266675395649, 558.8751857829727, 530.1263049780891, 517.1865710143954, 512.881877979611, 511.6786076253197, 511.3629932579372], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)", "marker": 44, "x_low": [0.0008034609999754, 1.2121934250000097, 1.533822630999964, 1.7187603589999867, 1.938150525000026, 2.512671504000025, 3.2506427580000263, 4.411839353999994, 6.158570682000004, 9.227994021000027, 17.678806829999985, 21.955275966999977, 27.555583987000038, 40.78557788299997], "x_high": [0.0008034609999754, 1.2121934250000097, 1.533822630999964, 1.7187603589999867, 1.938150525000026, 2.512671504000025, 3.2506427580000263, 4.411839353999994, 6.158570682000004, 9.227994021000027, 17.678806829999985, 21.955275966999977, 27.555583987000038, 40.78557788299997]}, {"x": [7.100099998069709e-05, 1.9452956499999916, 2.5186695969999846, 3.373080774000016, 4.138710065999987, 6.591180360999999, 8.952703001000032, 11.006528677000006, 15.328077864000022, 22.482428782, 35.983903596000005], "y": [1954.563248658216, 1883.853563319922, 1372.037210532473, 1131.209581721002, 986.7550637582434, 816.9258429791129, 689.4243331390162, 609.1826733178451, 557.6084867548767, 529.4234335067358, 516.9754129338442], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)", "marker": 45, "x_low": [7.100099998069709e-05, 1.9452956499999916, 2.5186695969999846, 3.373080774000016, 4.138710065999987, 6.591180360999999, 8.952703001000032, 11.006528677000006, 15.328077864000022, 22.482428782, 35.983903596000005], "x_high": [7.100099998069709e-05, 1.9452956499999916, 2.5186695969999846, 3.373080774000016, 4.138710065999987, 6.591180360999999, 8.952703001000032, 11.006528677000006, 15.328077864000022, 22.482428782, 35.983903596000005]}, {"x": [0.0005471999999144, 0.0491029270000353, 0.053024884000024, 0.061086054000043, 0.0679365359999337, 0.088301122999951, 0.1320432900000696, 0.2037293749999662, 0.3278066389999594, 0.5537766659999761, 1.0178958810000722, 1.7121214649999956, 3.020960453000044, 5.338147366000044, 9.657033533000003, 17.373822493000034, 29.899411047000054, 66.755022241, 166.687488507], "y": [5343.836211784427, 5343.836211784427, 4614.1707195775125, 4107.767839341457, 3427.439177362672, 2644.096331853956, 2043.275911425266, 1492.5975332830549, 942.6542270808018, 657.8200454834508, 527.9938723195777, 512.3851659705911, 511.3386008146682, 511.29693775742805, 511.2965720449488, 511.2965718726153, 511.2965718726153, 511.2965718726153, 511.2965718726153], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)", "marker": 39, "x_low": [0.0005471999999144, 0.0491029270000353, 0.053024884000024, 0.061086054000043, 0.0679365359999337, 0.088301122999951, 0.1320432900000696, 0.2037293749999662, 0.3278066389999594, 0.5537766659999761, 1.0178958810000722, 1.7121214649999956, 3.020960453000044, 5.338147366000044, 9.657033533000003, 17.373822493000034, 29.899411047000054, 66.755022241, 166.687488507], "x_high": [0.0005471999999144, 0.0491029270000353, 0.053024884000024, 0.061086054000043, 0.0679365359999337, 0.088301122999951, 0.1320432900000696, 0.2037293749999662, 0.3278066389999594, 0.5537766659999761, 1.0178958810000722, 1.7121214649999956, 3.020960453000044, 5.338147366000044, 9.657033533000003, 17.373822493000034, 29.899411047000054, 66.755022241, 166.687488507]}, {"x": [5.685600001470448e-05, 0.2471310459999358, 0.3982173639999473, 0.4791359190001003, 0.6597078349999492, 2.364093726999954, 8.776677503000087, 9.633476452999956, 5.588995132000036, 10.272215604999928, 18.633523845000013, 33.158928468, 61.804394559], "y": [9471.648476232069, 9471.648476232069, 8132.480894959923, 7062.148176192207, 5533.484755732476, 3874.628481570405, 2652.844952909272, 1804.3399071076728, 1124.10141284186, 671.8341164035169, 523.3935080302358, 514.4606897986139, 511.6904196397521], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)", "marker": 40, "x_low": [5.685600001470448e-05, 0.2471310459999358, 0.3982173639999473, 0.4791359190001003, 0.6597078349999492, 2.364093726999954, 8.776677503000087, 9.633476452999956, 5.588995132000036, 10.272215604999928, 18.633523845000013, 33.158928468, 61.804394559], "x_high": [5.685600001470448e-05, 0.2471310459999358, 0.3982173639999473, 0.4791359190001003, 0.6597078349999492, 2.364093726999954, 8.776677503000087, 9.633476452999956, 5.588995132000036, 10.272215604999928, 18.633523845000013, 33.158928468, 61.804394559]}, {"x": [1.9668000049932743e-05, 0.0794913130000622, 0.1056523429999742, 0.1760790000000724, 0.2178304050000861, 0.482414929000015, 0.6300797359999706, 0.7348381890000155, 1.1449854070000356, 1.8380982809999296, 3.3005303310000045, 5.599767724999992, 9.801756197999907, 17.262745527999982, 32.94521315099996, 56.75495519000003, 99.211054052], "y": [4170.543456639538, 4170.543456639538, 3477.9257284529986, 3080.441710977292, 2567.016035441303, 1860.742026259728, 1136.5224437329264, 662.8850890428871, 522.8992947824776, 514.5021327969162, 511.6393816243369, 511.35224498980114, 511.3008585183876, 511.2968740446498, 511.2965858059177, 511.2965723157232, 511.2965718778597], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)", "marker": 41, "x_low": [1.9668000049932743e-05, 0.0794913130000622, 0.1056523429999742, 0.1760790000000724, 0.2178304050000861, 0.482414929000015, 0.6300797359999706, 0.7348381890000155, 1.1449854070000356, 1.8380982809999296, 3.3005303310000045, 5.599767724999992, 9.801756197999907, 17.262745527999982, 32.94521315099996, 56.75495519000003, 99.211054052], "x_high": [1.9668000049932743e-05, 0.0794913130000622, 0.1056523429999742, 0.1760790000000724, 0.2178304050000861, 0.482414929000015, 0.6300797359999706, 0.7348381890000155, 1.1449854070000356, 1.8380982809999296, 3.3005303310000045, 5.599767724999992, 9.801756197999907, 17.262745527999982, 32.94521315099996, 56.75495519000003, 99.211054052]}]}, "objective_curve_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Iteration": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1 ", "xlabel": "Iteration", "ylabel": "Objective Value", "type": "scatter", "data": [{"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 932], "y": [9471.648476232063, 9471.648476232063, 8406.889194557343, 7642.203174546468, 6597.740960832516, 5404.453079218471, 4361.80685167032, 3519.18878665665, 2817.339723150764, 2254.949509566952, 1781.655674414468, 1382.395148693308, 1053.41254177999, 802.2656456480988], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)", "marker": 38}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42, 63, 94, 141], "y": [1380.643942600313, 1399.0003962102712, 1336.3848325274598, 1084.728045820503, 964.5679198596072, 812.4942014764085, 689.9707455018273, 611.266675395649, 558.8751857829727, 530.1263049780891, 517.1865710143954, 512.881877979611, 511.6786076253197, 511.3629932579372], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)", "marker": 44}, {"x": [0, 1, 2, 3, 4, 6, 9, 13, 19, 28, 42], "y": [1954.563248658216, 1883.853563319922, 1372.037210532473, 1131.209581721002, 986.7550637582434, 816.9258429791129, 689.4243331390162, 609.1826733178451, 557.6084867548767, 529.4234335067358, 516.9754129338442], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)", "marker": 45}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 932, 1677, 3018, 5432, 11733, 30411], "y": [5343.836211784427, 5343.836211784427, 4614.1707195775125, 4107.767839341457, 3427.439177362672, 2644.096331853956, 2043.275911425266, 1492.5975332830549, 942.6542270808018, 657.8200454834508, 527.9938723195777, 512.3851659705911, 511.3386008146682, 511.29693775742805, 511.2965720449488, 511.2965718726153, 511.2965718726153, 511.2965718726153, 511.2965718726153], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)", "marker": 39}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518], "y": [9471.648476232069, 9471.648476232069, 8132.480894959923, 7062.148176192207, 5533.484755732476, 3874.628481570405, 2652.844952909272, 1804.3399071076728, 1124.10141284186, 671.8341164035169, 523.3935080302358, 514.4606897986139, 511.6904196397521], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)", "marker": 40}, {"x": [0, 1, 2, 3, 5, 9, 16, 28, 50, 89, 160, 288, 518, 932, 1677, 3018, 5432], "y": [4170.543456639538, 4170.543456639538, 3477.9257284529986, 3080.441710977292, 2567.016035441303, 1860.742026259728, 1136.5224437329264, 662.8850890428871, 522.8992947824776, 514.5021327969162, 511.6393816243369, 511.35224498980114, 511.3008585183876, 511.2968740446498, 511.2965858059177, 511.2965723157232, 511.2965718778597], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)", "marker": 41}]}}, "bar_chart": {"bar_chart_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_True": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": [84.131797292], "text": "", "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"y": [4.388194416999994], "text": "", "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"y": [7.969023621000002], "text": "", "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"y": [1.975753147000006], "text": "", "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"y": [114.46134304999998], "text": "", "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"y": [9.957389368999998], "text": "", "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}, "bar_chart_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_False": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": [3.562600000006633e-05], "text": "", "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"y": [1.854799999989609e-05], "text": "", "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"y": [4.290000000040095e-05], "text": "", "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"y": [2.546499999311891e-05], "text": "", "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"y": [1.4614000008350558e-05], "text": "", "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"y": [6.40350000367107e-05], "text": "", "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}, "bar_chart_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_True": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": [101.361731211], "text": "", "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"y": [40.78557788299997], "text": "", "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"y": [35.983903596000005], "text": "", "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"y": [17.373822493000034], "text": "", "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"y": [61.804394559], "text": "", "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"y": [99.211054052], "text": "", "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}, "bar_chart_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_False": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "ylabel": "Time [sec]", "type": "bar_chart", "data": [{"y": [1.2734999927488388e-05], "text": "", "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"y": [1.2121934250000097], "text": "", "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"y": [7.100099998069709e-05], "text": "", "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"y": [0.0005471999999144], "text": "", "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"y": [5.685600001470448e-05], "text": "", "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"y": [1.9668000049932743e-05], "text": "", "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}}, "boxplot": {"boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Solver_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "xlabel": "Solver", "ylabel": "Time", "type": "boxplot", "data": [{"x": ["copt[accelerated=False,line_search=False,solver=pgd]"], "y": [[84.131797292]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=saga]"], "y": [[73.095573]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=svrg]"], "y": [[33.475050266]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"x": ["copt[accelerated=False,line_search=True,solver=pgd]"], "y": [[184.190941748]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"x": ["copt[accelerated=True,line_search=False,solver=pgd]"], "y": [[114.46134304999998]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": ["copt[accelerated=True,line_search=True,solver=pgd]"], "y": [[122.391084137]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Solver_Objective Metric": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "xlabel": "Solver", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": ["copt[accelerated=False,line_search=False,solver=pgd]"], "y": [[4147.708963583843]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=saga]"], "y": [[4147.708905345793]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=svrg]"], "y": [[4147.708905345793]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"x": ["copt[accelerated=False,line_search=True,solver=pgd]"], "y": [[4147.708905345797]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"x": ["copt[accelerated=True,line_search=False,solver=pgd]"], "y": [[4147.708905359279]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": ["copt[accelerated=True,line_search=True,solver=pgd]"], "y": [[4147.708905345792]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Iteration_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "xlabel": "Iteration", "ylabel": "Time", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "y": [[3.562600000006633e-05], [0.2265147679999999], [0.3453135979999999], [0.4296883890000003], [0.5379637769999999], [0.74391535], [1.0666492639999996], [1.4783130710000003], [2.122262517], [2.9958993560000007], [4.6166071980000005], [6.865518301000002], [10.205826685999998], [15.256551805], [23.555126322000007], [36.591378593], [52.529951992], [84.131797292]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[1.854799999989609e-05], [1.1848926689999928], [1.412041666999997], [1.6364116929999994], [1.9875058269999928], [2.449975058000007], [3.485309688000001], [4.388194416999994], [6.619891354000004], [9.038471369000009], [13.37272768599999], [19.064550994], [34.78184416300002], [73.095573]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[4.290000000040095e-05], [1.857385006], [2.4705843509999994], [3.192677806999999], [4.365755565999999], [5.400215383999999], [7.969023621000002], [10.624087952000004], [15.470778442000004], [23.304151087], [33.475050266]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [[2.546499999311891e-05], [0.0499170719999995], [0.055081659999999], [0.0604603849999989], [0.0707248289999995], [0.1095673239999968], [0.1724036589999968], [0.2605688189999995], [0.3407568110000056], [0.5683719620000005], [0.9559559190000044], [1.975753147000006], [3.3165528819999963], [6.641951849999998], [16.93520628799999], [50.272386357000016], [184.190941748]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[1.4614000008350558e-05], [0.2427404270000011], [0.3394601539999939], [0.4541435859999865], [0.6729320640000083], [1.1138764079999532], [1.9162894380000357], [3.2257922910000048], [5.849463737000008], [10.30620123], [18.41123095300003], [34.37856381700004], [63.95284476699993], [114.46134304999998]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "y": [[6.40350000367107e-05], [0.0826373050000484], [0.1200952819999656], [0.161344750000012], [0.2298427890000312], [0.3888013959999625], [0.6412742669999716], [1.0422138060000634], [1.7466813240000647], [3.114569798000048], [5.58937245900006], [9.957389368999998], [19.136565237000013], [35.251091213999985], [67.427955129], [122.391084137]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]_objective_value_Iteration_Objective Metric": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "xlabel": "Iteration", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "y": [[9558.08513461421], [9558.085134614212], [8546.212498123754], [7834.32609884987], [7303.457589631526], [6562.346965220361], [5880.918156952608], [5352.945716714797], [4919.174162714339], [4596.179150252831], [4375.2108637753645], [4247.865209733858], [4184.682759196329], [4157.911083188013], [4149.567664179916], [4147.887337046197], [4147.715453271052], [4147.708963583843]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[4800.587643514304], [4786.997503860613], [4193.3219401350125], [4152.881443981638], [4148.226311727887], [4147.715307806475], [4147.708924321047], [4147.70890535422], [4147.708905345791], [4147.708905345792], [4147.708905345793], [4147.708905345793], [4147.708905345793], [4147.708905345793]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[4382.979655809351], [4378.117479046834], [4155.555658709409], [4147.991999666088], [4147.72337257827], [4147.708938616195], [4147.7089053519685], [4147.708905345791], [4147.708905345792], [4147.708905345793], [4147.708905345793]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [[5796.853372074147], [5796.853372074147], [5255.781388314997], [4921.5120841949465], [4558.817275813866], [4319.242398687373], [4187.42408840555], [4153.007939580868], [4147.895572724647], [4147.709659775735], [4147.708905412424], [4147.708905345797], [4147.708905345797], [4147.708905345797], [4147.708905345797], [4147.708905345797], [4147.708905345797]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[9558.085134614212], [9558.085134614212], [8287.541792302922], [7301.102636376684], [5972.407102910373], [4766.697452240703], [4259.095674401782], [4159.616705146109], [4150.056084509411], [4147.903462454167], [4147.719824470261], [4147.709344458664], [4147.708911379867], [4147.708905359279]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "y": [[4934.124218176248], [4934.124218176248], [4579.298059853], [4441.218222202277], [4277.410703625699], [4169.327881746225], [4148.820399507953], [4147.84704434722], [4147.720199499805], [4147.709043556642], [4147.708905926123], [4147.708905345924], [4147.708905345792], [4147.708905345791], [4147.708905345792], [4147.708905345792]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Solver_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "xlabel": "Solver", "ylabel": "Time", "type": "boxplot", "data": [{"x": ["copt[accelerated=False,line_search=False,solver=pgd]"], "y": [[101.361731211]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=saga]"], "y": [[40.78557788299997]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=svrg]"], "y": [[35.983903596000005]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"x": ["copt[accelerated=False,line_search=True,solver=pgd]"], "y": [[166.687488507]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"x": ["copt[accelerated=True,line_search=False,solver=pgd]"], "y": [[61.804394559]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": ["copt[accelerated=True,line_search=True,solver=pgd]"], "y": [[99.211054052]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Solver_Objective Metric": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "xlabel": "Solver", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": ["copt[accelerated=False,line_search=False,solver=pgd]"], "y": [[802.2656456480988]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=saga]"], "y": [[511.3629932579372]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"x": ["copt[accelerated=False,line_search=False,solver=svrg]"], "y": [[516.9754129338442]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"x": ["copt[accelerated=False,line_search=True,solver=pgd]"], "y": [[511.2965718726153]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"x": ["copt[accelerated=True,line_search=False,solver=pgd]"], "y": [[511.6904196397521]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": ["copt[accelerated=True,line_search=True,solver=pgd]"], "y": [[511.2965718778597]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Iteration_Time": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "xlabel": "Iteration", "ylabel": "Time", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[1.2734999927488388e-05], [0.227890059999936], [0.334776206000015], [0.4394589879999557], [0.6684805720000213], [1.0908570549999013], [1.7886792139998988], [3.048002739000026], [5.497054534999961], [9.732811518000062], [17.411853371999996], [32.613099808000015], [59.876489511000045], [101.361731211]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[0.0008034609999754], [1.2121934250000097], [1.533822630999964], [1.7187603589999867], [1.938150525000026], [2.512671504000025], [3.2506427580000263], [4.411839353999994], [6.158570682000004], [9.227994021000027], [17.678806829999985], [21.955275966999977], [27.555583987000038], [40.78557788299997]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[7.100099998069709e-05], [1.9452956499999916], [2.5186695969999846], [3.373080774000016], [4.138710065999987], [6.591180360999999], [8.952703001000032], [11.006528677000006], [15.328077864000022], [22.482428782], [35.983903596000005]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], "y": [[0.0005471999999144], [0.0491029270000353], [0.053024884000024], [0.061086054000043], [0.0679365359999337], [0.088301122999951], [0.1320432900000696], [0.2037293749999662], [0.3278066389999594], [0.5537766659999761], [1.0178958810000722], [1.7121214649999956], [3.020960453000044], [5.338147366000044], [9.657033533000003], [17.373822493000034], [29.899411047000054], [66.755022241], [166.687488507]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "y": [[5.685600001470448e-05], [0.2471310459999358], [0.3982173639999473], [0.4791359190001003], [0.6597078349999492], [2.364093726999954], [8.776677503000087], [9.633476452999956], [5.588995132000036], [10.272215604999928], [18.633523845000013], [33.158928468], [61.804394559]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [[1.9668000049932743e-05], [0.0794913130000622], [0.1056523429999742], [0.1760790000000724], [0.2178304050000861], [0.482414929000015], [0.6300797359999706], [0.7348381890000155], [1.1449854070000356], [1.8380982809999296], [3.3005303310000045], [5.599767724999992], [9.801756197999907], [17.262745527999982], [32.94521315099996], [56.75495519000003], [99.211054052]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}, "boxplot_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]_objective_value_Iteration_Objective Metric": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "xlabel": "Iteration", "ylabel": "Objective Metric", "type": "boxplot", "data": [{"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[9471.648476232063], [9471.648476232063], [8406.889194557343], [7642.203174546468], [6597.740960832516], [5404.453079218471], [4361.80685167032], [3519.18878665665], [2817.339723150764], [2254.949509566952], [1781.655674414468], [1382.395148693308], [1053.41254177999], [802.2656456480988]], "label": "copt[accelerated=False,line_search=False,solver=pgd]", "color": "rgba(219, 219, 141, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "y": [[1380.643942600313], [1399.0003962102712], [1336.3848325274598], [1084.728045820503], [964.5679198596072], [812.4942014764085], [689.9707455018273], [611.266675395649], [558.8751857829727], [530.1263049780891], [517.1865710143954], [512.881877979611], [511.6786076253197], [511.3629932579372]], "label": "copt[accelerated=False,line_search=False,solver=saga]", "color": "rgba(148, 103, 189, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "y": [[1954.563248658216], [1883.853563319922], [1372.037210532473], [1131.209581721002], [986.7550637582434], [816.9258429791129], [689.4243331390162], [609.1826733178451], [557.6084867548767], [529.4234335067358], [516.9754129338442]], "label": "copt[accelerated=False,line_search=False,solver=svrg]", "color": "rgba(140, 86, 75, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], "y": [[5343.836211784427], [5343.836211784427], [4614.1707195775125], [4107.767839341457], [3427.439177362672], [2644.096331853956], [2043.275911425266], [1492.5975332830549], [942.6542270808018], [657.8200454834508], [527.9938723195777], [512.3851659705911], [511.3386008146682], [511.29693775742805], [511.2965720449488], [511.2965718726153], [511.2965718726153], [511.2965718726153], [511.2965718726153]], "label": "copt[accelerated=False,line_search=True,solver=pgd]", "color": "rgba(158, 218, 229, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "y": [[9471.648476232069], [9471.648476232069], [8132.480894959923], [7062.148176192207], [5533.484755732476], [3874.628481570405], [2652.844952909272], [1804.3399071076728], [1124.10141284186], [671.8341164035169], [523.3935080302358], [514.4606897986139], [511.6904196397521]], "label": "copt[accelerated=True,line_search=False,solver=pgd]", "color": "rgba(31, 119, 180, 1.0)"}, {"x": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], "y": [[4170.543456639538], [4170.543456639538], [3477.9257284529986], [3080.441710977292], [2567.016035441303], [1860.742026259728], [1136.5224437329264], [662.8850890428871], [522.8992947824776], [514.5021327969162], [511.6393816243369], [511.35224498980114], [511.3008585183876], [511.2968740446498], [511.2965858059177], [511.2965723157232], [511.2965718778597]], "label": "copt[accelerated=True,line_search=True,solver=pgd]", "color": "rgba(255, 127, 14, 1.0)"}]}}, "table": {"table_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=1.0]": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=1.0]<br />Data: rcv1", "columns": ["solver", "value", "time (s)"], "type": "table", "data": [["copt[accelerated=False,line_search=False,solver=pgd]", 4147.708963583843, 84.131797292], ["copt[accelerated=False,line_search=False,solver=saga]", 4147.708905345793, 73.095573], ["copt[accelerated=False,line_search=False,solver=svrg]", 4147.708905345793, 33.475050266], ["copt[accelerated=False,line_search=True,solver=pgd]", 4147.708905345797, 184.190941748], ["copt[accelerated=True,line_search=False,solver=pgd]", 4147.708905359279, 114.46134304999998], ["copt[accelerated=True,line_search=True,solver=pgd]", 4147.708905345792, 122.391084137]]}, "table_rcv1_L2 Logistic Regression[fit_intercept=False,lmbd=0.01]": {"title": "L2 Logistic Regression[fit_intercept=False,lmbd=0.01]<br />Data: rcv1", "columns": ["solver", "value", "time (s)"], "type": "table", "data": [["copt[accelerated=False,line_search=False,solver=pgd]", 802.2656456480988, 101.361731211], ["copt[accelerated=False,line_search=False,solver=saga]", 511.3629932579372, 40.78557788299997], ["copt[accelerated=False,line_search=False,solver=svrg]", 516.9754129338442, 35.983903596000005], ["copt[accelerated=False,line_search=True,solver=pgd]", 511.2965718726153, 166.687488507], ["copt[accelerated=True,line_search=False,solver=pgd]", 511.6904196397521, 61.804394559], ["copt[accelerated=True,line_search=True,solver=pgd]", 511.2965718778597, 99.211054052]]}}};
             window.metadata = {"plot_configs": {}, "solvers_description": {}, "obj_description": ""};
 
             window.addEventListener("load", () => {
@@ -2599,11 +2715,14 @@ g.hovertext:has(path + [data-unformatted*="lower fence"])
                             'bar_chart_dataset': document.getElementById('change_bar_chart_dataset').value,
                             'bar_chart_objective': document.getElementById('change_bar_chart_objective').value,
                             'bar_chart_objective_column': document.getElementById('change_bar_chart_objective_column').value,
+                            'bar_chart_minimize': document.getElementById('change_bar_chart_minimize').value,
                             'boxplot_dataset': document.getElementById('change_boxplot_dataset').value,
                             'boxplot_objective': document.getElementById('change_boxplot_objective').value,
                             'boxplot_objective_column': document.getElementById('change_boxplot_objective_column').value,
                             'boxplot_X_axis': document.getElementById('change_boxplot_X_axis').value,
                             'boxplot_Y_axis': document.getElementById('change_boxplot_Y_axis').value,
+                            'table_dataset': document.getElementById('change_table_dataset').value,
+                            'table_objective': document.getElementById('change_table_objective').value,
                 });
                 const plot_configs = document.getElementsByClassName('view');
                 if (plot_configs.length > 0 ){
@@ -3267,9 +3386,24 @@ const setState = (partialState) => {
   window._state = {...state(), ...partialState};
 
   renderSidebar();
-  renderPlot();
-  renderLegend();
-}
+
+  /**
+   * Hide all containers for the different plots
+   */
+  ["table", "image", "plot", "plot_with_legend", "legend"].forEach(key => {
+    let container = document.getElementById(`${key}_container`);
+    hide(container);
+  });
+
+  if  (isChart('table')) {
+    renderTable();
+  } else if (isChart('image')) {
+    renderImages();
+  } else {
+    renderPlot();
+  }
+
+};
 
 /**
  * Retrieve the state object from window._state
@@ -3312,17 +3446,24 @@ const config_mapping = {
  * Create/Update the plot.
  */
 const renderPlot = () => {
-  let div;
+
+  // Show and purge the container
+  let plot_container = document.getElementById('plot_container');
+  let plot_with_legend_container = document.getElementById('plot_with_legend_container');
+  Plotly.purge(plot_with_legend_container);
+  Plotly.purge(plot_container);
+  show(plot_container);
+
+  let div = plot_container;
   if (isChart('scatter')) {
-    div = document.getElementById('scatter_plot_container');
-  } else {
-    div = document.getElementById('plot_container');
+    show(plot_with_legend_container);
+    div = plot_with_legend_container;
+    renderLegend();
   }
+
+  // Render the plot with PlotlyJS
   const data = getChartData();
   const layout = getLayout();
-
-  Plotly.purge(document.getElementById('scatter_plot_container'));
-  Plotly.purge(document.getElementById('plot_container'));
   Plotly.react(div, data, layout);
 };
 
@@ -3385,13 +3526,14 @@ const getBarData = () => {
   getPlotData().data.forEach(curveData => {
     // Add times for each convergent bar
     // Check if text is not 'Did not converge'
-    if (curveData.text === '') {
-      let nbTimes = curveData.times.length
+    curveText = curveData.text || ''
+    if (curveText === '') {
+      let nbTimes = curveData.y.length
 
       barData.push({
         type: 'scatter',
         x: new Array(nbTimes).fill(curveData.label),
-        y: curveData.times,
+        y: curveData.y,
         marker: {
           color: 'black',
           symbol: 'line-ew-open'
@@ -3431,7 +3573,7 @@ const getPlotData = () => {
   let dropdowns = getPlotDropdowns();
   let dropdown_values = dropdowns.map(dropdown => state()[dropdown]);
   let data_key = [state().plot_kind, ...dropdown_values].join('_');
-  return window._custom_plots[state().plot_kind][data_key];
+  return window._plots[state().plot_kind][data_key];
 }
 
 
@@ -3454,23 +3596,15 @@ const getScatterData = () => {
   getPlotData().data.forEach(curveData => {
     label = curveData.label;
     y = curveData.y;
-    if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
-      q1 = curveData.q1;
-      q9 = curveData.q9;
+    if ("x_low" in curveData && "x_high" in curveData && state().with_quantiles) {
+      x_low = curveData.x_low;
+      x_high = curveData.x_high;
     }
     if (state().suboptimal_curve) {
       y = y.map(value => value - min_y);
-      if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
-        q1 = q1.map(value => value - min_y);
-        q9 = q9.map(value => value - min_y);
-      }
     }
     if (state().relative_curve) {
       y = y.map(value => value / (y[0] - min_y));
-      if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
-        q1 = q1.map(value => value / (y[0] - min_y));
-        q9 = q9.map(value => value / (y[0] - min_y));
-      }
     }
     curves.push({
       type: 'scatter',
@@ -3491,11 +3625,11 @@ const getScatterData = () => {
       y: y,
     });
 
-    if ("q1" in curveData && "q9" in curveData && state().with_quantiles) {
+    if ("x_low" in curveData && "x_high" in curveData && state().with_quantiles) {
       curves.push({
         type: 'scatter',
         mode: 'lines',
-        showlegend: false,
+        legend: false,
         line: {
           width: 0,
           color: curveData.color,
@@ -3503,7 +3637,7 @@ const getScatterData = () => {
         legendgroup: label,
         hovertemplate: '(%{x:.1e},%{y:.1e}) <extra></extra>',
         visible: isVisible(label) ? true : 'legendonly',
-        x: q1,
+        x: x_low,
         y: y,
       }, {
         type: 'scatter',
@@ -3517,7 +3651,7 @@ const getScatterData = () => {
         legendgroup: label,
         hovertemplate: '(%{x:.1e},%{y:.1e}) <extra></extra>',
         visible: isVisible(label) ? true : 'legendonly',
-        x: q9,
+        x: x_high,
         y: y,
       });
     }
@@ -3571,6 +3705,10 @@ const setConfig = (config_item) => {
     let update = {};
     // const lims = ['xlim', 'ylim', 'hidden_curves']
     const lims = ['hidden_curves']
+    let kind = state().plot_kind;
+    if ("plot_kind" in config) {
+      kind = config["plot_kind"];
+    }
     for(let key in config){
       const value = config[key];
       if (key in config_mapping) {
@@ -3580,16 +3718,24 @@ const setConfig = (config_item) => {
         }
       }
       else {
+        // Custom parameters which should be related to the current kind
+        // and the div prefix is 'change_{kind}_'. Ignore otherwise with
+        // a warning in the console.
+        if (!key.startsWith(kind)) {
+          key = kind + "_" + key;
+        }
         div_key = "change_" + key;
-        document.getElementById(div_key).value = value;
+        try {
+          document.getElementById(div_key).value = value;
+        } catch (error) {
+          // Element not found, ignore
+          console.warn("Unknown config parameter: '" + key + "'");
+        }
       }
       update[key] = value;
     }
 
     setState(update);
-
-    // update the plot
-    renderPlot();
   }
 };
 
@@ -3712,13 +3858,13 @@ const renderSidebar = () => {
  * Render Scale selector
  */
 const renderScaleSelector = () => {
-  if (isChart('bar_chart')) {
+  if (isChart(['table', 'image'])) {
     hide(document.querySelectorAll("#scale-form-group"));
   } else {
     show(document.querySelectorAll("#scale-form-group"), 'block');
   }
 
-  if (isChart('boxplot')) {
+  if (isChart(['boxplot', 'bar_chart'])) {
     hide(document.querySelectorAll(".other_plot_option"));
     show(document.querySelectorAll(".boxplot_option"));
   } else {
@@ -3749,6 +3895,16 @@ const renderSuboptimalRelativeToggle = () => {
 const renderPlotDropdowns = () => {
   hide(document.querySelectorAll(`[id$='-custom-params-container']`));
   show(document.querySelectorAll(`#${state().plot_kind}-custom-params-container`), 'block');
+  // Hide dropdowns with only one option
+  for (let dropdown of document.getElementsByTagName('select')) {
+    // Keep view selectors visible in the config container.
+    if (dropdown.closest('#config_container')) {
+      continue;
+    }
+    if (dropdown.options.length <= 1) {
+      hide(dropdown.parentElement.parentElement);
+    }
+  }
 
 }
 
@@ -3781,7 +3937,7 @@ const getPlotDropdowns = () => {
   let kind = state().plot_kind;
   let params = [];
   Object.keys(state()).forEach(key => {
-    if (key.includes(kind)) {
+    if (key.startsWith(kind)) {
       params.push(key);
     }
   });
@@ -3796,7 +3952,8 @@ const isChart = chart => {
   }
 
   let plot_kind = state().plot_kind;
-  if (!["bar_chart", "boxplot"].includes(plot_kind)) {
+  // If the plot kind is not a default one, check the type of the custom plot in the data.
+  if (!["bar_chart", "boxplot", "table", "scatter"].includes(plot_kind)) {
     let custom_data = getPlotData();
     plot_kind = custom_data.type;
   }
@@ -3827,14 +3984,25 @@ const isAvailable = () => {
   return !isNotAvailable;
 }
 
+const getMedian = (arr) => {
+  const sorted = [...arr].sort((a, b) => a - b);
+  let median = null;
+  if (sorted.length > 0) {
+    const mid = Math.floor(sorted.length / 2);
+    median = (sorted.length % 2 === 1) ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  }
+  return median;
+}
+
 const barDataToArrays = () => {
   const colors = [], texts = [], x = [], y = [];
 
   getPlotData().data.forEach(plotData => {
     x.push(plotData.label);
-    y.push(plotData.y);
-    colors.push(plotData.text === '' ? plotData.color : NON_CONVERGENT_COLOR);
-    texts.push(plotData.text);
+    y.push(getMedian(plotData.y));
+    const plotText = plotData.text || '';
+    colors.push(plotText === '' ? plotData.color : NON_CONVERGENT_COLOR);
+    texts.push(plotText);
   });
 
   return {x, y, colors, texts}
@@ -3851,7 +4019,7 @@ const _getScale = (scale) => {
         xaxis: 'log',
         yaxis: 'log',
       };
-    case 'log': // used for boxplot
+    case 'log': // used for boxplot or barchart
       return {
         xaxis: 'log',
         yaxis: 'log',
@@ -3879,12 +4047,12 @@ const _getScale = (scale) => {
 const getBarChartLayout = () => {
   let data = getPlotData();
   const layout = {
-    autosize: !isSmallScreen(),
+    autosize: true,
     modebar: {
       orientation: 'v',
     },
     yaxis: {
-      type: 'log',
+      type: getScale().yaxis,
       title: data["ylabel"],
       tickformat: '.1e',
       gridcolor: '#ffffff',
@@ -3899,8 +4067,6 @@ const getBarChartLayout = () => {
   };
 
   if (isSmallScreen()) {
-    layout.width = 900;
-    layout.height = window.screen.availHeight - 200;
     layout.dragmode = false;
   }
 
@@ -3924,9 +4090,9 @@ const getBarChartLayout = () => {
 };
 
 const getBoxplotChartLayout = () => {
-  plot_info = getPlotData()
+  const plot_info = getPlotData()
   const layout = {
-    autosize: !isSmallScreen(),
+    autosize: true,
     modebar: {
       orientation: 'v',
     },
@@ -3945,8 +4111,6 @@ const getBoxplotChartLayout = () => {
   };
 
   if (isSmallScreen()) {
-    layout.width = 900;
-    layout.height = window.screen.availHeight - 200;
     layout.dragmode = false;
   }
 
@@ -3958,11 +4122,10 @@ const getScatterChartLayout = () => {
   let customData = getPlotData();
 
   const layout = {
-    autosize: !isSmallScreen(),
+    autosize: true,  // Let Plotly handle sizing; CSS controls aspect ratio and min-height
     modebar: {
       orientation: 'v',
     },
-    height: 700,
     showlegend: false,
     legend: {
       title: {
@@ -3994,8 +4157,6 @@ const getScatterChartLayout = () => {
   };
 
   if (isSmallScreen()) {
-    layout.width = 900;
-    layout.height = window.screen.availHeight - 200;
     layout.dragmode = false;
   }
 
@@ -4037,7 +4198,7 @@ const hide = HTMLElements => {
  * @param HTMLElements
  * @param style
  */
-const show = (HTMLElements, style = 'initial') => {
+const show = (HTMLElements, style = '') => {
   if (HTMLElements instanceof Element) {
     HTMLElements = [HTMLElements]
   }
@@ -4100,6 +4261,259 @@ const handleCurveDoubleClick = curve => {
   hideAllCurvesExcept(curve);
 };
 
+
+/*
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * MANAGE IMAGE RENDERING
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
+const renderImages = () => {
+
+  // Show and purge the container
+  let image_container = document.getElementById('image_container');
+  image_container.innerHTML = '';
+  show(image_container);
+
+  const plotData = getPlotData();
+  if (!plotData || !plotData.data || plotData.data.length === 0) {
+    image_container.innerHTML = '<div>No image data available</div>';
+    return;
+  }
+
+  // Title
+  if (plotData.title) {
+    const titleEl = document.createElement('h2');
+    titleEl.className = 'text-xl text-center text-gray-800 mb-6';
+    titleEl.innerText = plotData.title;
+    image_container.appendChild(titleEl);
+  }
+
+  const ncols = plotData.ncols || Math.min(plotData.data.length, 3);
+  const grid = document.createElement('div');
+  grid.className = `grid gap-6`;
+  grid.style.gridTemplateColumns = `repeat(${ncols}, minmax(0, 1fr))`;
+
+  plotData.data.forEach(imgData => {
+    const card = document.createElement('div');
+
+    if (imgData.image === null) {
+      // Empty invisible block for grid alignment
+      grid.appendChild(card);
+      return;
+    }
+
+    card.className = 'bg-white rounded-lg shadow border border-gray-200 p-2 flex flex-col gap-2';
+
+    const imgWrapper = document.createElement('div');
+    imgWrapper.className = 'bg-gray-50 flex items-center justify-center';
+    imgWrapper.style.aspectRatio = '1 / 1';
+
+    if (imgData.image === '__incompatible__') {
+      const msg = document.createElement('span');
+      msg.className = 'text-sm text-gray-500 italic';
+      msg.innerText = 'Incompatible image';
+      imgWrapper.appendChild(msg);
+    } else {
+      const img = document.createElement('img');
+      img.src = imgData.image;
+      img.alt = imgData.label || '';
+      img.className = 'block w-full h-full object-contain';
+      img.style.imageRendering = 'pixelated';
+      imgWrapper.appendChild(img);
+    }
+    card.appendChild(imgWrapper);
+
+    if (imgData.label) {
+      const labelEl = document.createElement('div');
+      labelEl.className = 'text-sm text-center text-gray-700';
+      labelEl.innerText = imgData.label;
+      card.appendChild(labelEl);
+    }
+
+    grid.appendChild(card);
+  });
+
+  image_container.appendChild(grid);
+};
+
+/*
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * MANAGE TABLE RENDERING
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
+// Global state for precision
+let tableFloatPrecision = 4;
+
+const valueToFixed = (value) => {
+  if (typeof value === 'number' && !Number.isInteger(value)) {
+    return value.toFixed(tableFloatPrecision);
+  }
+  return value;
+}
+
+function renderTable() {
+
+  // Show and purge the container
+  let table_container = document.getElementById('table_container');
+  show(table_container);
+  table_container.innerHTML = "";
+
+  const plotData = getPlotData();
+  if (!plotData || !plotData.columns || !plotData.data) {
+    table_container.innerHTML = `<div >No data available</div>`;
+    return;
+  }
+
+  const { columns, data: rows } = plotData;
+
+  // Card Wrapper
+  const card = document.createElement("div");
+  card.className = "w-full bg-white overflow-hidden border border-gray-200 mx-auto";
+
+  // Table Element
+  const table = document.createElement("table");
+  table.className = "w-full border-collapse text-left";
+
+  // Header
+  const thead = document.createElement("thead");
+  thead.className = "bg-gray-50";
+  const trHead = document.createElement("tr");
+
+  columns.forEach(headerText => {
+    const th = document.createElement("th");
+    th.innerText = headerText;
+    th.className = "px-4 py-4 text-xs font-bold uppercase tracking-wider border-b border-gray-200";
+    trHead.appendChild(th);
+  });
+  thead.appendChild(trHead);
+  table.appendChild(thead);
+
+  // Body
+  const tbody = document.createElement("tbody");
+
+  rows.forEach((rowData, index) => {
+    const tr = document.createElement("tr");
+    tr.className = "bg-white transition-colors duration-150 ease-in-out hover:bg-gray-50";
+
+    tr.onmouseenter = () => tr.style.backgroundColor = "#f9fafb";
+    tr.onmouseleave = () => tr.style.backgroundColor = "#fff";
+
+    rowData.forEach(cellValue => {
+      const td = document.createElement("td");
+      td.innerHTML = valueToFixed(cellValue);
+
+      let cellClasses = "px-4 py-4 text-sm text-gray-700";
+      if (index !== rows.length - 1) {
+        cellClasses += " border-b border-gray-100";
+      }
+      td.className = cellClasses;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  // Footer with Precision Controls & Export
+  const footerWrapper = document.createElement("div");
+  footerWrapper.className = "w-full";
+
+  const footer = document.createElement("div");
+  footer.className = "flex justify-between items-center p-4";
+
+  // Precision Controls (Left)
+  const precisionContainer = document.createElement("div");
+  precisionContainer.className = "flex items-center gap-2 text-sm text-gray-700";
+
+  const createPrecBtn = (text) => {
+    const btn = document.createElement("button");
+    btn.innerText = text;
+    btn.className = "px-3 py-1 border border-gray-300 bg-white rounded cursor-pointer hover:bg-gray-100";
+    return btn;
+  };
+
+  const btnDec = createPrecBtn("-");
+  const btnInc = createPrecBtn("+");
+  const labelPrec = document.createElement("span");
+  labelPrec.innerText = `Float Precision: ${tableFloatPrecision}`;
+  labelPrec.className = "mx-2 px-4";
+
+  btnDec.onclick = () => {
+    if (tableFloatPrecision > 0) {
+      tableFloatPrecision--;
+      renderTable();
+    }
+  };
+
+  btnInc.onclick = () => {
+    tableFloatPrecision++;
+    renderTable();
+  };
+
+  precisionContainer.appendChild(btnDec);
+  precisionContainer.appendChild(labelPrec);
+  precisionContainer.appendChild(btnInc);
+
+  // Export Button (Right)
+  const exportButton = document.createElement("button");
+  exportButton.id = "table-export";
+  exportButton.innerText = "Export LaTeX";
+  exportButton.className = "inline-flex items-center px-4 py-2 space-x-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500";
+
+  exportButton.addEventListener('click', () => {
+    exportTable();
+  });
+
+  table.appendChild(tbody);
+  card.appendChild(table);
+  table_container.appendChild(card);
+
+  footer.appendChild(precisionContainer);
+  footer.appendChild(exportButton);
+  footerWrapper.appendChild(footer);
+  table_container.appendChild(footerWrapper);
+}
+
+
+async function exportTable() {
+  const button = document.getElementById("table-export");
+  const defaultText = button.innerHTML;
+  button.innerHTML = "Copying";
+
+  const plotData = getPlotData();
+
+  let value = "\\begin{tabular}{l";
+  value += "c".repeat(plotData.columns.length);
+  value += "}\n";
+  value += "\\hline\n";
+
+  value += plotData.columns[0].replace('_', '\\_');
+  plotData.columns.slice(1).forEach(metric => value += ` & ${metric.replace('_', '\\_')}`);
+
+  value += " \\\\\n";
+  value += "\\hline\n";
+
+  plotData.data.forEach(rowData => {
+    value += valueToFixed(rowData[0]).toString().replace('_', '\\_');
+    rowData.slice(1).forEach(cell => {
+      value += ` & ${valueToFixed(cell).toString().replace('_', '\\_')}`;
+    });
+    value += " \\\\\n";
+  });
+
+  value += "\\hline\n";
+  value += "\\end{tabular}";
+
+  try {
+    await navigator.clipboard.writeText(value);
+    button.innerHTML = "Copied in clipboard!";
+    setTimeout(() => button.innerHTML = defaultText, 2500);
+  } catch (err) {
+    button.innerHTML = "Error!";
+    setTimeout(() => button.innerHTML = defaultText, 2500);
+  }
+}
+
 /*
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * MANAGE PLOT LEGEND
@@ -4113,15 +4527,9 @@ const handleCurveDoubleClick = curve => {
  * Creates the legend at the bottom of the plot.
  */
 const renderLegend = () => {
-  const legendContainer = document.getElementById('legend_container')
-  if (!isChart('scatter')) {
-    hide(legendContainer);
-    return;
-  } else {
-    show(legendContainer);
-  }
 
   const legend = document.getElementById('plot_legend');
+  show(legend);
 
   legend.innerHTML = '';
   const curvesDescription = window.metadata["solvers_description"];
